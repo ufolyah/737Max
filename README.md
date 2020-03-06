@@ -21,7 +21,9 @@ Do not delete anything in this timeline, just append it.
 
 Also, if there is any mistake in the object model, like CamelCase, email me or update it yourself and inform others here.
 
+PS: use code generator and "fix doc comment" in intellij will save your life.
 
+---
 
 
 
