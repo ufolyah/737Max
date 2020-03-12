@@ -17,7 +17,7 @@ public class QueryFactory {
      * @param teamName is the name of the team to acquire the lock
      * @return the String written to HTTP POST to lock server database
      */
-    public static String lock (String teamName) {
+    public static String postLock (String teamName) {
         return "team=" + teamName + "&action=lockDB";
     }
 
@@ -27,7 +27,7 @@ public class QueryFactory {
      * @param teamName is the name of the team holding the lock
      * @return the String written to the HTTP POST to unlock server database
      */
-    public static String unlock (String teamName) {
+    public static String postUnlock (String teamName) {
         return "team=" + teamName + "&action=unlockDB";
     }
 
