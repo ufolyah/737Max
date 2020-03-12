@@ -26,7 +26,7 @@ PS: use code generator and "fix doc comment" in intellij will save your life.
 ---
 
 ### 03/12/2020 D. Xu
-UML: Fix a bug for input parameter of ServerInterface.reserve
+UML: Fix a bug for input parameter of ServerInterface.reserve  
 Code: general http Get and Post function set up in ServerInterface.
 
 ---
