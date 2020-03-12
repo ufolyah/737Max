@@ -25,9 +25,6 @@ public class ServerInterface {
      *
      */
     public void getAirports() throws IOException {
-        if (Airports.getInstance().getList().length!=0) {
-            return;
-        }
         String xml = httpGet(urlBase+QueryFactory.getAirports(teamName));
         Airports.getInstance().setList(XMLInterface.parseAirports(xml));
     }
@@ -76,7 +73,7 @@ public class ServerInterface {
 
     }
 
-    private String httpGet(String query) throws IOException {
+    public String httpGet(String query) throws IOException {
         /*
          * Create an HTTP connection to the server for a GET
          * QueryFactory provides the parameter annotations for the HTTP GET query string
@@ -92,22 +89,23 @@ public class ServerInterface {
          * line by line to build the full return string
          */
         int responseCode = connection.getResponseCode();
-        if (responseCode/100==2) {
-            InputStream inputStream = connection.getInputStream();
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                result.append(line);
-            }
-            reader.close();
-        } else {
-            throw new IOException("httpGet:"+query+" failed with "+ responseCode);
+        if (responseCode/100!=2) {
+            throw new IOException(String.valueOf(responseCode));
         }
+
+        InputStream inputStream = connection.getInputStream();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            result.append(line);
+        }
+        reader.close();
+
         return result.toString();
     }
 
-    private String httpPost(String query, String body) throws IOException {
+    public String httpPost(String query, String body) throws IOException {
         URL url = new URL(query);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
@@ -124,17 +122,19 @@ public class ServerInterface {
         System.out.println("\nSending 'POST'");
         System.out.println(("\nResponse Code : " + responseCode));
 
-        StringBuffer response = new StringBuffer();
-        if (responseCode/100==2) {
-            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            String line;
-            while ((line = in.readLine()) != null) {
-                response.append(line);
-            }
-            in.close();
-        } else {
-            throw new IOException("httpPost: failed with "+ responseCode);
+        if (responseCode/100!=2){
+            throw new IOException(String.valueOf(responseCode));
         }
+
+        StringBuffer response = new StringBuffer();
+
+
+        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        String line;
+        while ((line = in.readLine()) != null) {
+            response.append(line);
+        }
+        in.close();
 
         return response.toString();
     }

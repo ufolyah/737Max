@@ -29,6 +29,8 @@ PS: use code generator and "fix doc comment" in intellij will save your life.
 UML: Fix a bug for input parameter of ServerInterface.reserve  
 Code: general http Get and Post function set up in ServerInterface.
 
+Issue: I cannot reserve flight & reset Database. Their response code is weird. 
+
 ---
 
 
