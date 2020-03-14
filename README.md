@@ -33,4 +33,13 @@ Issue: I cannot reserve flight & reset Database. Their response code is weird.
 
 ---
 
+### 03/14/2020 D.Xu
+UML: Mark the property of Airplane read-only to make the methods consistent with Airports.  
+
+Code:
+  1. QueryFactory, Airport, Airports, Airplane, Airplanes are completed.  
+  2. GetAirport part of XML,ServerInterface are completed and tested with Test2.  
+  
+      
+     
 

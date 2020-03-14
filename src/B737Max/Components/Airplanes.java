@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 public class Airplanes {
     private static Airplanes instance=null;
-    private Airplane[] raw=null;
     private HashMap<String, Airplane> modelMap;
 
     private Airplanes() {
@@ -25,7 +24,6 @@ public class Airplanes {
      * @param airplanes
      */
     public void setList(Airplane[] airplanes) {
-        raw = airplanes.clone();
         modelMap.clear();
         for (Airplane p:airplanes) {
             modelMap.put(p.getModel(), p);
@@ -36,7 +34,7 @@ public class Airplanes {
      * @return
      */
     public Airplane[] getList() {
-        return raw.clone();
+        return modelMap.values().toArray(new Airplane[0]).clone();
     }
 
     /**

@@ -30,6 +30,20 @@ public class Airport {
     /**
      * @return
      */
+    @Override
+    public String toString() {
+        return "Airport{" +
+                "code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", timeZone=" + timeZone +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                '}';
+    }
+
+    /**
+     * @return
+     */
     public String getCode() {
         return code;
     }
