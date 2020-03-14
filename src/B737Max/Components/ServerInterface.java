@@ -66,11 +66,12 @@ public class ServerInterface {
     }
 
     /**
-     * @param flights
+     * @param trips
      * @throws IOException
      */
-    public void reserve(Flight[] flights) throws IOException {
-
+    public void reserve(Trip[] trips) throws IOException {
+        String q = QueryFactory.postReservation(teamName, trips);
+        httpPost(urlBase, q);
     }
 
     public String httpGet(String query) throws IOException {
@@ -111,6 +112,7 @@ public class ServerInterface {
         connection.setRequestMethod("POST");
         connection.setRequestProperty("User-Agent", teamName);
         connection.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+        connection.setRequestProperty("content-type", "application/x-www-form-urlencoded");
 
         connection.setDoOutput(true);
         DataOutputStream writer = new DataOutputStream(connection.getOutputStream());

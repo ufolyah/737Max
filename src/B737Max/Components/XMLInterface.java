@@ -39,15 +39,7 @@ public class XMLInterface {
 
             return docBuilder.parse(docStream);
         }
-        catch (ParserConfigurationException e) {
-            e.printStackTrace();
-            return null;
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-        catch (SAXException e) {
+        catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
             return null;
         }
