@@ -20,6 +20,16 @@ public class Airplane {
         return manufacturer;
     }
 
+    @Override
+    public String toString() {
+        return "Airplane{" +
+                "manufacturer='" + manufacturer + '\'' +
+                ", model='" + model + '\'' +
+                ", firstSeats=" + firstSeats +
+                ", coachSeats=" + coachSeats +
+                '}';
+    }
+
     /**
      * @return
      */

@@ -13,7 +13,6 @@ public class Flight {
     private Airport departureAirport, arrivalAirport;
     private String flightNo;
     private Airplane airplane;
-    private SeatClass seatClass;
     private int numFirstRemained, numCoachRemained;
     private BigDecimal firstPrice, coachPrice;
 
@@ -69,13 +68,6 @@ public class Flight {
     /**
      * @return
      */
-    public SeatClass getSeatClass() {
-        return seatClass;
-    }
-
-    /**
-     * @return
-     */
     public int getNumFirstRemained() {
         return numFirstRemained;
     }
@@ -101,6 +93,23 @@ public class Flight {
         return coachPrice;
     }
 
+    @Override
+    public String toString() {
+        return "Flight{" +
+                "departureTime=" + departureTime +
+                ", arrivalTime=" + arrivalTime +
+                ", travelTime=" + travelTime +
+                ", departureAirport=" + departureAirport +
+                ", arrivalAirport=" + arrivalAirport +
+                ", flightNo='" + flightNo + '\'' +
+                ", airplane=" + airplane +
+                ", numFirstRemained=" + numFirstRemained +
+                ", numCoachRemained=" + numCoachRemained +
+                ", firstPrice=" + firstPrice +
+                ", coachPrice=" + coachPrice +
+                '}';
+    }
+
     /**
      *
      * @param departureTime
@@ -110,7 +119,6 @@ public class Flight {
      * @param arrivalAirport
      * @param flightNo
      * @param airplane
-     * @param seatClass
      * @param numFirstRemained
      * @param numCoachRemained
      * @param firstPrice
@@ -118,16 +126,15 @@ public class Flight {
      * @throws IllegalArgumentException
      */
     public Flight(ZonedDateTime departureTime, ZonedDateTime arrivalTime, Duration travelTime, Airport departureAirport,
-                  Airport arrivalAirport, String flightNo, Airplane airplane, SeatClass seatClass, int numFirstRemained,
+                  Airport arrivalAirport, String flightNo, Airplane airplane, int numFirstRemained,
                   int numCoachRemained, BigDecimal firstPrice, BigDecimal coachPrice) throws IllegalArgumentException {
-        this.departureTime = departureTime;
-        this.arrivalTime = arrivalTime;
+        this.departureTime = departureTime.withZoneSameInstant(departureAirport.getTimeZone());
+        this.arrivalTime = arrivalTime.withZoneSameInstant(arrivalAirport.getTimeZone());
         this.travelTime = travelTime;
         this.departureAirport = departureAirport;
         this.arrivalAirport = arrivalAirport;
         this.flightNo = flightNo;
         this.airplane = airplane;
-        this.seatClass = seatClass;
         this.numFirstRemained = numFirstRemained;
         this.numCoachRemained = numCoachRemained;
         this.firstPrice = firstPrice;
@@ -160,4 +167,14 @@ public class Flight {
         return SeatClass.COACH;
     }
 
+    /**
+     * @param seat
+     * @return
+     */
+    public BigDecimal getPrice(SeatClass seat) {
+        if (seat==SeatClass.FIRST) {
+            return firstPrice;
+        }
+        return coachPrice;
+    }
 }

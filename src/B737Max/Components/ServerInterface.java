@@ -33,7 +33,8 @@ public class ServerInterface {
      * @throws IOException
      */
     public void getAirplanes() throws IOException {
-
+        String xml = httpGet(urlBase+QueryFactory.getAirplanes(teamName));
+        Airplanes.getInstance().setList(XMLInterface.parseAirplanes(xml));
     }
 
     /**

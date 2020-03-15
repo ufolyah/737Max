@@ -12,6 +12,11 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
+import java.time.Duration;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class XMLInterface {
     /**
@@ -38,11 +43,98 @@ public class XMLInterface {
     }
 
     public static Airplane[] parseAirplanes(String xml) {
-        return null;
+        Document doc = buildDomDoc(xml);
+        if (doc==null) {
+            return new Airplane[0];
+        }
+        NodeList airplanesDom = doc.getElementsByTagName("Airplane");
+        Airplane[] ans = new Airplane[airplanesDom.getLength()];
+        for (int i = 0; i<airplanesDom.getLength(); i++) {
+            Element airplaneDom = (Element)airplanesDom.item(i);
+            Airplane air = new Airplane(
+                    airplaneDom.getAttribute("Manufacturer"),
+                    airplaneDom.getAttribute("Model"),
+                    Integer.parseInt(getOnlyChildTextByTagName(airplaneDom, "FirstClassSeats")),
+                    Integer.parseInt(getOnlyChildTextByTagName(airplaneDom, "CoachSeats"))
+            );
+            ans[i] = air;
+        }
+        return ans;
     }
 
     public static Flight[] parseFlights(String xml) {
-        return null;
+        Document doc = buildDomDoc(xml);
+        if (doc == null) {
+            return new Flight[0];
+        }
+
+        NodeList flightsDom = doc.getElementsByTagName("Flight");
+        ArrayList<Flight> ans = new ArrayList<Flight>();
+        for (int i=0; i<flightsDom.getLength(); i++) {
+            Element flightDom = (Element)flightsDom.item(i);
+
+            Airplane airplane = Airplanes.getInstance().selectByModel(
+                    flightDom.getAttribute("Airplane")
+            );
+            Duration flightTime = Duration.ofMinutes(
+                    Integer.parseInt(flightDom.getAttribute("FlightTime"))
+            );
+            String flightNum = flightDom.getAttribute("Number");
+
+            Element departDom = (Element)flightDom.getElementsByTagName("Departure").item(0);
+            Airport departureAirport = Airports.getInstance().selectByCode(
+              getOnlyChildTextByTagName(departDom, "Code")
+            );
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MMM dd HH:mm z");
+            ZonedDateTime departureTime = ZonedDateTime.parse(
+                    getOnlyChildTextByTagName(departDom,"Time"),
+                    formatter
+            );
+
+            Element arrivalDom = (Element)flightDom.getElementsByTagName("Arrival").item(0);
+            Airport arrivalAirport = Airports.getInstance().selectByCode(
+                    getOnlyChildTextByTagName(arrivalDom, "Code")
+            );
+            ZonedDateTime arrivalTime = ZonedDateTime.parse(
+                    getOnlyChildTextByTagName(arrivalDom,"Time"),
+                    formatter
+            );
+
+            Element firstDom = (Element)flightDom.getElementsByTagName("FirstClass").item(0);
+            BigDecimal firstPrice = new BigDecimal(
+                    firstDom.getAttribute("Price").substring(1)
+            );
+            int firstReserved = Integer.parseInt(getElementText(firstDom));
+            int firstRemained = airplane.getFirstSeats() - firstReserved;
+
+            Element coachDom = (Element)flightDom.getElementsByTagName("Coach").item(0);
+            BigDecimal coachPrice = new BigDecimal(
+                    coachDom.getAttribute("Price").substring(1)
+            );
+            int coachReserved = Integer.parseInt(getElementText(coachDom));
+            int coachRemained = airplane.getCoachSeats() - coachReserved;
+
+            try {
+                Flight thisFlight = new Flight (
+                        departureTime,
+                        arrivalTime,
+                        flightTime,
+                        departureAirport,
+                        arrivalAirport,
+                        flightNum,
+                        airplane,
+                        firstRemained,
+                        coachRemained,
+                        firstPrice,
+                        coachPrice
+                );
+                ans.add(thisFlight);
+            } catch (IllegalArgumentException e) {
+
+            }
+        }
+
+        return ans.toArray(new Flight[0]);
     }
 
     public static String buildReservations(Trip[] trips) {
