@@ -102,14 +102,14 @@ public class XMLInterface {
 
             Element firstDom = (Element)flightDom.getElementsByTagName("FirstClass").item(0);
             BigDecimal firstPrice = new BigDecimal(
-                    firstDom.getAttribute("Price").substring(1)
+                    firstDom.getAttribute("Price").replaceAll("[$,]", "")
             );
             int firstReserved = Integer.parseInt(getElementText(firstDom));
             int firstRemained = airplane.getFirstSeats() - firstReserved;
 
             Element coachDom = (Element)flightDom.getElementsByTagName("Coach").item(0);
             BigDecimal coachPrice = new BigDecimal(
-                    coachDom.getAttribute("Price").substring(1)
+                    coachDom.getAttribute("Price").replaceAll("[$,]", "")
             );
             int coachReserved = Integer.parseInt(getElementText(coachDom));
             int coachRemained = airplane.getCoachSeats() - coachReserved;

@@ -16,6 +16,23 @@ public class Flight {
     private int numFirstRemained, numCoachRemained;
     private BigDecimal firstPrice, coachPrice;
 
+    @Override
+    public String toString() {
+        return "Flight{" +
+                "departureTime=" + departureTime +
+                ", arrivalTime=" + arrivalTime +
+                ", travelTime=" + travelTime +
+                ", departureAirport=" + departureAirport +
+                ", arrivalAirport=" + arrivalAirport +
+                ", flightNo='" + flightNo + '\'' +
+                ", airplane=" + airplane +
+                ", numFirstRemained=" + numFirstRemained +
+                ", numCoachRemained=" + numCoachRemained +
+                ", firstPrice=" + firstPrice +
+                ", coachPrice=" + coachPrice +
+                '}';
+    }
+
     /**
      * @return
      */
@@ -91,23 +108,6 @@ public class Flight {
      */
     public BigDecimal getCoachPrice() {
         return coachPrice;
-    }
-
-    @Override
-    public String toString() {
-        return "Flight{" +
-                "departureTime=" + departureTime +
-                ", arrivalTime=" + arrivalTime +
-                ", travelTime=" + travelTime +
-                ", departureAirport=" + departureAirport +
-                ", arrivalAirport=" + arrivalAirport +
-                ", flightNo='" + flightNo + '\'' +
-                ", airplane=" + airplane +
-                ", numFirstRemained=" + numFirstRemained +
-                ", numCoachRemained=" + numCoachRemained +
-                ", firstPrice=" + firstPrice +
-                ", coachPrice=" + coachPrice +
-                '}';
     }
 
     /**

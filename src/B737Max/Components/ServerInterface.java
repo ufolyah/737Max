@@ -3,6 +3,11 @@ package B737Max.Components;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ServerInterface {
     private final String teamName="737Max";
@@ -37,6 +42,10 @@ public class ServerInterface {
         Airplanes.getInstance().setList(XMLInterface.parseAirplanes(xml));
     }
 
+    enum FlightSearchMode {
+        DEPARTURE, ARRIVAL
+    }
+
     /**
      * @return
      * @throws IOException
@@ -45,11 +54,77 @@ public class ServerInterface {
         return null;
     }
 
+    public Flight[] getDepartureFlights(Airport airport, LocalDate dateInGMT) throws IOException {
+        return getFlights(airport, dateInGMT, FlightSearchMode.DEPARTURE);
+    }
+
+    public Flight[] getArrivalFlights(Airport airport, LocalDate dateInGMT) throws IOException{
+        return getFlights(airport, dateInGMT, FlightSearchMode.ARRIVAL);
+    }
+
+    public Flight[] getDepartureFlightsByTimeWindow(Airport airport, ZonedDateTime begin, ZonedDateTime end)
+        throws IOException {
+        return getFlightsByTimeWindow(airport, begin, end, FlightSearchMode.DEPARTURE);
+    }
+
+    public Flight[] getArrivalFlightsByTimeWindow(Airport airport, ZonedDateTime begin, ZonedDateTime end)
+        throws IOException {
+        return getFlightsByTimeWindow(airport, begin, end, FlightSearchMode.ARRIVAL);
+    }
+
+    private Flight[] getFlightsByTimeWindow(Airport airport, ZonedDateTime begin, ZonedDateTime end, FlightSearchMode mode)
+            throws IOException {
+        ZonedDateTime beginGMT = begin.withZoneSameInstant(ZoneId.of("GMT"));
+        LocalDate beginDate = beginGMT.toLocalDate();
+
+        ZonedDateTime endGMT = end.withZoneSameInstant(ZoneId.of("GMT"));
+        LocalDate endDate = endGMT.toLocalDate().plusDays(1);
+
+        ArrayList<Flight> rawResult = new ArrayList<>();
+        for (LocalDate d = beginDate; !d.equals(endDate); d=d.plusDays(1)) {
+            rawResult.addAll(
+                    Arrays.asList(getFlights(airport, d, mode))
+            );
+        }
+
+        ArrayList<Flight> ans = new ArrayList<>();
+        for (Flight f: rawResult) {
+            ZonedDateTime targetTime;
+
+            if (mode==FlightSearchMode.DEPARTURE) {
+                targetTime = f.getDepartureTime();
+            } else {
+                targetTime = f.getArrivalTime();
+            }
+
+            if (targetTime.isAfter(begin) && targetTime.isBefore(end)) {
+                ans.add(f);
+            }
+        }
+
+        return ans.toArray(new Flight[0]);
+    }
+
+    private Flight[] getFlights(Airport airport, LocalDate dateInGMT, FlightSearchMode mode) throws IOException{
+        String xml;
+        switch (mode) {
+            case DEPARTURE:
+                xml = httpGet(urlBase+QueryFactory.getDepartureFlights(teamName, airport, dateInGMT));
+                break;
+            case ARRIVAL:
+                xml = httpGet(urlBase+QueryFactory.getArrivalFlights(teamName, airport, dateInGMT));
+                break;
+            default:
+                throw new IOException("Search Mode should be DEPARTURE/ARRIVAL");
+        }
+        return XMLInterface.parseFlights(xml);
+    }
+
     /**
      * @throws IOException
      */
     public void reset() throws IOException {
-
+        httpGet(urlBase+QueryFactory.getReset(teamName));
     }
 
     /**
@@ -84,7 +159,7 @@ public class ServerInterface {
         HttpURLConnection connection= (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("User-Agent", teamName);
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
 
         /*
          * If response code of SUCCESS read the XML string returned
@@ -129,7 +204,7 @@ public class ServerInterface {
             throw new IOException(String.valueOf(responseCode));
         }
 
-        StringBuffer response = new StringBuffer();
+        StringBuilder response = new StringBuilder();
 
 
         BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));

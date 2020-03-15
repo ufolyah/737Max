@@ -7,7 +7,7 @@ public class Airplanes {
     private HashMap<String, Airplane> modelMap;
 
     private Airplanes() {
-        modelMap=new HashMap<String, Airplane>();
+        modelMap=new HashMap<>();
     }
 
     /**

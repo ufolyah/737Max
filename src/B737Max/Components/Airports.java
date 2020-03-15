@@ -8,8 +8,8 @@ public class Airports {
     private TreeMap<String, Airport> nameMap;
 
     private Airports() {
-        codeMap = new TreeMap<String, Airport>();
-        nameMap = new TreeMap<String, Airport>();
+        codeMap = new TreeMap<>();
+        nameMap = new TreeMap<>();
     }
 
     /**
