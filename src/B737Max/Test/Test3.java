@@ -14,7 +14,7 @@ public class Test3 {
         service.getAirplanes();
         Flight[] fList = service.getDepartureFlights(
                 Airports.getInstance().selectByCode("BOS"),
-                LocalDate.parse("2020-05-23")
+                LocalDate.parse("2020-05-10")
         );
         for (Flight i:fList) {
             System.out.println(i);
