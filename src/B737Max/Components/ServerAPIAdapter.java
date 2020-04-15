@@ -9,19 +9,19 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ServerInterface {
+public class ServerAPIAdapter {
     private final String teamName="737Max";
     private final String urlBase="http://cs509.cs.wpi.edu:8181/CS509.server/ReservationSystem";
-    private static ServerInterface instance=null;
+    private static ServerAPIAdapter instance=null;
 
-    private ServerInterface() {}
+    private ServerAPIAdapter() {}
 
     /**
      * @return
      */
-    public static ServerInterface getInstance() {
+    public static ServerAPIAdapter getInstance() {
         if (instance==null) {
-            instance = new ServerInterface();
+            instance = new ServerAPIAdapter();
         }
         return instance;
     }
@@ -188,7 +188,7 @@ public class ServerInterface {
         connection.setRequestMethod("POST");
         connection.setRequestProperty("User-Agent", teamName);
         connection.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-        connection.setRequestProperty("content-type", "application/x-www-form-urlencoded");
+        connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
         connection.setDoOutput(true);
         DataOutputStream writer = new DataOutputStream(connection.getOutputStream());

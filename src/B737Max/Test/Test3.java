@@ -2,14 +2,14 @@ package B737Max.Test;
 
 import B737Max.Components.Airports;
 import B737Max.Components.Flight;
-import B737Max.Components.ServerInterface;
+import B737Max.Components.ServerAPIAdapter;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 
 public class Test3 {
     public static void main(String[] args) throws Exception {
-        ServerInterface service = ServerInterface.getInstance();
+        ServerAPIAdapter service = ServerAPIAdapter.getInstance();
         service.getAirports();
         service.getAirplanes();
         Flight[] fList = service.getDepartureFlights(

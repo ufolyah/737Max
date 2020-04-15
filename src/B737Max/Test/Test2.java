@@ -4,7 +4,7 @@ import B737Max.Components.*;
 
 public class Test2 {
     public static void main(String[] args) throws Exception {
-        ServerInterface service = ServerInterface.getInstance();
+        ServerAPIAdapter service = ServerAPIAdapter.getInstance();
         Airports airports = Airports.getInstance();
         service.getAirports();
         Airport[] airs = airports.getList();
