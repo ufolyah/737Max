@@ -129,7 +129,7 @@ public class XMLInterface {
                         coachPrice
                 );
                 ans.add(thisFlight);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException ignored) {
 
             }
         }
@@ -138,7 +138,15 @@ public class XMLInterface {
     }
 
     public static String buildReservations(Trip[] trips) {
-        return null;
+        StringBuilder s = new StringBuilder();
+        s.append("<Flights>");
+        for (Trip t: trips) {
+            for (int i=0; i<t.getNumFlights(); i++) {
+                s.append("<Flight number=\"").append(t.getFlights()[i].getFlightNo()).append("\" seating=\"").append(t.getSeatClass()[i]).append("\" />");
+            }
+        }
+        s.append("</Flights>");
+        return s.toString();
     }
 
     static private Document buildDomDoc (String xmlString) {

@@ -10,9 +10,9 @@ public class Test4 {
         ServerAPIAdapter.getInstance().getAirports();
 
         SearchConfig cfg = new SearchConfig()
-                .setDepartureAirport(Airports.getInstance().selectByCode("SFO"))
-                .setArrivalAirport(Airports.getInstance().selectByCode("BOS"))
-                .setDepartureDate(LocalDate.of(2020, 5, 20));
+                .setDepartureAirport(Airports.getInstance().selectByCode("BOS"))
+                .setArrivalAirport(Airports.getInstance().selectByCode("SFO"))
+                .setArrivalDate(LocalDate.of(2020, 5, 23));
 
         Trips ret = SearchService.searchTrips(cfg);
         for (Trip t: ret.getTrips()) {

@@ -33,7 +33,7 @@ public class Test3 {
         System.out.println("-------------------");
 
         fList = service.getArrivalFlightsByTimeWindow(
-                Airports.getInstance().selectByCode("IAD"),
+                Airports.getInstance().selectByCode("SFO"),
                 ZonedDateTime.parse("2020-05-21T23:34-04:00[America/New_York]"),
                 ZonedDateTime.parse("2020-05-23T03:34-04:00[America/New_York]")
         );
