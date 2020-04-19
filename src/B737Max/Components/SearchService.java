@@ -3,11 +3,9 @@ package B737Max.Components;
 import javafx.util.Pair;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.time.ZonedDateTime;
 import java.util.*;
 
-//TODO: test
 public class SearchService {
 
     private static class AirportFlightsMap extends HashMap<Airport, ArrayList<Flight>> {

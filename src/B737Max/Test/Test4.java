@@ -6,15 +6,14 @@ import java.time.LocalDate;
 
 public class Test4 {
     public static void main(String[] args) throws Exception {
-        ServerAPIAdapter.getInstance().getAirplanes();
-        ServerAPIAdapter.getInstance().getAirports();
+        ServiceBase.load();
 
         SearchConfig cfg = new SearchConfig()
-                .setDepartureAirport(Airports.getInstance().selectByCode("BOS"))
-                .setArrivalAirport(Airports.getInstance().selectByCode("SFO"))
+                .setDepartureAirport(Airports.getInstance().selectByCode("SFO"))
+                .setArrivalAirport(Airports.getInstance().selectByCode("IAD"))
                 .setArrivalDate(LocalDate.of(2020, 5, 23));
 
-        Trips ret = SearchService.searchTrips(cfg);
+        Trips ret = ServiceBase.searchFlights(cfg);
         for (Trip t: ret.getTrips()) {
             System.out.println(t);
         }
