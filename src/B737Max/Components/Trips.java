@@ -1,5 +1,6 @@
 package B737Max.Components;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -16,13 +17,13 @@ public class Trips {
 
     public Trips() {
         filters = new HashMap<>();
-        comparator = null;
+        comparator = Comparator.comparing(Trip::getTravelTime);
         trips = new ArrayList<>();
     }
 
     public Trips(Trip[] trips) {
         filters = new HashMap<>();
-        comparator = null;
+        comparator = Comparator.comparing(Trip::getTravelTime);
         this.trips = new ArrayList<>(Arrays.asList(trips));
     }
 
@@ -69,5 +70,9 @@ public class Trips {
             result.sort(comparator);
         }
         return result.toArray(new Trip[0]);
+    }
+
+    public int size() {
+        return trips.size();
     }
 }

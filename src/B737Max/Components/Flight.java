@@ -22,10 +22,10 @@ public class Flight {
                 "departureTime=" + departureTime +
                 ", arrivalTime=" + arrivalTime +
                 ", travelTime=" + travelTime +
-                ", departureAirport=" + departureAirport +
-                ", arrivalAirport=" + arrivalAirport +
+                ", departureAirport=" + departureAirport.getCode() +
+                ", arrivalAirport=" + arrivalAirport.getCode() +
                 ", flightNo='" + flightNo + '\'' +
-                ", airplane=" + airplane +
+                ", airplane=" + airplane.getModel() +
                 ", numFirstRemained=" + numFirstRemained +
                 ", numCoachRemained=" + numCoachRemained +
                 ", firstPrice=" + firstPrice +

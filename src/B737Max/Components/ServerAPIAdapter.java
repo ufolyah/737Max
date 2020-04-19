@@ -74,11 +74,17 @@ public class ServerAPIAdapter {
 
     private Flight[] getFlightsByTimeWindow(Airport airport, ZonedDateTime begin, ZonedDateTime end, FlightSearchMode mode)
             throws IOException {
+
+        if (begin.isAfter(end)) {
+            return new Flight[0];
+        }
+
         ZonedDateTime beginGMT = begin.withZoneSameInstant(ZoneId.of("GMT"));
         LocalDate beginDate = beginGMT.toLocalDate();
 
         ZonedDateTime endGMT = end.withZoneSameInstant(ZoneId.of("GMT"));
         LocalDate endDate = endGMT.toLocalDate().plusDays(1);
+
 
         ArrayList<Flight> rawResult = new ArrayList<>();
         for (LocalDate d = beginDate; !d.equals(endDate); d=d.plusDays(1)) {

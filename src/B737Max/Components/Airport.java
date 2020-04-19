@@ -75,4 +75,10 @@ public class Airport {
     public double getLongitude() {
         return longitude;
     }
+
+    @Override
+    public int hashCode() {
+        return code.hashCode();
+    }
+
 }

@@ -54,11 +54,12 @@ public class Trip {
         for (int i=1; i<flights.length; i++) {
             assert flights[i] != null;
             this.layovers.add(getLayover(flights[i-1], flights[i]));
+            this.seatClass.add(flights[0].checkSeatClass(preferredSeatClass));
         }
 
     }
 
-    public  boolean addFlight(Flight f) {
+    public boolean addFlight(Flight f) {
         assert f!=null;
         Layover l;
         try {
@@ -89,7 +90,7 @@ public class Trip {
 
     public BigDecimal getPrice() {
         BigDecimal price = BigDecimal.ZERO;
-        for (int i = 0; i<flights.size(); i++) {
+        for (int i = 0; i < flights.size(); i++) {
             price = price.add(flights.get(i).getPrice(seatClass.get(i)));
         }
         return price;
@@ -111,4 +112,23 @@ public class Trip {
         return numFlights;
     }
 
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        s.append("Trip{\n");
+        for (int i =0; i< flights.size(); i++) {
+            s.append(flights.get(i).toString());
+            s.append("SeatClass=").append(seatClass.get(i).toString());
+            s.append("\n");
+            if (i<layovers.size()) {
+                s.append(layovers.get(i).toString());
+                s.append("\n");
+            }
+        }
+        s.append("TravelTime=").append(getTravelTime()).append(", ");
+        s.append("Price=").append(getPrice()).append(",");
+        s.append("Departure=").append(getDepartureTime()).append(", ");
+        s.append("Arrival=").append(getArrivalTime()).append(", ");
+        s.append("}");
+        return s.toString();
+    }
 }

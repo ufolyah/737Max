@@ -50,4 +50,10 @@ public class Airplane {
     public int getCoachSeats() {
         return coachSeats;
     }
+
+    @Override
+    public int hashCode() {
+        return model.hashCode();
+    }
+
 }
