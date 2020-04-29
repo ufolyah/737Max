@@ -1,3 +1,17 @@
+# For anyone that implements GUI and Test: 
+
+### About Trips Class
+
+The code of class "Trips" may be hard to understand so I write comments here.
+
+Trips can handle multiple filters and one sort method. And the filter and sorting are implemented with functors.
+
+One filter is defined by one name and a function (Trip) -> bool, and only the trips returned true from the function will be selected. When multiple filters are applied, each filter can be delete independently by its name.
+
+One sort method is defined by a standard Comparator<Trip>. For easier use, you can sort the trips by key with something like Comparator.comparing(Trip::getTravelTime)
+
+The Trips is lazy evaluated, which means the list will get filtering and sorting only when you call getTrips().
+
 # 737Max Timeline
 
 ### 03/06/2020 D. Xu
