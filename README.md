@@ -12,6 +12,8 @@ One sort method is defined by a standard Comparator<Trip>. For easier use, you c
 
 The Trips is lazy evaluated, which means the list will get filtering and sorting only when you call getTrips().
 
+And if you call getTrips() multiple times without change the filters and sorting, the method will do the filter and sort only in the first call and save the result for latter calls.  
+
 # 737Max Timeline
 
 ### 03/06/2020 D. Xu
