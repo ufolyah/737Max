@@ -9,6 +9,9 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ *
+ */
 public class ServerAPIAdapter {
     private final String teamName="737Max";
     private final String urlBase="http://cs509.cs.wpi.edu:8181/CS509.server/ReservationSystem";
@@ -28,6 +31,7 @@ public class ServerAPIAdapter {
 
     /**
      *
+     * @throws IOException
      */
     public void getAirports() throws IOException {
         String xml = httpGet(urlBase+QueryFactory.getAirports(teamName));
@@ -47,26 +51,44 @@ public class ServerAPIAdapter {
     }
 
     /**
+     * @param airport
+     * @param dateInGMT
      * @return
      * @throws IOException
      */
-    public Trips searchFlights() throws IOException {
-        return null;
-    }
-
     public Flight[] getDepartureFlights(Airport airport, LocalDate dateInGMT) throws IOException {
         return getFlights(airport, dateInGMT, FlightSearchMode.DEPARTURE);
     }
 
+    /**
+     * @param airport
+     * @param dateInGMT
+     * @return
+     * @throws IOException
+     */
     public Flight[] getArrivalFlights(Airport airport, LocalDate dateInGMT) throws IOException{
         return getFlights(airport, dateInGMT, FlightSearchMode.ARRIVAL);
     }
 
+    /**
+     * @param airport
+     * @param begin
+     * @param end
+     * @return
+     * @throws IOException
+     */
     public Flight[] getDepartureFlightsByTimeWindow(Airport airport, ZonedDateTime begin, ZonedDateTime end)
         throws IOException {
         return getFlightsByTimeWindow(airport, begin, end, FlightSearchMode.DEPARTURE);
     }
 
+    /**
+     * @param airport
+     * @param begin
+     * @param end
+     * @return
+     * @throws IOException
+     */
     public Flight[] getArrivalFlightsByTimeWindow(Airport airport, ZonedDateTime begin, ZonedDateTime end)
         throws IOException {
         return getFlightsByTimeWindow(airport, begin, end, FlightSearchMode.ARRIVAL);
@@ -156,6 +178,11 @@ public class ServerAPIAdapter {
         httpPost(urlBase, q);
     }
 
+    /**
+     * @param query
+     * @return
+     * @throws IOException
+     */
     public String httpGet(String query) throws IOException {
         /*
          * Create an HTTP connection to the server for a GET
@@ -188,6 +215,12 @@ public class ServerAPIAdapter {
         return result.toString();
     }
 
+    /**
+     * @param query
+     * @param body
+     * @return
+     * @throws IOException
+     */
     public String httpPost(String query, String body) throws IOException {
         URL url = new URL(query);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -203,8 +236,8 @@ public class ServerAPIAdapter {
         writer.close();
 
         int responseCode = connection.getResponseCode();
-        System.out.println("\nSending 'POST'");
-        System.out.println(("\nResponse Code : " + responseCode));
+        System.out.println("Sending 'POST':" + query + "\n" + body);
+        System.out.println("Response Code : " + responseCode+"\n");
 
         if (responseCode/100!=2){
             throw new IOException(String.valueOf(responseCode));

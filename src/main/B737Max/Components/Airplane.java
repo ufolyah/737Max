@@ -1,11 +1,20 @@
 package B737Max.Components;
 
+/**
+ *
+ */
 public class Airplane {
     private String manufacturer;
     private String model;
     private int firstSeats;
     private int coachSeats;
 
+    /**
+     * @param manufacturer
+     * @param model
+     * @param firstSeats
+     * @param coachSeats
+     */
     public Airplane(String manufacturer, String model, int firstSeats, int coachSeats) {
         this.manufacturer = manufacturer;
         this.model = model;
@@ -20,6 +29,9 @@ public class Airplane {
         return manufacturer;
     }
 
+    /**
+     * @return
+     */
     @Override
     public String toString() {
         return "Airplane{" +
@@ -49,11 +61,6 @@ public class Airplane {
      */
     public int getCoachSeats() {
         return coachSeats;
-    }
-
-    @Override
-    public int hashCode() {
-        return model.hashCode();
     }
 
 }

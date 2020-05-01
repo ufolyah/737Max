@@ -16,6 +16,9 @@ public class Flight {
     private int numFirstRemained, numCoachRemained;
     private BigDecimal firstPrice, coachPrice;
 
+    /**
+     * @return
+     */
     @Override
     public String toString() {
         return "Flight{" +

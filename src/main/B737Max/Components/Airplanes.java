@@ -2,6 +2,9 @@ package B737Max.Components;
 
 import java.util.HashMap;
 
+/**
+ *
+ */
 public class Airplanes {
     private static Airplanes instance=null;
     private HashMap<String, Airplane> modelMap;
@@ -34,7 +37,7 @@ public class Airplanes {
      * @return
      */
     public Airplane[] getList() {
-        return modelMap.values().toArray(new Airplane[0]).clone();
+        return modelMap.values().toArray(new Airplane[0]);
     }
 
     /**

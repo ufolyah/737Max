@@ -3,6 +3,9 @@ package B737Max.Components;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ *
+ */
 public class QueryFactory {
     /**
      * Return a query string that can be passed to HTTP URL to request list of airports
@@ -14,10 +17,21 @@ public class QueryFactory {
         return "?team=" + teamName + "&action=list&list_type=airports";
     }
 
+    /**
+     * @param teamName
+     * @return
+     */
     public static String getAirplanes(String teamName) {
         return "?team="+ teamName + "&action=list&list_type=airplanes";
     }
 
+    /**
+     * @param teamName
+     * @param airport
+     * @param day
+     * @param type
+     * @return
+     */
     private static String getFlights(String teamName, Airport airport, LocalDate day, String type) {
         String airportCode = airport.getCode();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd");

@@ -2,6 +2,9 @@ package B737Max.Components;
 
 import java.util.TreeMap;
 
+/**
+ *
+ */
 public class Airports {
     private static Airports instance=null;
     private TreeMap<String, Airport> codeMap;

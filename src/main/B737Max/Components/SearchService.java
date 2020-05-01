@@ -3,6 +3,7 @@ package B737Max.Components;
 import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.util.*;
+import java.util.function.Function;
 
 class Pair<K, V> {
     private K k;
@@ -22,27 +23,31 @@ class Pair<K, V> {
     }
 }
 
+/**
+ *
+ */
 public class SearchService {
+
+    private SearchService(){}
 
     static class AirportFlightsMap extends HashMap<Airport, ArrayList<Flight>> {
 
-        public interface KeyExtractor {
-            Airport getKey(Flight f);
+        interface KeyExtractor extends Function<Flight, Airport> {
         }
 
         private AirportFlightsMap() {
             super();
         }
 
-        public static AirportFlightsMap build(Flight[] flights, KeyExtractor ke) {
+        static AirportFlightsMap build(Flight[] flights, KeyExtractor keyExtractor) {
             AirportFlightsMap n = new AirportFlightsMap();
             for (Flight f : flights) {
-                n.put(ke.getKey(f), f);
+                n.put(keyExtractor.apply(f), f);
             }
             return n;
         }
 
-        public void put(Airport s, Flight f) {
+        void put(Airport s, Flight f) {
             if (!containsKey(s)) {
                 put(s, new ArrayList<>());
             }
@@ -52,15 +57,15 @@ public class SearchService {
     }
 
     static class SearchContext {
-        public Airport departureAirport, arrivalAirport;
-        public SeatClass preferredSeatClass;
-        public ZonedDateTime departureTimeStart, departureTimeEnd, arrivalTimeStart, arrivalTimeEnd;
-        public AirportFlightsMap beginningFlights = null;
-        public AirportFlightsMap endingFlights = null;
-        public Trips finalResult;
-        public int numTripLimit=50;
+        Airport departureAirport, arrivalAirport;
+        SeatClass preferredSeatClass;
+        ZonedDateTime departureTimeStart, departureTimeEnd, arrivalTimeStart, arrivalTimeEnd;
+        AirportFlightsMap beginningFlights = null;
+        AirportFlightsMap endingFlights = null;
+        Trips finalResult;
+        int numTripLimit=100;
 
-        public SearchContext(SearchConfig config) throws IllegalArgumentException {
+        SearchContext(SearchConfig config) throws IllegalArgumentException {
             config.check();
             this.departureAirport = config.departureAirport;
             this.arrivalAirport = config.arrivalAirport;
@@ -204,6 +209,12 @@ public class SearchService {
 
     }
 
+    /**
+     * @param config
+     * @return
+     * @throws IllegalArgumentException
+     * @throws IOException
+     */
     public static Trips searchTrips(SearchConfig config) throws IllegalArgumentException, IOException {
         SearchContext context = new SearchContext(config);
         searchTripsWithZeroLayover(context);

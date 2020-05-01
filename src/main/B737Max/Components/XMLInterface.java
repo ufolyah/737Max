@@ -18,6 +18,9 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+/**
+ *
+ */
 public class XMLInterface {
     /**
      * @param xml
@@ -42,6 +45,10 @@ public class XMLInterface {
         return ans;
     }
 
+    /**
+     * @param xml
+     * @return
+     */
     public static Airplane[] parseAirplanes(String xml) {
         Document doc = buildDomDoc(xml);
         if (doc==null) {
@@ -62,6 +69,10 @@ public class XMLInterface {
         return ans;
     }
 
+    /**
+     * @param xml
+     * @return
+     */
     public static Flight[] parseFlights(String xml) {
         Document doc = buildDomDoc(xml);
         if (doc == null) {
@@ -137,6 +148,10 @@ public class XMLInterface {
         return ans.toArray(new Flight[0]);
     }
 
+    /**
+     * @param trips
+     * @return
+     */
     public static String buildReservations(Trip[] trips) {
         StringBuilder s = new StringBuilder();
         s.append("<Flights>");

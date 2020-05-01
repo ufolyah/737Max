@@ -15,38 +15,68 @@ public class SearchConfig {
     public Airport departureAirport=null, arrivalAirport=null;
     public SeatClass preferredSeatClass = SeatClass.COACH;
 
+    /**
+     * @param departureDate
+     * @return
+     */
     public SearchConfig setDepartureDate(LocalDate departureDate) {
         this.departureDate = departureDate;
         return this;
     }
 
+    /**
+     * @param arrivalDate
+     * @return
+     */
     public SearchConfig setArrivalDate(LocalDate arrivalDate) {
         this.arrivalDate = arrivalDate;
         return this;
     }
 
+    /**
+     * @param departureWindowStart
+     * @param departureWindowEnd
+     * @return
+     */
     public SearchConfig setDepartureWindow(LocalTime departureWindowStart, LocalTime departureWindowEnd) {
         this.departureWindowStart = departureWindowStart;
         this.departureWindowEnd = departureWindowEnd;
         return this;
     }
 
+    /**
+     * @param arrivalWindowStart
+     * @param arrivalWindowEnd
+     * @return
+     */
     public SearchConfig setArrivalWindow(LocalTime arrivalWindowStart, LocalTime arrivalWindowEnd) {
         this.arrivalWindowStart = arrivalWindowStart;
         this.arrivalWindowEnd = arrivalWindowEnd;
         return this;
     }
 
+    /**
+     * @param departureAirport
+     * @return
+     */
     public SearchConfig setDepartureAirport(Airport departureAirport) {
         this.departureAirport = departureAirport;
         return this;
     }
 
+    /**
+     * @param arrivalAirport
+     * @return
+     */
     public SearchConfig setArrivalAirport(Airport arrivalAirport) {
         this.arrivalAirport = arrivalAirport;
         return this;
     }
 
+    /**
+     * @param preferredSeatClass
+     * @return
+     */
     public SearchConfig setPreferredSeatClass(SeatClass preferredSeatClass) {
         if (preferredSeatClass!=null) {
             this.preferredSeatClass = preferredSeatClass;
@@ -55,8 +85,8 @@ public class SearchConfig {
     }
 
     /**Check if the config is valid for a flight search and add some default values.
-     * If departure/arrival date is specified, set the default time window if it is null.
-     * If the arrival/departure date is null, the corresponding time window is not used, and can be any value after the check.
+     * If departure/arrival date is specified, set the default time window if it is null. The default time window is 00:00:00 - 23:59:59.
+     * If the arrival/departure date is null, the corresponding time window is not used, and should not be used for other components because can be any value after the check.
      * criteria for checking:
      *  1. airports should be filled.
      *  2. departure or arrival date should be filled.

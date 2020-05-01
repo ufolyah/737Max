@@ -4,6 +4,9 @@ import com.skedgo.converter.TimezoneMapper;
 
 import java.time.ZoneId;
 
+/**
+ *
+ */
 public class Airport {
     private String code;
     private String name;
@@ -74,11 +77,6 @@ public class Airport {
      */
     public double getLongitude() {
         return longitude;
-    }
-
-    @Override
-    public int hashCode() {
-        return code.hashCode();
     }
 
 }

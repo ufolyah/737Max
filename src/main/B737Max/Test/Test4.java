@@ -31,6 +31,7 @@ public class Test4 {
         Trip[] imba2 = ServiceBase.searchFlights(cfg).getTrips();
         t = Arrays.copyOfRange(imba2, 0, 1);
         System.out.println(t[0]);
+
     }
 
 }
