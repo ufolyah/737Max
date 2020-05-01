@@ -53,7 +53,7 @@ public class Trip {
         for (int i=1; i<flights.length; i++) {
             assert flights[i] != null;
             this.layovers.add(Layover.ofFlights(flights[i-1], flights[i]));
-            this.seatClass.add(flights[0].checkSeatClass(preferredSeatClass));
+            this.seatClass.add(flights[i].checkSeatClass(preferredSeatClass));
         }
 
     }
