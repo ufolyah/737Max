@@ -8,7 +8,7 @@ import java.util.*;
 
 public class SearchService {
 
-    private static class AirportFlightsMap extends HashMap<Airport, ArrayList<Flight>> {
+    static class AirportFlightsMap extends HashMap<Airport, ArrayList<Flight>> {
 
         public interface KeyExtractor {
             Airport getKey(Flight f);
@@ -35,7 +35,7 @@ public class SearchService {
 
     }
 
-    private static class SearchContext {
+    static class SearchContext {
         public Airport departureAirport, arrivalAirport;
         public SeatClass preferredSeatClass;
         public ZonedDateTime departureTimeStart, departureTimeEnd, arrivalTimeStart, arrivalTimeEnd;
@@ -70,20 +70,9 @@ public class SearchService {
             finalResult = new Trips();
         }
 
-        public SearchContext(SearchConfig config, ZonedDateTime departureTimeStart, ZonedDateTime departureTimeEnd, ZonedDateTime arrivalTimeStart, ZonedDateTime arrivalTimeEnd) {
-            this.departureAirport = config.departureAirport;
-            this.arrivalAirport = config.arrivalAirport;
-            this.preferredSeatClass = config.preferredSeatClass;
-            this.departureTimeStart = departureTimeStart;
-            this.departureTimeEnd = departureTimeEnd;
-            this.arrivalTimeStart = arrivalTimeStart;
-            this.arrivalTimeEnd = arrivalTimeEnd;
-            assert !(this.arrivalAirport==null || this.departureAirport==null || this.preferredSeatClass==null);
-            finalResult = new Trips();
-        }
     }
 
-    public static void searchTripsWithZeroLayover(SearchContext context) throws IOException {
+    static void searchTripsWithZeroLayover(SearchContext context) throws IOException {
         if (context.beginningFlights==null) {
             Flight[] tempFlights = ServerAPIAdapter.getInstance().getDepartureFlightsByTimeWindow(context.departureAirport, context.departureTimeStart, context.departureTimeEnd);
             context.beginningFlights = AirportFlightsMap.build(tempFlights, Flight::getArrivalAirport);
@@ -112,7 +101,7 @@ public class SearchService {
         }
     }
 
-    public static void searchTripsWithOneLayover(SearchContext context) throws IOException {
+    static void searchTripsWithOneLayover(SearchContext context) throws IOException {
         populateFlightMaps(context);
         for (Map.Entry<Airport, ArrayList<Flight>> e:context.beginningFlights.entrySet()) {
             ArrayList<Flight> secondLeg = context.endingFlights.get(e.getKey());
@@ -133,7 +122,7 @@ public class SearchService {
         }
     }
 
-    public static void searchTripsWithTwoLayover(SearchContext context) throws IOException {
+    static void searchTripsWithTwoLayover(SearchContext context) throws IOException {
         populateFlightMaps(context);
         ArrayList<Pair<Airport, ZonedDateTime[]>> firstLayoverDepartureRange = new ArrayList<>();
 
@@ -185,7 +174,7 @@ public class SearchService {
         }
     }
 
-    public static double calcGreatCircleDistance(Airport a1, Airport a2) {
+    static double calcGreatCircleDistance(Airport a1, Airport a2) {
         double lat1 = Math.toRadians(a1.getLatitude());
         double lat2 = Math.toRadians(a2.getLatitude());
         double lng1 = Math.toRadians(a1.getLongitude());
