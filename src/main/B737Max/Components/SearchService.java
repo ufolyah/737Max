@@ -1,10 +1,26 @@
 package B737Max.Components;
 
-import javafx.util.Pair;
-
 import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.util.*;
+
+class Pair<K, V> {
+    private K k;
+    private V v;
+
+    public Pair(K k, V v) {
+        this.k = k;
+        this.v = v;
+    }
+
+    public K getKey() {
+        return k;
+    }
+
+    public V getValue() {
+        return v;
+    }
+}
 
 public class SearchService {
 
