@@ -20,7 +20,11 @@ import java.util.ArrayList;
 
 /**
  *
+ * @author xudufy
+ * @version 2.0 2020-05-03
+ * @since 2020-04-01
  */
+
 public class XMLInterface {
     /**
      * @param xml

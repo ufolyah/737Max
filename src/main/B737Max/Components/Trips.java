@@ -8,7 +8,10 @@ import java.util.HashMap;
 import java.util.function.Function;
 
 /**
- *
+ * The class aggregates a number of trip. The aggregate is implemented as an HashMap.
+ * @author xudufy
+ * @version 2.0 2020-05-04
+ * @since 2020-03-01
  */
 public class Trips {
 

@@ -5,7 +5,13 @@ import java.time.Duration;
 import java.time.ZonedDateTime;
 
 /**
+ * This class holds values pertaining to a single Flight. Class member attributes
+ * are from Class Airport, Airplane and the same as defined by the CS509 server API
  *
+ *
+ *  @author xudufy
+ *  @version 2.0 2020-05-03
+ *  @since 2020-03-01
  */
 public class Flight {
     private ZonedDateTime departureTime, arrivalTime;
@@ -17,6 +23,7 @@ public class Flight {
     private BigDecimal firstPrice, coachPrice;
 
     /**
+     * get a string of basic flight information
      * @return
      */
     @Override
@@ -155,6 +162,7 @@ public class Flight {
     }
 
     /**
+     * Is there available seats
      * @param seat
      * @return
      */
@@ -171,6 +179,7 @@ public class Flight {
     }
 
     /**
+     * Return the single price of available Seat type
      * @param seat
      * @return
      */

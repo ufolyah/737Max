@@ -7,6 +7,10 @@ import java.time.LocalTime;
  * Contains all of the parameters needed for one flight search for one-way.
  * if the arrival/departure date is null, the corresponding time window should not used, and can be any value.
  * builder design pattern used.
+ *
+ * @author xudufy
+ * @version 2.0 2020-05-03
+ * @since 2020-03-01
  */
 public class SearchConfig {
 

@@ -4,6 +4,9 @@ import java.io.IOException;
 
 /**
  *
+ * @author xudufy
+ * @version 2.0 2020-05-03
+ * @since 2020-03-01
  */
 public class ServiceBase {
     /**

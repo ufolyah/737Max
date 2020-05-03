@@ -3,7 +3,12 @@ package B737Max.Components;
 import java.util.TreeMap;
 
 /**
+ * This class aggregates a number of Airport. The aggregate is implemented as an TreeMap.
  *
+ *
+ * @author xudufy
+ * @version 2.0 2020-05-03
+ * @since 2020-03-01
  */
 public class Airports {
     private static Airports instance=null;
@@ -16,6 +21,7 @@ public class Airports {
     }
 
     /**
+     *
      * @return
      */
     public static Airports getInstance() {
@@ -33,7 +39,7 @@ public class Airports {
     }
 
     /**
-     *
+     * set a list of airport including name and code
      * @param list
      */
     public void setList(Airport[] list) {
@@ -46,6 +52,7 @@ public class Airports {
     }
 
     /**
+     * using airport code to get the name
      * @param code
      * @return
      */
@@ -54,6 +61,7 @@ public class Airports {
     }
 
     /**
+     * using airport name to get the code
      * @param name
      * @return
      */
