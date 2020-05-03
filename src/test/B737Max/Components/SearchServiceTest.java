@@ -167,4 +167,32 @@ class SearchServiceTest {
         }
     }
 
+    @Test
+    void InvalidAirportArrivalBeforeDeparture() {
+        SearchConfig cfg = new SearchConfig()
+                .setDepartureDate(LocalDate.of(2020, 5, 20))
+                .setArrivalDate(LocalDate.of(2020, 5, 19))
+                .setDepartureAirport(Airports.getInstance().selectByCode("MCO"))
+                .setArrivalAirport(Airports.getInstance().selectByCode("BOS"));
+        assertThrows(IllegalArgumentException.class, () -> SearchService.searchTrips(cfg));
+
+        SearchConfig cfg2 = new SearchConfig()
+                .setDepartureDate(LocalDate.of(2020, 5, 20))
+                .setArrivalDate(LocalDate.of(2020, 5, 20))
+                .setDepartureWindow(LocalTime.of(12,0), LocalTime.of(12,30))
+                .setArrivalWindow(LocalTime.of(11,30), LocalTime.of(11,59))
+                .setDepartureAirport(Airports.getInstance().selectByCode("MCO"))
+                .setArrivalAirport(Airports.getInstance().selectByCode("BOS"));
+        assertThrows(IllegalArgumentException.class, () -> SearchService.searchTrips(cfg2));
+
+        SearchConfig cfg3 = new SearchConfig()
+                .setDepartureDate(LocalDate.of(2020, 5, 20))
+                .setArrivalDate(LocalDate.of(2020, 5, 20))
+                .setDepartureWindow(LocalTime.of(12,0), LocalTime.of(12,30))
+                .setArrivalWindow(LocalTime.of(11,30), LocalTime.of(12,0))
+                .setDepartureAirport(Airports.getInstance().selectByCode("MCO"))
+                .setArrivalAirport(Airports.getInstance().selectByCode("BOS"));
+        assertDoesNotThrow(() -> SearchService.searchTrips(cfg3));
+    }
+
 }
