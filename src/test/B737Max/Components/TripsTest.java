@@ -33,13 +33,32 @@ class TripsTest {
         for (int i=0; i<50; i++) {
             ZonedDateTime t1 = ZonedDateTime.of(2020, 5, randint(20,30), randint(0,23), randint(0,59), randint(0,59), 0, ZoneId.systemDefault());
             ZonedDateTime t2 = t1.plusSeconds(randint(1, 86400));
-            instance.addTrip(new Trip(
-                    new Flight (
-                            t1, t2, Duration.between(t1, t2), Airports.getInstance().selectByCode("A"), Airports.getInstance().selectByCode("B"),
-                            "12345", new Airplane("A", "A", 100, 100), 50, 50,
-                            BigDecimal.valueOf(Math.random()*100), BigDecimal.valueOf(Math.random() * 100)
-                    ), SeatClass.COACH
-            ));
+            ZonedDateTime t3 = t2.plusSeconds(randint(30*60, 4 * 60 *60));
+            ZonedDateTime t4 = t3.plusSeconds(randint(1,86400));
+            if (Math.random()<0.5) {
+                instance.addTrip(new Trip(
+                        new Flight (
+                                t1, t2, Duration.between(t1, t2), Airports.getInstance().selectByCode("A"), Airports.getInstance().selectByCode("B"),
+                                "12345", new Airplane("A", "A", 100, 100), 50, 50,
+                                BigDecimal.valueOf(Math.random()*100), BigDecimal.valueOf(Math.random() * 100)
+                        ), SeatClass.COACH
+                ));
+            } else {
+                instance.addTrip(new Trip( new Flight[]{
+                        new Flight(
+                                t1, t2, Duration.between(t1, t2), Airports.getInstance().selectByCode("A"), Airports.getInstance().selectByCode("B"),
+                                "12345", new Airplane("A", "A", 100, 100), 50, 50,
+                                BigDecimal.valueOf(Math.random() * 100), BigDecimal.valueOf(Math.random() * 100)
+                        ),
+                        new Flight(
+                                t3, t4, Duration.between(t3, t4), Airports.getInstance().selectByCode("B"), Airports.getInstance().selectByCode("A"),
+                                "12345", new Airplane("A", "A", 100, 100), 50, 50,
+                                BigDecimal.valueOf(Math.random() * 100), BigDecimal.valueOf(Math.random() * 100)
+                        ),
+                        },
+                        SeatClass.COACH
+                ));
+            }
         }
 
     }
@@ -84,15 +103,15 @@ class TripsTest {
     void filterTestGroup1() {
         Trip[] reference = instance.getTrips();
 
-        instance.filterBy("price", (Trip t)-> t.getPrice().compareTo(BigDecimal.valueOf(50)) < 0);
+        instance.filterBy("layover", (Trip t)-> t.getNumFlights()<=1);
         Trip[] result = instance.getTrips();
         HashSet<Trip> ret = new HashSet<>(Arrays.asList(result));
 
         for (Trip t: reference) {
             if (ret.contains(t)) {
-                assertTrue(t.getPrice().doubleValue()<50);
+                assertTrue(t.getNumFlights()<=1);
             } else {
-                assertFalse(t.getPrice().doubleValue()<50);
+                assertFalse(t.getNumFlights()<=1);
             }
         }
 
@@ -102,10 +121,10 @@ class TripsTest {
 
         for (Trip t: reference) {
             if (ret2.contains(t)) {
-                assertTrue(t.getPrice().doubleValue()<50);
+                assertTrue(t.getNumFlights()<=1);
                 assertTrue(t.getTravelTime().compareTo(Duration.ofHours(12)) < 0);
             } else {
-                assertFalse(t.getPrice().doubleValue()<50 && t.getTravelTime().compareTo(Duration.ofHours(12)) < 0);
+                assertFalse(t.getNumFlights()<=1 && t.getTravelTime().compareTo(Duration.ofHours(12)) < 0);
             }
         }
 
