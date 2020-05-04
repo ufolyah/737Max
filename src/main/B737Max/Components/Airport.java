@@ -102,5 +102,25 @@ public class Airport {
     public double getLongitude() {
         return longitude;
     }
-
+    
+    /**
+     *
+     * @param obj
+     * @return
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Airport other = (Airport) obj;
+        return code.equals(other.code) && name.equals(other.name) && longitude == other.longitude
+                && latitude == other.latitude;
+    }
 }

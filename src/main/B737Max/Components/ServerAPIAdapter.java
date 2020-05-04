@@ -218,6 +218,8 @@ public class ServerAPIAdapter {
          * line by line to build the full return string
          */
         int responseCode = connection.getResponseCode();
+        System.out.println("Sending 'GET':" + query);
+        System.out.println("Response Code : " + responseCode+"\n");
 
         if (responseCode/100!=2) {
             throw new IOException(String.valueOf(responseCode));

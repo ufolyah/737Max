@@ -76,4 +76,19 @@ public class Airplane {
         return coachSeats;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Airplane other = (Airplane) obj;
+        return manufacturer.equals(other.manufacturer) && model.equals(other.model) && firstSeats == other.firstSeats
+                && coachSeats == other.coachSeats;
+    }
 }
