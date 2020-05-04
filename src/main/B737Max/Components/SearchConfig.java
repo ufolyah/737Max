@@ -20,6 +20,7 @@ public class SearchConfig {
     public SeatClass preferredSeatClass = SeatClass.COACH;
 
     /**
+     * set the departure date
      * @param departureDate
      * @return
      */
@@ -29,6 +30,8 @@ public class SearchConfig {
     }
 
     /**
+     * set the arrival date
+     *
      * @param arrivalDate
      * @return
      */
@@ -38,6 +41,7 @@ public class SearchConfig {
     }
 
     /**
+     * set the departure time window
      * @param departureWindowStart
      * @param departureWindowEnd
      * @return
@@ -49,6 +53,8 @@ public class SearchConfig {
     }
 
     /**
+     * det the arrival time window
+     *
      * @param arrivalWindowStart
      * @param arrivalWindowEnd
      * @return
@@ -60,6 +66,8 @@ public class SearchConfig {
     }
 
     /**
+     * set the departure airport
+     *
      * @param departureAirport
      * @return
      */
@@ -69,6 +77,8 @@ public class SearchConfig {
     }
 
     /**
+     * set the arrival airport
+     *
      * @param arrivalAirport
      * @return
      */
@@ -78,6 +88,8 @@ public class SearchConfig {
     }
 
     /**
+     * set the preferred seat type
+     *
      * @param preferredSeatClass
      * @return
      */

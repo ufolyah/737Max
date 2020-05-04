@@ -94,6 +94,12 @@ public class SearchService {
 
     }
 
+    /**
+     * Search possible trips without layovers from the server satisfying the search config
+     *
+     * @param context
+     * @throws IOException
+     */
     static void searchTripsWithZeroLayover(SearchContext context) throws IOException {
         if (context.beginningFlights==null) {
             Flight[] tempFlights = ServerAPIAdapter.getInstance().getDepartureFlightsByTimeWindow(context.departureAirport, context.departureTimeStart, context.departureTimeEnd);
@@ -123,6 +129,12 @@ public class SearchService {
         }
     }
 
+    /**
+     * Search possible trips with one layovers from the server satisfying the search config
+     *
+     * @param context
+     * @throws IOException
+     */
     static void searchTripsWithOneLayover(SearchContext context) throws IOException {
         populateFlightMaps(context);
         for (Map.Entry<Airport, ArrayList<Flight>> e:context.beginningFlights.entrySet()) {
@@ -144,6 +156,11 @@ public class SearchService {
         }
     }
 
+    /**
+     * Search possible trips with 2 layovers from the server satisfying the search config
+     * @param context
+     * @throws IOException
+     */
     static void searchTripsWithTwoLayover(SearchContext context) throws IOException {
         populateFlightMaps(context);
         ArrayList<Pair<Airport, ZonedDateTime[]>> firstLayoverDepartureRange = new ArrayList<>();
@@ -196,6 +213,12 @@ public class SearchService {
         }
     }
 
+    /**
+     *
+     * @param a1 departure airport
+     * @param a2 arrival airport
+     * @return distance between two airports
+     */
     static double calcGreatCircleDistance(Airport a1, Airport a2) {
         double lat1 = Math.toRadians(a1.getLatitude());
         double lat2 = Math.toRadians(a2.getLatitude());
@@ -211,8 +234,11 @@ public class SearchService {
     }
 
     /**
+     *
+     * Search possible trips with at most 2 layovers from the server satisfying the search config
+     *
      * @param config
-     * @return
+     * @return trips
      * @throws IllegalArgumentException
      * @throws IOException
      */
