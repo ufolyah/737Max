@@ -18,8 +18,8 @@ public class ServiceBase {
     }
 
     /**
-     * @param cfg
-     * @return
+     * @param cfg  search criteria
+     * @return results that satisfy the search criteria
      * @throws IllegalArgumentException
      * @throws IOException
      */
@@ -28,6 +28,7 @@ public class ServiceBase {
     }
 
     /**
+     * lock the server database during the reservation
      * @param trips
      * @throws IOException
      */

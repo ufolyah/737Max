@@ -55,7 +55,7 @@ public class ServerAPIAdapter {
     /**
      * @param airport
      * @param dateInGMT
-     * @return
+     * @return list of fights that satisfy the demand of departure airport and departure date
      * @throws IOException
      */
     public Flight[] getDepartureFlights(Airport airport, LocalDate dateInGMT) throws IOException {
@@ -65,7 +65,7 @@ public class ServerAPIAdapter {
     /**
      * @param airport
      * @param dateInGMT
-     * @return
+     * @return list of fights that satisfy the demand of arrival airport and arrival date
      * @throws IOException
      */
     public Flight[] getArrivalFlights(Airport airport, LocalDate dateInGMT) throws IOException{
@@ -76,7 +76,7 @@ public class ServerAPIAdapter {
      * @param airport
      * @param begin
      * @param end
-     * @return
+     * @return list of fights that satisfy the demand of departure airport, date and time
      * @throws IOException
      */
     public Flight[] getDepartureFlightsByTimeWindow(Airport airport, ZonedDateTime begin, ZonedDateTime end)
@@ -88,7 +88,7 @@ public class ServerAPIAdapter {
      * @param airport
      * @param begin
      * @param end
-     * @return
+     * @return list of fights that satisfy the demand of arrival airport, date and time
      * @throws IOException
      */
     public Flight[] getArrivalFlightsByTimeWindow(Airport airport, ZonedDateTime begin, ZonedDateTime end)
@@ -96,6 +96,15 @@ public class ServerAPIAdapter {
         return getFlightsByTimeWindow(airport, begin, end, FlightSearchMode.ARRIVAL);
     }
 
+    /**
+     *
+     * @param airport
+     * @param begin
+     * @param end
+     * @param mode
+     * @return list of fights that satisfy the demand relevant features
+     * @throws IOException
+     */
     private Flight[] getFlightsByTimeWindow(Airport airport, ZonedDateTime begin, ZonedDateTime end, FlightSearchMode mode)
             throws IOException {
 
@@ -135,6 +144,14 @@ public class ServerAPIAdapter {
         return ans.toArray(new Flight[0]);
     }
 
+    /**
+     *
+     * @param airport
+     * @param dateInGMT
+     * @param mode
+     * @return xml of flights that satisfy relevant features
+     * @throws IOException
+     */
     private Flight[] getFlights(Airport airport, LocalDate dateInGMT, FlightSearchMode mode) throws IOException{
         String xml;
         switch (mode) {

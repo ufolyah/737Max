@@ -23,6 +23,8 @@ public class QueryFactory {
     }
 
     /**
+     * Return a query string that can be passed to HTTP URL to request list of airplanes
+     *
      * @param teamName
      * @return
      */
@@ -31,6 +33,9 @@ public class QueryFactory {
     }
 
     /**
+     *
+     * Return a query string to request list of flight
+     *
      * @param teamName
      * @param airport
      * @param day
@@ -66,6 +71,7 @@ public class QueryFactory {
     }
 
     /**
+     * Reset the server database
      * @param teamName
      * @return
      */
@@ -93,6 +99,12 @@ public class QueryFactory {
         return "team=" + teamName + "&action=unlockDB";
     }
 
+    /**
+     * Return the reservation of trips
+     * @param teamName
+     * @param trips
+     * @return
+     */
     public static String postReservation(String teamName, Trip[] trips) {
         String tripXml = XMLInterface.buildReservations(trips);
         return "team="+teamName+"&action=buyTickets&flightData="+tripXml;

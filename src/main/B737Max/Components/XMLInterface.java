@@ -27,8 +27,9 @@ import java.util.ArrayList;
 
 public class XMLInterface {
     /**
+     * Parse the XMl to get the string of airports
      * @param xml
-     * @return
+     * @return list of airports
      */
     public static Airport[] parseAirports(String xml) {
         Document doc = buildDomDoc(xml);
@@ -50,8 +51,9 @@ public class XMLInterface {
     }
 
     /**
+     * Get the string of airplanes
      * @param xml
-     * @return
+     * @return list of airplanes
      */
     public static Airplane[] parseAirplanes(String xml) {
         Document doc = buildDomDoc(xml);
@@ -75,7 +77,7 @@ public class XMLInterface {
 
     /**
      * @param xml
-     * @return
+     * @return list of Flights
      */
     public static Flight[] parseFlights(String xml) {
         Document doc = buildDomDoc(xml);
@@ -153,8 +155,9 @@ public class XMLInterface {
     }
 
     /**
+     * Get the flight information of reservations
      * @param trips
-     * @return
+     * @return reservation detail
      */
     public static String buildReservations(Trip[] trips) {
         StringBuilder s = new StringBuilder();
@@ -169,13 +172,14 @@ public class XMLInterface {
     }
 
     /**
+     *
+     * load the xml string into a DOM document and return the Document
+     *
      * @param xmlString
      * @return
      */
     static private Document buildDomDoc (String xmlString) {
-        /*
-         * load the xml string into a DOM document and return the Document
-         */
+
         try {
             DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();

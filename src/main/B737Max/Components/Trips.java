@@ -42,6 +42,7 @@ public class Trips {
     }
 
     /**
+     * Add a new trip into list
      * @param trip
      */
     public void addTrip(Trip trip) {
@@ -58,6 +59,7 @@ public class Trips {
     }
 
     /**
+     * identify the filter
      * @param id
      * @param flt
      */
@@ -67,6 +69,7 @@ public class Trips {
     }
 
     /**
+     * Remove the filter options
      * @param id
      */
     public void removeFilter(String id) {
@@ -75,7 +78,7 @@ public class Trips {
     }
 
     /**
-     *
+     * Reset the filter options
      */
     public void resetFilter() {
         filters.clear();
@@ -83,7 +86,7 @@ public class Trips {
     }
 
     /**
-     * @return
+     * @return latest list of trips
      */
     public Trip[] getTrips() {
         if (!modifiedSinceLastResult) {
@@ -116,7 +119,7 @@ public class Trips {
     }
 
     /**
-     * @return
+     * @return the size of trip list
      */
     public int size() {
         return trips.size();
