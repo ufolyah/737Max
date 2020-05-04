@@ -12,6 +12,13 @@ import java.time.ZonedDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class tests the ServiceAPIAdapter class which interacts with the SystemServer vis HTTP.
+ *
+ * @author Robert Dwan
+ * @version 1.0.0
+ * @since 2020-05-04
+ */
 class ServerAPIAdapterTest {
     static ServerAPIAdapter instance;
     

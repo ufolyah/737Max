@@ -11,6 +11,13 @@ import java.time.ZonedDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class tests the XMLInterface component which parses and creates XML Files.
+ *
+ * @author Robert Dwan
+ * @version 1.0.0
+ * @since 2020-05-03
+ */
 class XMLInterfaceTest {
     
     @BeforeAll
@@ -86,18 +93,19 @@ class XMLInterfaceTest {
     }
 
     @Test
-    void parseFlights() {
+    void parseFlights() throws IOException{
         System.out.println("----- Departing Flights -----");
+        ServiceBase.load();
         String xmlDeparting = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
                 "<Flights>\n" +
                 "\t<Flight Airplane=\"757\" FlightTime=\"167\" Number=\"2751\">\n" +
                 "\t\t<Departure>\n" +
                 "\t\t\t<Code>BOS</Code>\n" +
-                "\t\t\t<Time>2019 May 05 00:28 GMT</Time>\n" +
+                "\t\t\t<Time>2020 May 05 00:28 GMT</Time>\n" +
                 "\t\t</Departure>\n" +
                 "\t\t<Arrival>\n" +
                 "\t\t\t<Code>FLL</Code>\n" +
-                "\t\t\t<Time>2019 May 05 03:15 GMT</Time>\n" +
+                "\t\t\t<Time>2020 May 05 03:15 GMT</Time>\n" +
                 "\t\t</Arrival>\n" +
                 "\t\t<Seating>\n" +
                 "\t\t\t<FirstClass Price=\"$396.33\">20</FirstClass>\n" +
@@ -117,11 +125,11 @@ class XMLInterfaceTest {
                 "\t<Flight Airplane=\"767\" FlightTime=\"1001\" Number=\"1380\">\n" +
                 "\t\t<Departure>\n" +
                 "\t\t\t<Code>AUS</Code>\n" +
-                "\t\t\t<Time>2019 May 04 19:24 GMT</Time>\n" +
+                "\t\t\t<Time>2020 May 04 19:24 GMT</Time>\n" +
                 "\t\t</Departure>\n" +
                 "\t\t<Arrival>\n" +
                 "\t\t\t<Code>BOS</Code>\n" +
-                "\t\t\t<Time>2019 May 05 12:05 GMT</Time>\n" +
+                "\t\t\t<Time>2020 May 05 12:05 GMT</Time>\n" +
                 "\t\t</Arrival>\n" +
                 "\t\t<Seating>\n" +
                 "\t\t\t<FirstClass Price=\"$728.76\">65</FirstClass>\n" +
@@ -154,5 +162,42 @@ class XMLInterfaceTest {
         String expected = "<Flights><Flight number=\"2751\" seating=\"Coach\" /></Flights>";
         
         assertEquals(expected, result);
+    }
+    
+    @Test
+    void remainingSeatsCalculation() {
+        // Load Test Airplane to list of airplanes
+        String planeXMl = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
+                "<Airplanes>\n" +
+                "\t<Airplane Manufacturer=\"A\" Model=\"A\">\n" +
+                "\t\t<FirstClassSeats>24</FirstClassSeats>\n" +
+                "\t\t<CoachSeats>200</CoachSeats>\n" +
+                "\t</Airplane>\n" +
+                "</Airplanes>";
+        Airplane[] p1 = XMLInterface.parseAirplanes(planeXMl);
+        Airplanes.getInstance().setList(p1);
+        
+        // Create a test Flight
+        String flightXML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
+                "<Flights>\n" +
+                "\t<Flight Airplane=\"A\" FlightTime=\"167\" Number=\"2751\">\n" +
+                "\t\t<Departure>\n" +
+                "\t\t\t<Code>BOS</Code>\n" +
+                "\t\t\t<Time>2019 May 05 00:28 GMT</Time>\n" +
+                "\t\t</Departure>\n" +
+                "\t\t<Arrival>\n" +
+                "\t\t\t<Code>FLL</Code>\n" +
+                "\t\t\t<Time>2019 May 05 03:15 GMT</Time>\n" +
+                "\t\t</Arrival>\n" +
+                "\t\t<Seating>\n" +
+                "\t\t\t<FirstClass Price=\"$396.33\">20</FirstClass>\n" +
+                "\t\t\t<Coach Price=\"$74.60\">22</Coach>\n" +
+                "\t\t</Seating>\n" +
+                "\t</Flight>\n" +
+                "</Flights>\n";
+        Flight[] f1 = XMLInterface.parseFlights(flightXML);
+        
+        assertEquals(178, f1[0].getNumCoachRemained());
+        assertEquals(4, f1[0].getNumFirstRemained());
     }
 }
