@@ -52,5 +52,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="jxdatepicker-support-1.0" level="project" />
   </component>
 </module>
