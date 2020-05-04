@@ -35,6 +35,14 @@ class XMLInterfaceTest {
                 "</Airports>\n";
         Airport[] result = XMLInterface.parseAirports(xml);
         
+        Airport atl = new Airport("ATL", "Hartsfield-Jackson Atlanta International", 33.641045, -84.427764);
+        Airport anc = new Airport("ANC", "Ted Stevens Anchorage International Airport", 61.176033, -149.990079);
+        Airport bos = new Airport("BOS", "Logan International", 42.365855, -71.009624);
+
+        Airport[] expected = {atl, anc, bos};
+        
+        assertArrayEquals(expected, result);
+        
         for (Airport a : result) {
             System.out.println(a);
         }
