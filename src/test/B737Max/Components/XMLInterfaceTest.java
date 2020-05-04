@@ -4,6 +4,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.time.Duration;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -134,5 +138,21 @@ class XMLInterfaceTest {
 
     @Test
     void buildReservations() {
+        Trips instance = new Trips();
+        ZonedDateTime t1 = ZonedDateTime.of(2019, 5, 5, 0, 28, 0, 0, ZoneId.systemDefault());
+        ZonedDateTime t2 = ZonedDateTime.of(2019, 5, 5, 3, 15, 0, 0, ZoneId.systemDefault());
+        instance.addTrip(new Trip(
+                new Flight (
+                        t1, t2, Duration.between(t1, t2), Airports.getInstance().selectByCode("BOS"), Airports.getInstance().selectByCode("FLL"),
+                        "2751", new Airplane("Airbus", "A310", 24, 200),
+                        12, 50, BigDecimal.valueOf(Math.random()*100), BigDecimal.valueOf(Math.random() * 100)
+                ), SeatClass.COACH
+        ));
+        
+        String result = XMLInterface.buildReservations(instance.getTrips());
+        
+        String expected = "<Flights><Flight number=\"2751\" seating=\"Coach\" /></Flights>";
+        
+        assertEquals(expected, result);
     }
 }
