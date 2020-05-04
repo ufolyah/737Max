@@ -66,8 +66,16 @@ class XMLInterfaceTest {
                 "\t\t<CoachSeats>375</CoachSeats>\n" +
                 "\t</Airplane>\n" +
                 "</Airplanes>\n";
-                
         Airplane[] result = XMLInterface.parseAirplanes(xml);
+        
+        Airplane a130 = new Airplane("Airbus", "A310", 24, 200);
+        Airplane a320 = new Airplane("Airbus", "A320", 12, 124);
+        Airplane a330 = new Airplane("Airbus", "A330", 42, 375);
+        
+        Airplane[] expected = {a130, a320, a330};
+        
+        assertArrayEquals(expected, result);
+        
         for(Airplane a : result) {
             System.out.println(a);
         }
@@ -93,8 +101,8 @@ class XMLInterfaceTest {
                 "\t\t</Seating>\n" +
                 "\t</Flight>\n" +
                 "</Flights>\n";
-        
         Flight[] departing = XMLInterface.parseFlights(xmlDeparting);
+        
         for(Flight f : departing) {
             System.out.println(f);
         }

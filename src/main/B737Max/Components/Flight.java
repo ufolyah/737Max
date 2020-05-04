@@ -27,7 +27,7 @@ public class Flight {
                 ", travelTime=" + travelTime +
                 ", departureAirport=" + departureAirport.getCode() +
                 ", arrivalAirport=" + arrivalAirport.getCode() +
-                ", flightNo='" + flightNo + '\'' +
+                ", \nflightNo='" + flightNo + '\'' +
                 ", airplane=" + airplane.getModel() +
                 ", numFirstRemained=" + numFirstRemained +
                 ", numCoachRemained=" + numCoachRemained +
