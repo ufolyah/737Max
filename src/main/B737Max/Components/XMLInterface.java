@@ -20,7 +20,11 @@ import java.util.ArrayList;
 
 /**
  *
+ * @author xudufy
+ * @version 2.0 2020-05-03
+ * @since 2020-04-01
  */
+
 public class XMLInterface {
     /**
      * @param xml
@@ -164,6 +168,10 @@ public class XMLInterface {
         return s.toString();
     }
 
+    /**
+     * @param xmlString
+     * @return
+     */
     static private Document buildDomDoc (String xmlString) {
         /*
          * load the xml string into a DOM document and return the Document
@@ -182,11 +190,20 @@ public class XMLInterface {
         }
     }
 
+    /**
+     * @param ele
+     * @param tag
+     * @return
+     */
     private static String getOnlyChildTextByTagName(Element ele, String tag) {
         Element target = (Element) ele.getElementsByTagName(tag).item(0);
         return getElementText(target);
     }
 
+    /**
+     * @param ele
+     * @return
+     */
     private static String getElementText(Element ele) {
         if (ele==null) {
             System.out.println("null Element\n");

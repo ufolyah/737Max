@@ -7,7 +7,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
+ * This class holds values pertaining to a single trip. Class member attributes
+ * are composed of several flights, airports and layovers.
  *
+ * @author xudufy
+ * @version 2.0 2020-05-03
+ * @since 2020-03-01
  */
 public class Trip {
     private int numFlights;
@@ -59,6 +64,8 @@ public class Trip {
     }
 
     /**
+     * add a flight with relevant departure airport and arrival airport
+     *
      * @param f
      * @return
      */

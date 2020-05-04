@@ -4,7 +4,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
+ * This class build query string for HTTP get and return the final string
  *
+ *
+ *  @author xudufy
+ *  @version 2.0 2020-05-03
+ *  @since 2020-03-01
  */
 public class QueryFactory {
     /**

@@ -2,11 +2,23 @@ package B737Max.Components;
 
 /**
  *
+ * This class holds values pertaining to a single Airplane. Class member attributes
+ * are the same as defined by the CS509 server API and store values after conversion from
+ * XML received from the server to Java primitives.
+ *
+ *
+ * @author xudufy
+ * @version 2.0 2020-05-03
+ * @since 2020-03-01
  */
 public class Airplane {
+    /** Manufacturer of the airplane */
     private String manufacturer;
+    /** Model of the airplane */
     private String model;
+    /** Total number of firstSeat for the airplane */
     private int firstSeats;
+    /** Total number of CoachSeat for the airplane */
     private int coachSeats;
 
     /**
@@ -30,6 +42,7 @@ public class Airplane {
     }
 
     /**
+     * get a string of basic airport information
      * @return
      */
     @Override

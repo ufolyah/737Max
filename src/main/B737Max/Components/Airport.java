@@ -6,15 +6,39 @@ import java.time.ZoneId;
 
 /**
  *
+ *  This class holds values pertaining to a single Airport. Class member attributes
+ *  are the same as defined by the CS509 server API and store values after conversion from
+ *  XML received from the server to Java primitives.
+ *
+ *  @author xudufy
+ *  @version 2.0 2020-05-03
+ *  @since 2020-03-01
+ *
  */
 public class Airport {
+    /**
+     * Airport attributes as defined by the CS509 server interface XML
+     */
+
+    /** Three character code of the airport */
     private String code;
+
+    /** Full name of the airport */
     private String name;
+
+    /** TimeZone ID of the airport based on the location*/
     private ZoneId timeZone;
+
+    /** Latitude of airport in decimal format */
     private double latitude;
+
+    /** Longitude of airport in decimal format */
     private double longitude;
 
     /**
+     *
+     * Sets all params in Class Airport
+     *
      * @param code
      * @param name
      * @param latitude
@@ -31,7 +55,7 @@ public class Airport {
     }
 
     /**
-     * @return
+     * @return Basic information of the airport
      */
     @Override
     public String toString() {
@@ -45,35 +69,35 @@ public class Airport {
     }
 
     /**
-     * @return
+     * @return airport code
      */
     public String getCode() {
         return code;
     }
 
     /**
-     * @return
+     * @return airport name
      */
     public String getName() {
         return name;
     }
 
     /**
-     * @return
+     * @return timezone id
      */
     public ZoneId getTimeZone() {
         return timeZone;
     }
 
     /**
-     * @return
+     * @return latitude of airport
      */
     public double getLatitude() {
         return latitude;
     }
 
     /**
-     * @return
+     * @return longitude of airport
      */
     public double getLongitude() {
         return longitude;

@@ -4,6 +4,11 @@ import java.util.HashMap;
 
 /**
  *
+ * This class aggregates a number of Airplanes. The aggregate is implemented as an TreeMap
+ *
+ * @author xudufy
+ * @version 2.0 2020-05-03
+ * @since 2020-03-01
  */
 public class Airplanes {
     private static Airplanes instance=null;
@@ -24,6 +29,7 @@ public class Airplanes {
     }
 
     /**
+     * set a list of airplanes
      * @param airplanes
      */
     public void setList(Airplane[] airplanes) {
@@ -34,6 +40,7 @@ public class Airplanes {
     }
 
     /**
+     *
      * @return
      */
     public Airplane[] getList() {
@@ -41,6 +48,7 @@ public class Airplanes {
     }
 
     /**
+     * using model to get relevant airplane's code
      * @param code
      * @return
      */
