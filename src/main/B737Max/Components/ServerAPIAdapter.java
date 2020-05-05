@@ -3,6 +3,7 @@ package B737Max.Components;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -218,15 +219,15 @@ public class ServerAPIAdapter {
          * line by line to build the full return string
          */
         int responseCode = connection.getResponseCode();
-        System.out.println("Sending 'GET':" + query);
-        System.out.println("Response Code : " + responseCode+"\n");
+//        System.out.println("Sending 'GET':" + query);
+//        System.out.println("Response Code : " + responseCode+"\n");
 
         if (responseCode/100!=2) {
             throw new IOException(String.valueOf(responseCode));
         }
 
         InputStream inputStream = connection.getInputStream();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("windows-1252")));
         String line;
         while ((line = reader.readLine()) != null) {
             result.append(line);
