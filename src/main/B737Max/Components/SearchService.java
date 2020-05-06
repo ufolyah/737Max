@@ -155,10 +155,7 @@ public class SearchService {
      * @throws IOException
      */
     static void searchTripsWithZeroLayover(SearchContext context) throws IOException {
-        if (context.beginningFlights==null) {
-            Flight[] tempFlights = ServerAPIAdapter.getInstance().getDepartureFlightsByTimeWindow(context.departureAirport, context.departureTimeStart, context.departureTimeEnd);
-            context.beginningFlights = AirportFlightsMap.build(tempFlights, Flight::getArrivalAirport);
-        }
+        populateFlightMaps(context);
         for (ArrayList<Flight> arrF:context.beginningFlights.values()) {
             for (Flight f: arrF) {
                 if (

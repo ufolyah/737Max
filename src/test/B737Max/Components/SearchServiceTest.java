@@ -14,7 +14,7 @@ import java.time.ZonedDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Execution(ExecutionMode.CONCURRENT)
+@Execution(ExecutionMode.SAME_THREAD)
 class SearchServiceTest {
 
     void checkTrip(Trip t, SearchConfig cfg) {
