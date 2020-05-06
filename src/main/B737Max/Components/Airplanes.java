@@ -1,6 +1,9 @@
 package B737Max.Components;
 
 import java.util.HashMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  *
@@ -12,7 +15,11 @@ import java.util.HashMap;
  */
 public class Airplanes {
     private static Airplanes instance=null;
-    private HashMap<String, Airplane> modelMap;
+    private final HashMap<String, Airplane> modelMap;
+    private final ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
+    private final Lock rLock = rwl.readLock();
+    private final Lock wLock = rwl.writeLock();
+    private static final Lock singletonLock = new ReentrantLock();
 
     private Airplanes() {
         modelMap=new HashMap<>();
@@ -22,9 +29,11 @@ public class Airplanes {
      * @return
      */
     public static Airplanes getInstance() {
+        singletonLock.lock();
         if (instance==null) {
             instance = new Airplanes();
         }
+        singletonLock.unlock();
         return instance;
     }
 
@@ -33,10 +42,12 @@ public class Airplanes {
      * @param airplanes
      */
     public void setList(Airplane[] airplanes) {
+        wLock.lock();
         modelMap.clear();
         for (Airplane p:airplanes) {
             modelMap.put(p.getModel(), p);
         }
+        wLock.unlock();
     }
 
     /**
@@ -44,7 +55,12 @@ public class Airplanes {
      * @return
      */
     public Airplane[] getList() {
-        return modelMap.values().toArray(new Airplane[0]);
+        rLock.lock();
+        try {
+            return modelMap.values().toArray(new Airplane[0]);
+        } finally {
+            rLock.unlock();
+        }
     }
 
     /**
@@ -53,6 +69,11 @@ public class Airplanes {
      * @return
      */
     public Airplane selectByModel(String code) {
-        return modelMap.get(code);
+        rLock.lock();
+        try {
+            return modelMap.get(code);
+        } finally {
+            rLock.unlock();
+        }
     }
 }

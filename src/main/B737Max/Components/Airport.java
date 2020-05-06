@@ -21,19 +21,19 @@ public class Airport {
      */
 
     /** Three character code of the airport */
-    private String code;
+    private final String code;
 
     /** Full name of the airport */
-    private String name;
+    private final String name;
 
     /** TimeZone ID of the airport based on the location*/
-    private ZoneId timeZone;
+    private final ZoneId timeZone;
 
     /** Latitude of airport in decimal format */
-    private double latitude;
+    private final double latitude;
 
     /** Longitude of airport in decimal format */
-    private double longitude;
+    private final double longitude;
 
     /**
      *

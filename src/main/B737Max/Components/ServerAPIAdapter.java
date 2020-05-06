@@ -9,6 +9,8 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author xudufy
@@ -19,6 +21,7 @@ public class ServerAPIAdapter {
     private final String teamName="737Max";
     private final String urlBase="http://cs509.cs.wpi.edu:8181/CS509.server/ReservationSystem";
     private static ServerAPIAdapter instance=null;
+    private static final Lock singletonLock = new ReentrantLock();
 
     private ServerAPIAdapter() {}
 
@@ -26,9 +29,11 @@ public class ServerAPIAdapter {
      * @return
      */
     public static ServerAPIAdapter getInstance() {
+        singletonLock.lock();
         if (instance==null) {
             instance = new ServerAPIAdapter();
         }
+        singletonLock.unlock();
         return instance;
     }
 

@@ -13,13 +13,13 @@ package B737Max.Components;
  */
 public class Airplane {
     /** Manufacturer of the airplane */
-    private String manufacturer;
+    private final String manufacturer;
     /** Model of the airplane */
-    private String model;
+    private final String model;
     /** Total number of firstSeat for the airplane */
-    private int firstSeats;
+    private final int firstSeats;
     /** Total number of CoachSeat for the airplane */
-    private int coachSeats;
+    private final int coachSeats;
 
     /**
      * @param manufacturer

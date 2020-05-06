@@ -3,6 +3,8 @@ package B737Max.Components;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -12,6 +14,7 @@ import java.time.ZonedDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Execution(ExecutionMode.CONCURRENT)
 class SearchServiceTest {
 
     void checkTrip(Trip t, SearchConfig cfg) {
@@ -53,7 +56,8 @@ class SearchServiceTest {
     }
 
     static int randint(int minInclusive, int maxInclusive) {
-        return (int)(Math.random()*(maxInclusive-minInclusive+1))+minInclusive;
+//        return (int)(Math.random()*(maxInclusive-minInclusive+1))+minInclusive;
+        return (int)(minInclusive+maxInclusive)/2;
     }
 
     @RepeatedTest(3)
@@ -65,6 +69,7 @@ class SearchServiceTest {
 
         Trips trips = SearchService.searchTrips(cfg);
         assertTrue(trips.size()>0);
+        System.out.println(trips.size());
         for (Trip t:trips.getTrips()) {
             checkTrip(t, cfg);
         }
@@ -80,6 +85,7 @@ class SearchServiceTest {
 
         Trips trips = SearchService.searchTrips(cfg);
         assertTrue(trips.size()>0);
+        System.out.println(trips.size());
         for (Trip t:trips.getTrips()) {
             checkTrip(t, cfg);
         }
@@ -94,6 +100,7 @@ class SearchServiceTest {
 
         Trips trips = SearchService.searchTrips(cfg);
         assertTrue(trips.size()>0);
+        System.out.println(trips.size());
         for (Trip t:trips.getTrips()) {
             checkTrip(t, cfg);
         }
@@ -109,6 +116,7 @@ class SearchServiceTest {
 
         Trips trips = SearchService.searchTrips(cfg);
         assertTrue(trips.size()>0);
+        System.out.println(trips.size());
         for (Trip t:trips.getTrips()) {
             checkTrip(t, cfg);
         }
@@ -127,6 +135,7 @@ class SearchServiceTest {
 
         Trips trips = SearchService.searchTrips(cfg);
         assertTrue(trips.size()>0);
+        System.out.println(trips.size());
         for (Trip t:trips.getTrips()) {
             checkTrip(t, cfg);
         }
@@ -146,6 +155,7 @@ class SearchServiceTest {
 
         Trips trips = SearchService.searchTrips(cfg);
         assertTrue(trips.size()>0);
+        System.out.println(trips.size());
         for (Trip t:trips.getTrips()) {
             checkTrip(t, cfg);
         }
@@ -162,6 +172,7 @@ class SearchServiceTest {
 
         Trips trips = SearchService.searchTrips(cfg);
         assertTrue(trips.size()>0);
+        System.out.println(trips.size());
         for (Trip t:trips.getTrips()) {
             checkTrip(t, cfg);
         }

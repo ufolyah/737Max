@@ -1,6 +1,9 @@
 package B737Max.Components;
 
 import java.util.TreeMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * This class aggregates a number of Airport. The aggregate is implemented as an TreeMap.
@@ -12,8 +15,12 @@ import java.util.TreeMap;
  */
 public class Airports {
     private static Airports instance=null;
-    private TreeMap<String, Airport> codeMap;
-    private TreeMap<String, Airport> nameMap;
+    private final TreeMap<String, Airport> codeMap;
+    private final TreeMap<String, Airport> nameMap;
+    private final ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
+    private final Lock rLock = rwl.readLock();
+    private final Lock wLock = rwl.writeLock();
+    private static final Lock singletonLock = new ReentrantLock();
 
     private Airports() {
         codeMap = new TreeMap<>();
@@ -25,9 +32,11 @@ public class Airports {
      * @return
      */
     public static Airports getInstance() {
+        singletonLock.lock();
         if (instance==null) {
             instance = new Airports();
         }
+        singletonLock.unlock();
         return instance;
     }
 
@@ -35,7 +44,12 @@ public class Airports {
      * @return
      */
     public Airport[] getList() {
-        return nameMap.values().toArray(new Airport[0]).clone();
+        rLock.lock();
+        try {
+            return nameMap.values().toArray(new Airport[0]);
+        } finally {
+            rLock.unlock();
+        }
     }
 
     /**
@@ -43,12 +57,14 @@ public class Airports {
      * @param list
      */
     public void setList(Airport[] list) {
+        wLock.lock();
         nameMap.clear();
         codeMap.clear();
         for (Airport a:list) {
             nameMap.put(a.getName(), a);
             codeMap.put(a.getCode(), a);
         }
+        wLock.unlock();
     }
 
     /**
@@ -57,7 +73,12 @@ public class Airports {
      * @return
      */
     public Airport selectByCode(String code) {
-        return codeMap.get(code);
+        rLock.lock();
+        try {
+            return codeMap.get(code);
+        } finally {
+            rLock.unlock();
+        }
     }
 
     /**
@@ -66,7 +87,12 @@ public class Airports {
      * @return
      */
     public Airport selectByName(String name) {
-        return nameMap.get(name);
+        rLock.lock();
+        try {
+            return nameMap.get(name);
+        } finally {
+          rLock.unlock();
+        }
     }
 
 
