@@ -135,7 +135,9 @@ public class SearchScreen {
         searchAvailableFlightsButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                //searchFrame.setVisible(false);
+                searchFrame.setVisible(false);
+                SystemSearching systemSearching = new SystemSearching();
+
 
                 SearchConfig searchConfig = new SearchConfig();
                 // Convert the departure time frame to something usable
@@ -191,6 +193,9 @@ public class SearchScreen {
 
                 searchConfig.setPreferredSeatClass(seatClass);
 
+
+
+
                 // Search for trips with the given parameters
                 Trips theResults = new Trips();
                 try{
@@ -199,11 +204,8 @@ public class SearchScreen {
 
                 }
 
-                // Print out the trips
-                for(Trip t: theResults.getTrips()){
-                    System.out.println(t);
-                }
-
+                systemSearching.hideScreen();
+                ResultsScreen resultsScreen = new ResultsScreen(theResults, searchFrame);
             }
         });
     }

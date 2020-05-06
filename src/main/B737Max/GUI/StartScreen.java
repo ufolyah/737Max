@@ -12,7 +12,7 @@ public class StartScreen {
     public static void main(String[] args) throws Exception {
         JFrame mainframe = new JFrame("Startup");
         mainframe.setContentPane((new StartScreen().panel1));
-        mainframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         mainframe.setSize(800, 350);
         mainframe.setLocationRelativeTo(null);
