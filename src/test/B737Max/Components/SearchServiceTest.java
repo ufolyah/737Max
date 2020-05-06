@@ -56,8 +56,8 @@ class SearchServiceTest {
     }
 
     static int randint(int minInclusive, int maxInclusive) {
-//        return (int)(Math.random()*(maxInclusive-minInclusive+1))+minInclusive;
-        return (int)(minInclusive+maxInclusive)/2;
+        return (int)(Math.random()*(maxInclusive-minInclusive+1))+minInclusive;
+//        return (int)(minInclusive+maxInclusive)/2;
     }
 
     @RepeatedTest(3)
