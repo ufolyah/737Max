@@ -24,6 +24,60 @@ class Pair<K, V> {
     }
 }
 
+class SearchTask implements Runnable {
+    private volatile Flight[] taskResult;
+    private Thread thread = null;
+
+    enum Type {
+        DEPARTURE, ARRIVAL
+    }
+
+    private final Airport air;
+    private final ZonedDateTime wBegin;
+    private final ZonedDateTime wEnd;
+    private final Type t;
+    private volatile IOException err = null;
+
+    public SearchTask(Type t, Airport air, ZonedDateTime wBegin, ZonedDateTime wEnd) {
+        this.air = air;
+        this.wBegin = wBegin;
+        this.wEnd = wEnd;
+        this.t = t;
+    }
+
+    @Override
+    public void run() {
+        if (t==Type.DEPARTURE) {
+            try {
+                taskResult = ServerAPIAdapter.getInstance().getDepartureFlightsByTimeWindow(air, wBegin, wEnd);
+            } catch (IOException e) {
+                err = e;
+            }
+        } else {
+            try {
+                taskResult = ServerAPIAdapter.getInstance().getArrivalFlightsByTimeWindow(air, wBegin, wEnd);
+            } catch (IOException e) {
+                err = e;
+            }
+        }
+    }
+
+    public void start() {
+        thread = new Thread(this);
+        thread.start();
+    }
+
+    public Flight[] join() throws IOException {
+        try {
+            thread.join();
+        } catch (Exception ignored) {}
+        if (err!=null) {
+            throw err;
+        }
+        return taskResult;
+    }
+}
+
 /**
  *
  */
@@ -119,13 +173,18 @@ public class SearchService {
     }
 
     private static void populateFlightMaps(SearchContext context) throws IOException {
+        SearchTask task1 = null;
         if (context.beginningFlights==null) {
-            Flight[] tempFlights = ServerAPIAdapter.getInstance().getDepartureFlightsByTimeWindow(context.departureAirport, context.departureTimeStart, context.departureTimeEnd);
-            context.beginningFlights = AirportFlightsMap.build(tempFlights, Flight::getArrivalAirport);
+            task1 = new SearchTask(SearchTask.Type.DEPARTURE, context.departureAirport, context.departureTimeStart, context.departureTimeEnd);
+            task1.start();
         }
         if (context.endingFlights == null) {
             Flight[] tempFlights = ServerAPIAdapter.getInstance().getArrivalFlightsByTimeWindow(context.arrivalAirport, context.arrivalTimeStart, context.arrivalTimeEnd);
             context.endingFlights = AirportFlightsMap.build(tempFlights, Flight::getDepartureAirport);
+        }
+        if (task1!=null) {
+            Flight[] tempFlights = task1.join();
+            context.beginningFlights = AirportFlightsMap.build(tempFlights, Flight::getArrivalAirport);
         }
     }
 
@@ -188,27 +247,34 @@ public class SearchService {
                 (Pair<Airport, ZonedDateTime[]> e) -> calcGreatCircleDistance(context.departureAirport, e.getKey()) + calcGreatCircleDistance(e.getKey(), context.arrivalAirport)
         ));
 
+        ArrayList<SearchTask> tasks = new ArrayList<>();
+
+        for (Pair<Airport, ZonedDateTime[]> e: firstLayoverDepartureRange) {
+            SearchTask thisTask = new SearchTask(SearchTask.Type.DEPARTURE, e.getKey(), e.getValue()[0], e.getValue()[1]);
+            tasks.add(thisTask);
+            thisTask.start();
+        }
 
         int count = 8;
-        for (Pair<Airport, ZonedDateTime[]> e: firstLayoverDepartureRange) {
+        for (SearchTask task:tasks) {
             count--;
-            Flight[] middleLegs = ServerAPIAdapter.getInstance().getDepartureFlightsByTimeWindow(e.getKey(), e.getValue()[0], e.getValue()[1]);
-            for (Flight f1: context.beginningFlights.get(e.getKey())) { // will not be null because e.key is extracted from beginningFlights
-                for (Flight f2: middleLegs) {
-
-                    ArrayList<Flight> potentialF3 = context.endingFlights.get(f2.getArrivalAirport());
-                    if (potentialF3 == null) continue;
-                    for (Flight f3: potentialF3) {
-                        try {
-                            Trip t = new Trip(new Flight[]{f1, f2, f3}, context.preferredSeatClass);
-                            context.finalResult.addTrip(t);
-                            if (count<0 && context.finalResult.size()>=context.numTripLimit) {
-                                return;
+            Flight[] f2s = task.join();
+            for (Flight f2: f2s) {
+                for (Flight f1: context.beginningFlights.get(f2.getDepartureAirport())) {
+                    ArrayList<Flight> f3s = context.endingFlights.get(f2.getArrivalAirport());
+                    if (f3s!=null) {
+                        for (Flight f3:f3s) {
+                            try {
+                                Trip t = new Trip(new Flight[]{f1, f2, f3}, context.preferredSeatClass);
+                                context.finalResult.addTrip(t);
+                            } catch (IllegalArgumentException ignored) {
                             }
-                        } catch (IllegalArgumentException ignored) {
                         }
                     }
                 }
+            }
+            if (count<0 && context.finalResult.size()>=context.numTripLimit) {
+                return;
             }
         }
     }
