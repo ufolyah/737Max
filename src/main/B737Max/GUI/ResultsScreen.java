@@ -25,7 +25,7 @@ public class ResultsScreen {
     private JButton returnToSearchButton;
     private JComboBox ResultsBoxR;
     private JLabel lblReturn;
-    private JCheckBox includeLayoversCheckBox;
+    private JComboBox layoverBox;
 
     public ResultsScreen(Trips theResults, JFrame otherFrame, boolean isRoundTrip, Trips theResultsR){
         JFrame resultFrame = new JFrame("ResultsMenu");
@@ -102,11 +102,23 @@ public class ResultsScreen {
         sortByBox.addItem("Latest Arrival Time");
         sortByBox.addItem("Shortest Travel Time");
         sortByBox.addItem("Longest Travel Time");
+        layoverBox.addItem("Any");
+        layoverBox.addItem("Non-stop");
+        layoverBox.addItem("1 stop");
+        layoverBox.addItem("2 stops");
 
 
         reserveTicketButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                if (ResultsBox.getSelectedIndex()==-1) {
+                    JOptionPane.showMessageDialog(null, "You have not chosen a trip.");
+                    return;
+                }
+                if (isRoundTrip && ResultsBoxR.getSelectedIndex()==-1) {
+                    JOptionPane.showMessageDialog(null, "You have not chosen a return trip.");
+                    return;
+                }
                 int result = JOptionPane.showConfirmDialog(null, "Are you sure you would like to reserve this flight?");
                 if(result == JOptionPane.YES_OPTION){
 
@@ -215,54 +227,46 @@ public class ResultsScreen {
                 }
             }
         });
-        includeLayoversCheckBox.addActionListener(new ActionListener() {
+
+        layoverBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if(includeLayoversCheckBox.isSelected()){
-                    ResultsBox.removeAllItems();
-                    // Print out the trips
-                    for(Trip t: theResults.getTrips()){
+                String option = layoverBox.getSelectedItem().toString();
+
+                if (option.equals("Any")) {
+                    theResults.removeFilter("layover");
+                } else if (option.equals("Non-stop")) {
+                    theResults.filterBy("layover", (Trip t) -> t.getNumFlights() == 1);
+                } else if (option.equals("1 stop")) {
+                    theResults.filterBy("layover", (Trip t) -> t.getNumFlights() == 2);
+                } else if (option.equals("2 stops")) {
+                    theResults.filterBy("layover", (Trip t) -> t.getNumFlights() == 3);
+                }
+                ResultsBox.removeAllItems();
+                for (Trip t : theResults.getTrips()) {
+                    String theTrip;
+                    theTrip = printTrip.apply(t);
+
+                    ResultsBox.addItem(theTrip);
+                }
+
+                if (isRoundTrip) {
+                    if (option.equals("Any")) {
+                        theResultsR.removeFilter("layover");
+                    } else if (option.equals("Non-stop")) {
+                        theResultsR.filterBy("layover", (Trip t) -> t.getNumFlights() == 1);
+                    } else if (option.equals("1 stop")) {
+                        theResultsR.filterBy("layover", (Trip t) -> t.getNumFlights() == 2);
+                    } else if (option.equals("2 stops")) {
+                        theResultsR.filterBy("layover", (Trip t) -> t.getNumFlights() == 3);
+                    }
+                    ResultsBoxR.removeAllItems();
+                    for (Trip t : theResultsR.getTrips()) {
                         String theTrip;
                         theTrip = printTrip.apply(t);
 
-                        ResultsBox.addItem(theTrip);
+                        ResultsBoxR.addItem(theTrip);
                     }
-
-                    if(isRoundTrip){
-                        ResultsBoxR.removeAllItems();
-                        // Print out the trips
-                        for(Trip t: theResultsR.getTrips()){
-                            String theTrip;
-                            theTrip = printTrip.apply(t);
-
-                            ResultsBoxR.addItem(theTrip);
-                        }
-                    }
-                } else {
-                    ResultsBox.removeAllItems();
-                    // Print out the trips
-                    for(Trip t: theResults.getTrips()){
-                        if(t.getLayovers().length == 0){
-                            String theTrip;
-                            theTrip = printTrip.apply(t);
-                            ResultsBox.addItem(theTrip);
-                        }
-                    }
-
-                    if(isRoundTrip){
-                        ResultsBoxR.removeAllItems();
-                        // Print out the trips
-                        for(Trip t: theResultsR.getTrips()){
-                            if(t.getLayovers().length == 0){
-
-                                String theTrip;
-                                theTrip = printTrip.apply(t);
-
-                                ResultsBoxR.addItem(theTrip);
-                            }
-                        }
-                    }
-
                 }
             }
         });

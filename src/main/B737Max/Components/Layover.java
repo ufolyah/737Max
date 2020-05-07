@@ -71,7 +71,7 @@ public class Layover {
             throw new IllegalArgumentException("layover invalid");
         }
 
-        /** If the duration is legal    */
+        // If the duration is legal
         Duration d = Duration.between(f1.getArrivalTime(), f2.getDepartureTime());
         if (d.getSeconds() < 30 * 60 || d.getSeconds() > 4 * 60 * 60) {
             throw new IllegalArgumentException("layover invalid");
