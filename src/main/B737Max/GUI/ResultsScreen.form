@@ -12,10 +12,10 @@
     <children>
       <component id="dd0ac" class="javax.swing.JComboBox" binding="ResultsBox">
         <constraints>
-          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <font size="12"/>
+          <font size="14"/>
         </properties>
       </component>
       <component id="d0c7c" class="javax.swing.JButton" binding="reserveTicketButton" default-binding="true">

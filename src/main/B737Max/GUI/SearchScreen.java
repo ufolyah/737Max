@@ -39,38 +39,38 @@ public class SearchScreen {
         Airport[] airs = airports.getList();
 
         for(Airport air : airs){
-            departureList.addItem(air.getCode());
+            departureList.addItem(air.getName());
         }
 
         for(Airport air : airs){
-            arrivalList.addItem(air.getCode());
+            arrivalList.addItem(air.getName());
         }
 
-        for(int i = 1; i < 32; i++){
+        for(int i = 9; i < 32; i++){
             DepartureDays.addItem(i);
         }
 
-        for(int i = 2020; i < 2031; i++){
+        for(int i = 2020; i < 2021; i++){
             DepartureYear.addItem(i);
         }
 
-        DepartureMonth.addItem("January");
-        DepartureMonth.addItem("February");
-        DepartureMonth.addItem("March");
-        DepartureMonth.addItem("April");
+//        DepartureMonth.addItem("January");
+//        DepartureMonth.addItem("February");
+//        DepartureMonth.addItem("March");
+//        DepartureMonth.addItem("April");
         DepartureMonth.addItem("May");
-        DepartureMonth.addItem("June");
-        DepartureMonth.addItem("July");
-        DepartureMonth.addItem("August");
-        DepartureMonth.addItem("September");
-        DepartureMonth.addItem("October");
-        DepartureMonth.addItem("November");
-        DepartureMonth.addItem("December");
+//        DepartureMonth.addItem("June");
+//        DepartureMonth.addItem("July");
+//        DepartureMonth.addItem("August");
+//        DepartureMonth.addItem("September");
+//        DepartureMonth.addItem("October");
+//        DepartureMonth.addItem("November");
+//        DepartureMonth.addItem("December");
 
         pickSeating.addItem("Coach");
         pickSeating.addItem("First Class");
 
-        for(int i = 0; i < 24; i++){
+        for(int i = 0; i < 25; i++){
             if(i < 10){
                 startTimeframe.addItem("0" + i + ":00");
                 endTimeframe.addItem("0" + i + ":00");
@@ -80,57 +80,57 @@ public class SearchScreen {
             }
         }
 
-        DepartureMonth.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                String theMonth = DepartureMonth.getSelectedItem().toString();
-                if(theMonth == "January" || theMonth == "March" || theMonth == "May" || theMonth == "July" || theMonth == "August" || theMonth == "October" || theMonth == "December"){
-                    DepartureDays.removeAllItems();
-                    for(int i = 1; i < 32; i++){
-                        DepartureDays.addItem(i);
-                    }
-                } else if (theMonth == "April" || theMonth == "June" || theMonth == "September" || theMonth == "November"){
-                    DepartureDays.removeAllItems();
-                    for(int i = 1; i < 31; i++){
-                        DepartureDays.addItem(i);
-                    }
-                } else {
-                    DepartureDays.removeAllItems();
-                    int stopper;
-                    int theYear = Integer.parseInt(DepartureYear.getSelectedItem().toString());
-                    if(theYear == 2020 || theYear == 2024 || theYear == 2028){
-                        stopper = 30;
-                    } else{
-                        stopper = 29;
-                    }
+//        DepartureMonth.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent actionEvent) {
+//                String theMonth = DepartureMonth.getSelectedItem().toString();
+//                if(theMonth == "January" || theMonth == "March" || theMonth == "May" || theMonth == "July" || theMonth == "August" || theMonth == "October" || theMonth == "December"){
+//                    DepartureDays.removeAllItems();
+//                    for(int i = 1; i < 32; i++){
+//                        DepartureDays.addItem(i);
+//                    }
+//                } else if (theMonth == "April" || theMonth == "June" || theMonth == "September" || theMonth == "November"){
+//                    DepartureDays.removeAllItems();
+//                    for(int i = 1; i < 31; i++){
+//                        DepartureDays.addItem(i);
+//                    }
+//                } else {
+//                    DepartureDays.removeAllItems();
+//                    int stopper;
+//                    int theYear = Integer.parseInt(DepartureYear.getSelectedItem().toString());
+//                    if(theYear == 2020 || theYear == 2024 || theYear == 2028){
+//                        stopper = 30;
+//                    } else{
+//                        stopper = 29;
+//                    }
+//
+//                    for(int i = 1; i < stopper; i++){
+//                        DepartureDays.addItem(i);
+//                    }
+//                }
+//            }
+//        });
 
-                    for(int i = 1; i < stopper; i++){
-                        DepartureDays.addItem(i);
-                    }
-                }
-            }
-        });
-
-        DepartureYear.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                String theMonth = DepartureMonth.getSelectedItem().toString();
-                if(theMonth == "February"){
-                    DepartureDays.removeAllItems();
-                    int stopper;
-                    int theYear = Integer.parseInt(DepartureYear.getSelectedItem().toString());
-                    if(theYear == 2020 || theYear == 2024 || theYear == 2028){
-                        stopper = 30;
-                    } else{
-                        stopper = 29;
-                    }
-
-                    for(int i = 1; i < stopper; i++){
-                        DepartureDays.addItem(i);
-                    }
-                }
-            }
-        });
+//        DepartureYear.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent actionEvent) {
+//                String theMonth = DepartureMonth.getSelectedItem().toString();
+//                if(theMonth == "February"){
+//                    DepartureDays.removeAllItems();
+//                    int stopper;
+//                    int theYear = Integer.parseInt(DepartureYear.getSelectedItem().toString());
+//                    if(theYear == 2020 || theYear == 2024 || theYear == 2028){
+//                        stopper = 30;
+//                    } else{
+//                        stopper = 29;
+//                    }
+//
+//                    for(int i = 1; i < stopper; i++){
+//                        DepartureDays.addItem(i);
+//                    }
+//                }
+//            }
+//        });
 
         searchAvailableFlightsButton.addActionListener(new ActionListener(){
             @Override
@@ -143,14 +143,14 @@ public class SearchScreen {
                 // Convert the departure time frame to something usable
                 int departStartTime = Integer.parseInt(startTimeframe.getSelectedItem().toString().substring(0, 2));
                 int departEndTime = Integer.parseInt(endTimeframe.getSelectedItem().toString().substring(0, 2));
-                LocalTime departureTime = LocalTime.of(departStartTime, 0, 0);
-                LocalTime departureEnd = LocalTime.of(departEndTime, 0, 0);
+                LocalTime departureTime = departStartTime==24?LocalTime.MAX:LocalTime.of(departStartTime, 0, 0);
+                LocalTime departureEnd = departEndTime==24?LocalTime.MAX:LocalTime.of(departEndTime, 0, 0);
 
                 // Set the departure time frame
                 searchConfig.setDepartureWindow(departureTime, departureEnd);
 
                 // Convert departure date to something usable
-                int departMonth = DepartureMonth.getSelectedIndex() + 1;
+                int departMonth = 5;
                 int departDay = Integer.parseInt(DepartureDays.getSelectedItem().toString());
                 int departYear = Integer.parseInt(DepartureYear.getSelectedItem().toString());
 
@@ -159,24 +159,9 @@ public class SearchScreen {
                 // Set the departure date
                 searchConfig.setDepartureDate(departureDate);
 
-                Airport departPort = airs[0];
-                Airport arrivePort = airs[0];
-
                 // Find the departureAirport
-                for(Airport air : airs){
-                    if(air.getCode().toString() == departureList.getSelectedItem().toString()){
-                        departPort = air;
-                        break;
-                    }
-                }
-
-                // Find the arrival Airport
-                for(Airport air : airs){
-                    if(air.getCode().toString() == arrivalList.getSelectedItem().toString()){
-                        arrivePort = air;
-                        break;
-                    }
-                }
+                Airport departPort = airports.selectByName(departureList.getSelectedItem().toString());
+                Airport arrivePort = airports.selectByName(arrivalList.getSelectedItem().toString());
 
                 // Set arrival and departure airports
                 searchConfig.setArrivalAirport(arrivePort);
@@ -185,16 +170,13 @@ public class SearchScreen {
                 SeatClass seatClass;
 
                 // Set seating preference
-                if(pickSeating.getSelectedItem().toString() == "Coach"){
+                if(pickSeating.getSelectedItem().toString().equals("Coach")){
                     seatClass = SeatClass.COACH;
                 } else {
                     seatClass = SeatClass.FIRST;
                 }
 
                 searchConfig.setPreferredSeatClass(seatClass);
-
-
-
 
                 // Search for trips with the given parameters
                 Trips theResults = new Trips();

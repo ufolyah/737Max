@@ -124,7 +124,7 @@ class SearchServiceTest {
 
     @RepeatedTest(3)
     void searchTripsWithBothDate() throws IOException {
-        int d = randint(20,29);
+        int d = randint(10,29);
         int dd = randint(d, d+1);
         SearchConfig cfg = new SearchConfig()
                 .setDepartureDate(LocalDate.of(2020, 5, d))
@@ -143,7 +143,7 @@ class SearchServiceTest {
 
     @RepeatedTest(3)
     void searchTripsWithBothWindow() throws IOException {
-        int d = randint(20,29);
+        int d = randint(10,29);
         int dd = randint(d, d+1);
         SearchConfig cfg = new SearchConfig()
                 .setDepartureDate(LocalDate.of(2020, 5, d))
@@ -163,7 +163,7 @@ class SearchServiceTest {
 
     @RepeatedTest(5)
     void searchTripsWithFirstClass() throws IOException {
-        int d = randint(20,29);
+        int d = randint(10,29);
         SearchConfig cfg = new SearchConfig()
                 .setDepartureDate(LocalDate.of(2020, 5, d))
                 .setDepartureAirport(Airports.getInstance().selectByCode("MCO"))

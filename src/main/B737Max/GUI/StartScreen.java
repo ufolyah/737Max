@@ -18,7 +18,7 @@ public class StartScreen {
         mainframe.setLocationRelativeTo(null);
         mainframe.setVisible(true);
 
-        TimeUnit.SECONDS.sleep(4);
+        TimeUnit.MILLISECONDS.sleep(500);
 
 
         mainframe.setVisible(false);
