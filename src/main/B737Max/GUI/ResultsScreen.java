@@ -6,11 +6,14 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.lang.reflect.Array;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.function.Function;
 
@@ -120,6 +123,14 @@ public class ResultsScreen {
                     theResults.sortBy(Comparator.comparing(Trip::getDepartureTime));
                 } else if(sortByBox.getSelectedItem().toString() == "Shortest Travel Time"){
                     theResults.sortBy(Comparator.comparing(Trip::getTravelTime));
+                } else if(sortByBox.getSelectedItem().toString() == "Highest Price"){
+                    theResults.sortBy(Comparator.comparing(Trip::getPrice).reversed());
+                } else if(sortByBox.getSelectedItem().toString() == "Longest Travel Time"){
+                    theResults.sortBy(Comparator.comparing(Trip::getTravelTime).reversed());
+                } else if(sortByBox.getSelectedItem().toString() == "Latest Arrival Time"){
+                    theResults.sortBy(Comparator.comparing(Trip::getArrivalTime).reversed());
+                } else if(sortByBox.getSelectedItem().toString() == "Latest Departure Time"){
+                    theResults.sortBy(Comparator.comparing(Trip::getDepartureTime).reversed());
                 }
 
                 ResultsBox.removeAllItems();
