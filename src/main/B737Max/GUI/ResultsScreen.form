@@ -34,6 +34,7 @@
         </constraints>
         <properties>
           <font size="16"/>
+          <maximumRowCount value="15"/>
         </properties>
       </component>
       <component id="87243" class="javax.swing.JButton" binding="returnToSearchButton" default-binding="true">

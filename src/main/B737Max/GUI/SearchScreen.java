@@ -5,6 +5,7 @@ import B737Max.Components.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -33,7 +34,7 @@ public class SearchScreen {
     private JComboBox endTimeframeR;
     private JComboBox pickSeatingR;
 
-    public SearchScreen() throws Exception{
+    public SearchScreen() {
         JFrame searchFrame = new JFrame("SearchMenu");
         searchFrame.setContentPane((SearchPanel));
         searchFrame.setSize(1200, 600);
@@ -41,7 +42,14 @@ public class SearchScreen {
         searchFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         searchFrame.setVisible(true);
 
-        ServiceBase.load();
+        try {
+            ServiceBase.load();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Connection Error. Check your internet connection or retry a few seconds later.");
+            System.exit(0);
+            return;
+        }
+
 
         Airports airports = Airports.getInstance();
 
@@ -215,6 +223,14 @@ public class SearchScreen {
                 try{
                     theResults = ServiceBase.searchFlights(searchConfig);
                 } catch (Exception e){
+                    systemSearching.hideScreen();
+                    searchFrame.setVisible(true);
+                    if (e instanceof IOException) {
+                        JOptionPane.showMessageDialog(null, "Connection error.\n Check your internet connection or retry a few seconds later");
+                    } else {
+                        JOptionPane.showMessageDialog(null, e.getMessage());
+                    }
+                    return;
 
                 }
 
@@ -251,7 +267,12 @@ public class SearchScreen {
                     try{
                         theResultsR = ServiceBase.searchFlights(searchConfigR);
                     } catch (Exception e){
-
+                        if (e instanceof IOException) {
+                            JOptionPane.showMessageDialog(null, "Connection error.\n Check your internet connection or retry a few seconds later");
+                        } else {
+                            JOptionPane.showMessageDialog(null, e.getMessage());
+                        }
+                        return;
                     }
 
                     if(departDay >= departDayR){

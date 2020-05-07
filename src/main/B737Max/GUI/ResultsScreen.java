@@ -73,7 +73,7 @@ public class ResultsScreen {
         };
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd HH:mm");
-        Function<Trip, String> printTrip = (Trip t) -> "Duration:" + durStr.apply(t.getTravelTime()) + "   Price:$" + String.format("%-8s", t.getPrice().toString()) + "  "
+        Function<Trip, String> printTrip = (Trip t) -> "Travel Time:" + durStr.apply(t.getTravelTime()) + "   Price:$" + String.format("%-8s", t.getPrice().toString()) + "  "
                 + formatter.format(t.getDepartureTime()) + "->" + formatter.format(t.getArrivalTime()) + "   "
                 + printPath.apply(t);
 
@@ -102,6 +102,7 @@ public class ResultsScreen {
         sortByBox.addItem("Latest Arrival Time");
         sortByBox.addItem("Shortest Travel Time");
         sortByBox.addItem("Longest Travel Time");
+        sortByBox.addItem("Smallest Number of Stops");
         layoverBox.addItem("Any");
         layoverBox.addItem("Non-stop");
         layoverBox.addItem("1 stop");
@@ -184,6 +185,9 @@ public class ResultsScreen {
                     } else if(sortByBox.getSelectedItem().toString() == "Latest Departure Time"){
                         theResults.sortBy(Comparator.comparing(Trip::getDepartureTime).reversed());
                         theResultsR.sortBy(Comparator.comparing(Trip::getDepartureTime).reversed());
+                    } else if(sortByBox.getSelectedItem().toString().equals("Smallest Number of Stops")) {
+                        theResults.sortBy(Comparator.comparing(Trip::getNumFlights));
+                        theResultsR.sortBy(Comparator.comparing(Trip::getNumFlights));
                     }
                 } else{
                     if(sortByBox.getSelectedItem().toString() == "Lowest Price"){
@@ -202,6 +206,8 @@ public class ResultsScreen {
                         theResults.sortBy(Comparator.comparing(Trip::getArrivalTime).reversed());
                     } else if(sortByBox.getSelectedItem().toString() == "Latest Departure Time"){
                         theResults.sortBy(Comparator.comparing(Trip::getDepartureTime).reversed());
+                    } else if(sortByBox.getSelectedItem().toString().equals("Smallest Number of Stops")) {
+                        theResults.sortBy(Comparator.comparing(Trip::getNumFlights));
                     }
                 }
 
