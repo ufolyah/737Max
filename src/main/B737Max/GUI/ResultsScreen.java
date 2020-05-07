@@ -25,6 +25,7 @@ public class ResultsScreen {
     private JButton returnToSearchButton;
     private JComboBox ResultsBoxR;
     private JLabel lblReturn;
+    private JCheckBox includeLayoversCheckBox;
 
     public ResultsScreen(Trips theResults, JFrame otherFrame, boolean isRoundTrip, Trips theResultsR){
         JFrame resultFrame = new JFrame("ResultsMenu");
@@ -211,6 +212,57 @@ public class ResultsScreen {
 
                         ResultsBoxR.addItem(theTrip);
                     }
+                }
+            }
+        });
+        includeLayoversCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if(includeLayoversCheckBox.isSelected()){
+                    ResultsBox.removeAllItems();
+                    // Print out the trips
+                    for(Trip t: theResults.getTrips()){
+                        String theTrip;
+                        theTrip = printTrip.apply(t);
+
+                        ResultsBox.addItem(theTrip);
+                    }
+
+                    if(isRoundTrip){
+                        ResultsBoxR.removeAllItems();
+                        // Print out the trips
+                        for(Trip t: theResultsR.getTrips()){
+                            String theTrip;
+                            theTrip = printTrip.apply(t);
+
+                            ResultsBoxR.addItem(theTrip);
+                        }
+                    }
+                } else {
+                    ResultsBox.removeAllItems();
+                    // Print out the trips
+                    for(Trip t: theResults.getTrips()){
+                        if(t.getLayovers().length == 0){
+                            String theTrip;
+                            theTrip = printTrip.apply(t);
+                            ResultsBox.addItem(theTrip);
+                        }
+                    }
+
+                    if(isRoundTrip){
+                        ResultsBoxR.removeAllItems();
+                        // Print out the trips
+                        for(Trip t: theResultsR.getTrips()){
+                            if(t.getLayovers().length == 0){
+
+                                String theTrip;
+                                theTrip = printTrip.apply(t);
+
+                                ResultsBoxR.addItem(theTrip);
+                            }
+                        }
+                    }
+
                 }
             }
         });
