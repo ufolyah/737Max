@@ -216,6 +216,8 @@ public class ServerAPIAdapter {
         URL url = new URL(query);
         HttpURLConnection connection= (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
+        connection.setConnectTimeout(5000);
+        connection.setReadTimeout(1000);
         connection.setRequestProperty("User-Agent", teamName);
         StringBuilder result = new StringBuilder();
 
@@ -252,6 +254,8 @@ public class ServerAPIAdapter {
         URL url = new URL(query);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
+        connection.setConnectTimeout(3000);
+        connection.setReadTimeout(1000);
         connection.setRequestProperty("User-Agent", teamName);
         connection.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
         connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
