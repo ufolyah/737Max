@@ -23,8 +23,10 @@ public class ResultsScreen {
     private JButton reserveTicketButton;
     private JComboBox sortByBox;
     private JButton returnToSearchButton;
+    private JComboBox ResultsBoxR;
+    private JLabel lblReturn;
 
-    public ResultsScreen(Trips theResults, JFrame otherFrame){
+    public ResultsScreen(Trips theResults, JFrame otherFrame, boolean isRoundTrip, Trips theResultsR){
         JFrame resultFrame = new JFrame("ResultsMenu");
         resultFrame.setContentPane((ResultsPanel));
         resultFrame.setSize(1920, 500);
@@ -32,9 +34,16 @@ public class ResultsScreen {
         resultFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         resultFrame.setVisible(true);
 
-        if(theResults.getTrips().length == 0){
+        if(theResults.getTrips().length == 0 || theResultsR.getTrips().length == 0){
             JOptionPane.showMessageDialog(null, "No flights were found!");
             returnToSearch(otherFrame, resultFrame);
+        }
+
+        if(isRoundTrip){
+            ResultsBoxR.setEnabled(true);
+        } else {
+            ResultsBoxR.setVisible(false);
+            lblReturn.setVisible(false);
         }
 
         Function<Duration, String> durStr = (Duration d) -> String.format("%02d",d.toHours()) +
@@ -74,6 +83,15 @@ public class ResultsScreen {
             ResultsBox.addItem(theTrip);
         }
 
+        if(isRoundTrip){
+            for(Trip t: theResultsR.getTrips()){
+                String theTrip;
+                theTrip = printTrip.apply(t);
+                ResultsBoxR.addItem(theTrip);
+            }
+        }
+
+
         sortByBox.addItem("default");
         sortByBox.addItem("Highest Price");
         sortByBox.addItem("Lowest Price");
@@ -90,14 +108,26 @@ public class ResultsScreen {
             public void actionPerformed(ActionEvent actionEvent) {
                 int result = JOptionPane.showConfirmDialog(null, "Are you sure you would like to reserve this flight?");
                 if(result == JOptionPane.YES_OPTION){
-                    Trip[] theTrip = new Trip[1];
-                    theTrip[0] = theResults.getTrips()[ResultsBox.getSelectedIndex()];
-                    System.out.println(theTrip[0].toString());
+
+                    Trip[] theTrip;
+                    if(isRoundTrip){
+                        theTrip = new Trip[2];
+                        theTrip[0] = theResults.getTrips()[ResultsBox.getSelectedIndex()];
+                        theTrip[1] = theResultsR.getTrips()[ResultsBoxR.getSelectedIndex()];
+                    } else {
+                        theTrip = new Trip[1];
+                        theTrip[0] = theResults.getTrips()[ResultsBox.getSelectedIndex()];
+                    }
+
+                    //System.out.println(theTrip[0].toString());
                     try{
                         ServiceBase.reserve(theTrip);
+
                     } catch(Exception e){
 
                     }
+                    JOptionPane.showMessageDialog(null, "Your ticket has been reserved! Now returning to search menu...");
+                    returnToSearch(otherFrame, resultFrame);
                 } else{
 
                 }
@@ -115,23 +145,53 @@ public class ResultsScreen {
         sortByBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if(sortByBox.getSelectedItem().toString() == "Lowest Price"){
-                    theResults.sortBy(Comparator.comparing(Trip::getPrice));
-                } else if(sortByBox.getSelectedItem().toString() == "Earliest Arrival Time"){
-                    theResults.sortBy(Comparator.comparing(Trip::getArrivalTime));
-                } else if(sortByBox.getSelectedItem().toString() == "Earliest Departure Time"){
-                    theResults.sortBy(Comparator.comparing(Trip::getDepartureTime));
-                } else if(sortByBox.getSelectedItem().toString() == "Shortest Travel Time"){
-                    theResults.sortBy(Comparator.comparing(Trip::getTravelTime));
-                } else if(sortByBox.getSelectedItem().toString() == "Highest Price"){
-                    theResults.sortBy(Comparator.comparing(Trip::getPrice).reversed());
-                } else if(sortByBox.getSelectedItem().toString() == "Longest Travel Time"){
-                    theResults.sortBy(Comparator.comparing(Trip::getTravelTime).reversed());
-                } else if(sortByBox.getSelectedItem().toString() == "Latest Arrival Time"){
-                    theResults.sortBy(Comparator.comparing(Trip::getArrivalTime).reversed());
-                } else if(sortByBox.getSelectedItem().toString() == "Latest Departure Time"){
-                    theResults.sortBy(Comparator.comparing(Trip::getDepartureTime).reversed());
+
+                if(isRoundTrip){
+                    if(sortByBox.getSelectedItem().toString() == "Lowest Price"){
+                        theResults.sortBy(Comparator.comparing(Trip::getPrice));
+                        theResultsR.sortBy(Comparator.comparing(Trip::getPrice));
+                    } else if(sortByBox.getSelectedItem().toString() == "Earliest Arrival Time"){
+                        theResults.sortBy(Comparator.comparing(Trip::getArrivalTime));
+                        theResultsR.sortBy(Comparator.comparing(Trip::getArrivalTime));
+                    } else if(sortByBox.getSelectedItem().toString() == "Earliest Departure Time"){
+                        theResults.sortBy(Comparator.comparing(Trip::getDepartureTime));
+                        theResultsR.sortBy(Comparator.comparing(Trip::getDepartureTime));
+                    } else if(sortByBox.getSelectedItem().toString() == "Shortest Travel Time"){
+                        theResults.sortBy(Comparator.comparing(Trip::getTravelTime));
+                        theResultsR.sortBy(Comparator.comparing(Trip::getTravelTime));
+                    } else if(sortByBox.getSelectedItem().toString() == "Highest Price"){
+                        theResults.sortBy(Comparator.comparing(Trip::getPrice).reversed());
+                        theResultsR.sortBy(Comparator.comparing(Trip::getPrice).reversed());
+                    } else if(sortByBox.getSelectedItem().toString() == "Longest Travel Time"){
+                        theResults.sortBy(Comparator.comparing(Trip::getTravelTime).reversed());
+                        theResultsR.sortBy(Comparator.comparing(Trip::getTravelTime).reversed());
+                    } else if(sortByBox.getSelectedItem().toString() == "Latest Arrival Time"){
+                        theResults.sortBy(Comparator.comparing(Trip::getArrivalTime).reversed());
+                        theResultsR.sortBy(Comparator.comparing(Trip::getArrivalTime).reversed());
+                    } else if(sortByBox.getSelectedItem().toString() == "Latest Departure Time"){
+                        theResults.sortBy(Comparator.comparing(Trip::getDepartureTime).reversed());
+                        theResultsR.sortBy(Comparator.comparing(Trip::getDepartureTime).reversed());
+                    }
+                } else{
+                    if(sortByBox.getSelectedItem().toString() == "Lowest Price"){
+                        theResults.sortBy(Comparator.comparing(Trip::getPrice));
+                    } else if(sortByBox.getSelectedItem().toString() == "Earliest Arrival Time"){
+                        theResults.sortBy(Comparator.comparing(Trip::getArrivalTime));
+                    } else if(sortByBox.getSelectedItem().toString() == "Earliest Departure Time"){
+                        theResults.sortBy(Comparator.comparing(Trip::getDepartureTime));
+                    } else if(sortByBox.getSelectedItem().toString() == "Shortest Travel Time"){
+                        theResults.sortBy(Comparator.comparing(Trip::getTravelTime));
+                    } else if(sortByBox.getSelectedItem().toString() == "Highest Price"){
+                        theResults.sortBy(Comparator.comparing(Trip::getPrice).reversed());
+                    } else if(sortByBox.getSelectedItem().toString() == "Longest Travel Time"){
+                        theResults.sortBy(Comparator.comparing(Trip::getTravelTime).reversed());
+                    } else if(sortByBox.getSelectedItem().toString() == "Latest Arrival Time"){
+                        theResults.sortBy(Comparator.comparing(Trip::getArrivalTime).reversed());
+                    } else if(sortByBox.getSelectedItem().toString() == "Latest Departure Time"){
+                        theResults.sortBy(Comparator.comparing(Trip::getDepartureTime).reversed());
+                    }
                 }
+
 
                 ResultsBox.removeAllItems();
                 // Print out the trips
@@ -140,6 +200,17 @@ public class ResultsScreen {
                     theTrip = printTrip.apply(t);
 
                     ResultsBox.addItem(theTrip);
+                }
+
+                if(isRoundTrip){
+                    ResultsBoxR.removeAllItems();
+                    // Print out the trips
+                    for(Trip t: theResultsR.getTrips()){
+                        String theTrip;
+                        theTrip = printTrip.apply(t);
+
+                        ResultsBoxR.addItem(theTrip);
+                    }
                 }
             }
         });
