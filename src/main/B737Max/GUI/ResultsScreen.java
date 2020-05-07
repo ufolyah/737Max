@@ -1,6 +1,7 @@
 package B737Max.GUI;
 
 import B737Max.Components.SearchConfig;
+import B737Max.Components.ServiceBase;
 import B737Max.Components.Trip;
 import B737Max.Components.Trips;
 
@@ -23,7 +24,7 @@ public class ResultsScreen {
         resultFrame.setContentPane((ResultsPanel));
         resultFrame.setSize(1920, 500);
         resultFrame.setLocationRelativeTo(null);
-        resultFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        resultFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         resultFrame.setVisible(true);
 
         if(theResults.getTrips().length == 0){
@@ -58,7 +59,14 @@ public class ResultsScreen {
             public void actionPerformed(ActionEvent actionEvent) {
                 int result = JOptionPane.showConfirmDialog(null, "Are you sure you would like to reserve this flight?");
                 if(result == JOptionPane.YES_OPTION){
+                    Trip[] theTrip = new Trip[1];
+                    theTrip[0] = theResults.getTrips()[ResultsBox.getSelectedIndex()];
+                    System.out.println(theTrip[0].toString());
+                    try{
+                        ServiceBase.reserve(theTrip);
+                    } catch(Exception e){
 
+                    }
                 } else{
 
                 }
@@ -76,6 +84,7 @@ public class ResultsScreen {
 
     public void returnToSearch(JFrame otherFrame, JFrame resultFrame){
         otherFrame.setVisible(true);
+        resultFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         resultFrame.dispatchEvent(new WindowEvent(resultFrame, WindowEvent.WINDOW_CLOSING));
     }
 
