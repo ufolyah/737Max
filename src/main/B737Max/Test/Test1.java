@@ -4,7 +4,7 @@ import B737Max.Components.ServerAPIAdapter;
 
 import java.io.IOException;
 
-public class Test1 {
+class Test1 {
     public static void main(String[] args) throws Exception{
         ServerAPIAdapter service = ServerAPIAdapter.getInstance();
         String r = "<Flight number=\"4214\" seating=\"FirstClass\"/>";

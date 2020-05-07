@@ -76,7 +76,7 @@ public class XMLInterface {
     }
 
     /**
-     * @param xml
+     * @param xml the xml of flight
      * @return list of Flights
      */
     public static Flight[] parseFlights(String xml) {

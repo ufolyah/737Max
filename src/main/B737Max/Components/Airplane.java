@@ -22,10 +22,11 @@ public class Airplane {
     private final int coachSeats;
 
     /**
-     * @param manufacturer
-     * @param model
-     * @param firstSeats
-     * @param coachSeats
+     * Construct an Airplane instance with manufacturer,model,firstSeats,coachSeats
+     * @param manufacturer manufacturer of the airplane
+     * @param model model of the airplane
+     * @param firstSeats Total number of FirstSeat for the airplane
+     * @param coachSeats Total number of CoachSeat for the airplane
      */
     public Airplane(String manufacturer, String model, int firstSeats, int coachSeats) {
         this.manufacturer = manufacturer;
@@ -35,7 +36,8 @@ public class Airplane {
     }
 
     /**
-     * @return
+     * get the Manufacturer of the airport
+     * @return manufacturer
      */
     public String getManufacturer() {
         return manufacturer;
@@ -43,7 +45,7 @@ public class Airplane {
 
     /**
      * get a string of basic airport information
-     * @return
+     * @return manufacturer, model, number of firstSeats, number of coachSeats
      */
     @Override
     public String toString() {
@@ -56,30 +58,33 @@ public class Airplane {
     }
 
     /**
-     * @return
+     * get the model of the airplane
+     * @return model
      */
     public String getModel() {
         return model;
     }
 
     /**
-     * @return
+     * Total number of FirstSeat for the airplane
+     * @return number of FirstSeat
      */
     public int getFirstSeats() {
         return firstSeats;
     }
 
     /**
-     * @return
+     * Total number of CoachSeat for the airplane
+     * @return number of CoachSeat
      */
     public int getCoachSeats() {
         return coachSeats;
     }
 
     /**
-     * determine whether two objects are equal
-     * @param obj
-     * @return
+     * determine whether two airplanes are the same
+     * @param obj an airplane
+     * @return whether two airplanes are the same
      */
     @Override
     public boolean equals(Object obj) {

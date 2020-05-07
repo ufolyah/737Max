@@ -2,7 +2,7 @@ package B737Max.Test;
 
 import B737Max.Components.*;
 
-public class Test2 {
+class Test2 {
     public static void main(String[] args) throws Exception {
         ServerAPIAdapter service = ServerAPIAdapter.getInstance();
         Airports airports = Airports.getInstance();

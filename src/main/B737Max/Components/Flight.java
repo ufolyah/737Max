@@ -24,7 +24,9 @@ public class Flight {
 
     /**
      * get a string of basic flight information
-     * @return
+     * @return basic flight information including departureTime, arrivalTime, travelTime,departureAirport,
+     * arrivalAirport,flightNo,airplane,number of FirstRemained, number of CoachRemained, price of FirstSeat,
+     * price of coachSeat
      */
     @Override
     public String toString() {
@@ -44,96 +46,107 @@ public class Flight {
     }
 
     /**
-     * @return
+     * get hte departure time of the flight
+     * @return the departure time
      */
     public ZonedDateTime getDepartureTime() {
         return departureTime;
     }
 
     /**
-     * @return
+     * get arrival time of the flight
+     * @return the arrival time
      */
     public ZonedDateTime getArrivalTime() {
         return arrivalTime;
     }
 
     /**
-     * @return
+     * get the whole travel time of the flight
+     * @return the travel time
      */
     public Duration getTravelTime() {
         return travelTime;
     }
 
     /**
-     * @return
+     * get the departure airport of the flight
+     * @return the departure airport
      */
     public Airport getDepartureAirport() {
         return departureAirport;
     }
 
     /**
-     * @return
+     * get the arrival airport of the flight
+     * @return the arrival airport
      */
     public Airport getArrivalAirport() {
         return arrivalAirport;
     }
 
     /**
-     * @return
+     * get the flight number
+     * @return the flight number
      */
     public String getFlightNo() {
         return flightNo;
     }
 
     /**
-     * @return
+     * get the airplane of the flight
+     * @return airplane
      */
     public Airplane getAirplane() {
         return airplane;
     }
 
     /**
-     * @return
+     * get the number of remained firstSeat in the flight
+     * @return the number of remained firstSeat
      */
     public int getNumFirstRemained() {
         return numFirstRemained;
     }
 
     /**
-     * @return
+     * get the number of remained coachSeat in the flight
+     * @return the number of remained coachSeat
      */
     public int getNumCoachRemained() {
         return numCoachRemained;
     }
 
     /**
-     * @return
+     * get the price of firstSeat in the flight
+     * @return the price of firstSeat in the flight
      */
     public BigDecimal getFirstPrice() {
         return firstPrice;
     }
 
     /**
-     * @return
+     * get the price of coachSeat in the flight
+     * @return price of coachSeat in the flight
      */
     public BigDecimal getCoachPrice() {
         return coachPrice;
     }
 
     /**
-     *
-     * @param departureTime
-     * @param arrivalTime
-     * @param travelTime
-     * @param departureAirport
-     * @param arrivalAirport
-     * @param flightNo
-     * @param airplane
-     * @param numFirstRemained
-     * @param numCoachRemained
-     * @param firstPrice
-     * @param coachPrice
-     * @throws IllegalArgumentException
+     * construct a flight instance
+     * @param departureTime departure time of the flight
+     * @param arrivalTime arrival time of the flight
+     * @param travelTime whole travel time of the flight
+     * @param departureAirport departure airport of the flight
+     * @param arrivalAirport arrival airport of the flight
+     * @param flightNo flight number
+     * @param airplane airplane of the flight
+     * @param numFirstRemained remained number of firstSeat in the flight
+     * @param numCoachRemained remained number of coachSeat in the flight
+     * @param firstPrice price of firstSeat of the flight
+     * @param coachPrice price of coach Seat  of the flight
+     * @throws IllegalArgumentException throw a warning when there is not available seat in both firstClass and coachClass
      */
     public Flight(ZonedDateTime departureTime, ZonedDateTime arrivalTime, Duration travelTime, Airport departureAirport,
                   Airport arrivalAirport, String flightNo, Airplane airplane, int numFirstRemained,
@@ -156,16 +169,16 @@ public class Flight {
 
     /**
      * Is there available seats
-     * @return
+     * @return whether there is available seat
      */
     public boolean checkAvailable() {
         return numFirstRemained>0 || numCoachRemained>0;
     }
 
     /**
-     * Return the seat number of available class
-     * @param seat
-     * @return
+     * Return the available classes
+     * @param seat seatClass
+     * @return the available classes
      */
     public SeatClass checkSeatClass(SeatClass seat) {
         if (numFirstRemained>0 && numCoachRemained>0) {
@@ -181,8 +194,8 @@ public class Flight {
 
     /**
      * Return the single price of available Seat type
-     * @param seat
-     * @return
+     * @param seat SeatClass
+     * @return the price of corresponding class
      */
     public BigDecimal getPrice(SeatClass seat) {
         if (seat==SeatClass.FIRST) {

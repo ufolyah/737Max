@@ -10,7 +10,8 @@ package B737Max.Components;
 public enum SeatClass {
     FIRST {
         /**
-         * @return "FirstClass"
+         * return a string "FirstClass"
+         * @return string "FirstClass"
          */
         @Override
         public String toString() {
@@ -19,7 +20,8 @@ public enum SeatClass {
     },
     COACH {
         /**
-         * @return "Coach"
+         * return a string "Coach"
+         * @return string "Coach"
          */
         @Override
         public String toString() {

@@ -3,9 +3,8 @@ package B737Max.Test;
 import B737Max.Components.*;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 
-public class Test5 {
+class Test5 {
     public static void main(String[] args) throws Exception {
         ServiceBase.load();
 
