@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Comparator;
 
 public class ResultsScreen {
     private JPanel ResultsPanel;
@@ -78,6 +79,33 @@ public class ResultsScreen {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 returnToSearch(otherFrame, resultFrame);
+            }
+        });
+
+        sortByBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if(sortByBox.getSelectedItem().toString() == "Lowest Price"){
+                    theResults.sortBy(Comparator.comparing(Trip::getPrice));
+                } else if(sortByBox.getSelectedItem().toString() == "Earliest Arrival Time"){
+                    theResults.sortBy(Comparator.comparing(Trip::getArrivalTime));
+                } else if(sortByBox.getSelectedItem().toString() == "Earliest Departure Time"){
+                    theResults.sortBy(Comparator.comparing(Trip::getDepartureTime));
+                } else if(sortByBox.getSelectedItem().toString() == "Shortest Travel Time"){
+                    theResults.sortBy(Comparator.comparing(Trip::getTravelTime));
+                }
+
+                ResultsBox.removeAllItems();
+                // Print out the trips
+                for(Trip t: theResults.getTrips()){
+                    String theTrip;
+                    theTrip = "Flight " + t.getFlights()[0].getFlightNo() + " from " + t.getFlights()[0].getDepartureAirport().getName() + " to "
+                            + t.getFlights()[0].getArrivalAirport().getName() + ",     Departure Time: " + t.getDepartureTime()
+                            + ",       Arrival Time: " + t.getArrivalTime() + ",    Seating Class: " + t.getSeatClass()[0].toString() + ",   Layovers: "
+                            + t.getLayovers().length + ",    Price: $" + t.getPrice();
+
+                    ResultsBox.addItem(theTrip);
+                }
             }
         });
     }
