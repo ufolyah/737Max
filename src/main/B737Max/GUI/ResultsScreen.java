@@ -18,7 +18,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.function.Function;
 
-public class ResultsScreen {
+class ResultsScreen {
     private JPanel ResultsPanel;
     private JComboBox ResultsBox;
     private JButton reserveTicketButton;
@@ -287,7 +287,7 @@ public class ResultsScreen {
         });
     }
 
-    public void returnToSearch(JFrame otherFrame, JFrame resultFrame){
+    private void returnToSearch(JFrame otherFrame, JFrame resultFrame){
         otherFrame.setVisible(true);
         resultFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         resultFrame.dispatchEvent(new WindowEvent(resultFrame, WindowEvent.WINDOW_CLOSING));

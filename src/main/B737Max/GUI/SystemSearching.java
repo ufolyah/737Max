@@ -7,7 +7,7 @@ import B737Max.Components.Trips;
 import javax.swing.*;
 import java.util.concurrent.TimeUnit;
 
-public class SystemSearching {
+class SystemSearching {
     JFrame systemSearchingFrame;
     private JPanel systemSearchPanel;
     private JLabel searchingLabel;
@@ -24,7 +24,7 @@ public class SystemSearching {
 
     }
 
-    public void hideScreen(){
+    void hideScreen(){
         systemSearchingFrame.setVisible(false);
     }
 
