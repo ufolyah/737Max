@@ -76,6 +76,11 @@ public class Airplane {
         return coachSeats;
     }
 
+    /**
+     * determine whether two objects are equal
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

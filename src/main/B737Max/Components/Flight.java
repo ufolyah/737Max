@@ -155,6 +155,7 @@ public class Flight {
     }
 
     /**
+     * Is there available seats
      * @return
      */
     public boolean checkAvailable() {
@@ -162,7 +163,7 @@ public class Flight {
     }
 
     /**
-     * Is there available seats
+     * Return the seat number of available class
      * @param seat
      * @return
      */

@@ -45,6 +45,7 @@ class SearchTask implements Runnable {
         this.t = t;
     }
 
+
     @Override
     public void run() {
         if (t==Type.DEPARTURE) {

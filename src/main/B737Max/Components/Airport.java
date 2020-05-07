@@ -104,7 +104,7 @@ public class Airport {
     }
     
     /**
-     *
+     * determine whether two objects are equal
      * @param obj
      * @return
      */
