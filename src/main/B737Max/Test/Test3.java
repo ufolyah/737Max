@@ -7,7 +7,7 @@ import B737Max.Components.ServerAPIAdapter;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 
-public class Test3 {
+class Test3 {
     public static void main(String[] args) throws Exception {
         ServerAPIAdapter service = ServerAPIAdapter.getInstance();
         service.getAirports();
