@@ -267,6 +267,8 @@ public class SearchScreen {
                     try{
                         theResultsR = ServiceBase.searchFlights(searchConfigR);
                     } catch (Exception e){
+                        systemSearching.hideScreen();
+                        searchFrame.setVisible(true);
                         if (e instanceof IOException) {
                             JOptionPane.showMessageDialog(null, "Connection error.\n Check your internet connection or retry a few seconds later");
                         } else {

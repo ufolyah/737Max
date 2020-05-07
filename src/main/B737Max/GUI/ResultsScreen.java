@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -137,13 +138,21 @@ public class ResultsScreen {
                     try{
                         ServiceBase.reserve(theTrip);
 
-                    } catch(Exception e){
-
+                    } catch(IOException e){
+                        if (e.getMessage().equals("417")) {
+                            JOptionPane.showMessageDialog(null, "The database is locked. Try again later");
+                            return;
+                        } else if (e.getMessage().equals("304")) {
+                            JOptionPane.showMessageDialog(null, "The tickets were sold out, perform another search to obtain latest flight info.");
+                            returnToSearch(otherFrame, resultFrame);
+                            return;
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Connection Error. Try again later.");
+                            return;
+                        }
                     }
                     JOptionPane.showMessageDialog(null, "Your ticket has been reserved! Now returning to search menu...");
                     returnToSearch(otherFrame, resultFrame);
-                } else{
-
                 }
             }
         });
