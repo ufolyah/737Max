@@ -218,6 +218,7 @@ public class SearchScreen {
 
                 }
 
+                boolean validSearch = true;
                 Trips theResultsR = new Trips();
                 if(roundTripCheckBox.isSelected()){
                     int departStartTimeR = Integer.parseInt(startTimeframeR.getSelectedItem().toString().substring(0, 2));
@@ -252,13 +253,22 @@ public class SearchScreen {
                     } catch (Exception e){
 
                     }
+
+                    if(departDay >= departDayR){
+                        JOptionPane.showMessageDialog(null, "The return trip is before the outgoing trip!");
+                        validSearch = false;
+                    }
                 }
 
                 systemSearching.hideScreen();
-                if(roundTripCheckBox.isSelected()){
-                    ResultsScreen resultsScreen = new ResultsScreen(theResults, searchFrame, true, theResultsR);
+                if(!validSearch){
+                    searchFrame.setVisible(true);
                 } else {
-                    ResultsScreen resultsScreen = new ResultsScreen(theResults, searchFrame, false, theResults);
+                    if(roundTripCheckBox.isSelected()){
+                        ResultsScreen resultsScreen = new ResultsScreen(theResults, searchFrame, true, theResultsR);
+                    } else {
+                        ResultsScreen resultsScreen = new ResultsScreen(theResults, searchFrame, false, theResults);
+                    }
                 }
             }
         });
