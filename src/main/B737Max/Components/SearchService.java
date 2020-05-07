@@ -6,6 +6,11 @@ import java.util.*;
 import java.util.function.Function;
 
 
+/**
+ * A helper class representing a Tuple of Two objects.
+ * @param <K> The type of the first object.
+ * @param <V> The type of the second object.
+ */
 class Pair<K, V> {
     private K k;
     private V v;
@@ -24,6 +29,10 @@ class Pair<K, V> {
     }
 }
 
+
+/**
+ * Wrapper for a thread to perform getDepartureFlightsByTimeWindow or getArrivalFlightsByTimeWindow.
+ */
 class SearchTask implements Runnable {
     private volatile Flight[] taskResult;
     private Thread thread = null;
@@ -81,11 +90,81 @@ class SearchTask implements Runnable {
 
 /**
  *
+ <p>Flight Searching Service  </p>
+ <h3 id="flight-searching-algorithm">Flight Searching Algorithm</h3>
+ <h4 id="level-0-functions-provide-by-server-api-">Level 0 Functions (Provide by Server API)</h4>
+ <p><b>SearchDepartureFlightsInGMTDate</b><br><b>SearchArrivalFlightsInGMTDate</b>  </p>
+ <h4 id="level-1-functions">Level 1 Functions</h4>
+ <p><b>SearchDepartureFlightsInTimeWindow</b> (Provided in {@link ServerAPIAdapter})<br>input the time window and the airport.<br>return all flights depart from that airport within the time window.<br>Method:  </p>
+ <ul>
+ <li>expand the time window to GMT date.  </li>
+ <li>call SearchDepartureFlightsInGMTDate.  </li>
+ <li>filter the result by the remaining seats and the accurate time window.  </li>
+ </ul>
+ <p><b>SearchArrivalFlightsInTimeWindow</b> (Provided in {@link ServerAPIAdapter})<br>input the time window and the airport.<br>return all flights arrive at that airport within the time window.<br>Method:  </p>
+ <ul>
+ <li>Identical to SearchDepartureFlightsInTimeWindow  </li>
+ </ul>
+ <p><b>BuildTrip</b> (Provided in {@link Trip})<br>input a set of at most 3 flights<br>return a trip if the combination of the flights are valid, otherwise throw exception<br>Method:  </p>
+ <ul>
+ <li>check the layover airports between every 2 adjacent flights are consistent. (the arrival airport of the former should be exactly the same as the departure airport of the latter.)  </li>
+ <li>check the layover time between every 2 adjacent flights are within 0.5-4 hours.  </li>
+ <li>if both checks passed, return a trip, otherwise throw exception.  </li>
+ </ul>
+ <h4 id="level-2-functions">Level 2 Functions</h4>
+ <p><b>SearchTripsWithZeroLayover</b><br>input departure airport and time window, arrival airport and time window.<br>return trips that matching the input and has only one flight inside.<br>Method:  </p>
+ <ul>
+ <li>call SearchDepartureFlightsInTimeWindow  </li>
+ <li>filter the results by arrival airport and time window  </li>
+ <li>run BuildTrip upon each flight of the results.  </li>
+ <li>return trips.  </li>
+ </ul>
+ <p><b>SearchTripsWithOneLayover</b><br>input departure airport and time window, arrival airport and time window.<br>return trips that matching the input and has 2 flights inside.<br>Method:  </p>
+ <ul>
+ <li>call SearchDepartureFlightsInTimeWindow, get results as result 1.  </li>
+ <li>call SearchArrivalFlightsInTimeWindow, get results as result 2.  </li>
+ <li>Find all of the possible layover airports by calculating the arrival airports of result 1 intersect the departure airports of result 2.  </li>
+ <li>For every possible layover airport, choose all of the combination of flights arrives at that airport in result1 and flights depart from that airport in result 2, run BuildTrip.  </li>
+ <li>return all of the valid trips return from BuildTrip.  </li>
+ </ul>
+ <p><b>SearchTripsWithTwoLayover</b><br>input departure airport and time window, arrival airport and time window.<br>return trips that matching the input and has 3 flights inside.<br>Method:  </p>
+ <ul>
+ <li>call SearchDepartureFlightsInTimeWindow, get results as result 1.  </li>
+ <li>call SearchArrivalFlightsInTimeWindow, get results as result 2.  </li>
+ <li>Find all of the possible first layover airports by getting the arrival airport of result 1.  </li>
+ <li>Find all of the possible second layover airports by getting the departure airport of result 2.  </li>
+ <li>For every possible layover airport, find a loose bound on the possible time window that another flight connect to it within the time window has the probability to build a valid layover with a flight in existing flights.  </li>
+ <li>For every possible combination of the first layover airports and second layover airports where the two are not identical,  </li>
+ <li>call SearchTripsWithZeroLayover between the two airposts with the loose time windows, get the result as result 3.  </li>
+ <li>Build trip on all the combinations of flights from result 1 that arrive at the first airport, flights from result 2 that depart from the second airport, and flights in result 3 that connect the two airports.  </li>
+ <li>return all of the valid trips return from BuildTrip.  </li>
+ </ul>
+ <h4 id="level-3-functions-">Level 3 functions:</h4>
+ <p><b>SearchTrips</b><br>input {@link SearchConfig search config}<br>output candidate trips<br>Method:  </p>
+ <ul>
+ <li>Check search options. If arrival time window missing, guess one.  </li>
+ <li>Call SearchTripsWithZeroLayover  </li>
+ <li>Call SearchTripsWithOneLayover  </li>
+ <li>Call SearchTripsWithTwoLayover  </li>
+ <li>return candidate trips.  </li>
+ </ul>
+ <h4 id="helper-class-">Helper Class:</h4>
+ <p><b>SearchContext</b><br>Save all of the temporary data of one search request, including:  </p>
+ <ul>
+ <li>content of request: airports, time windows, preferred seat class;  </li>
+ <li>result cache of replicate server API calls: SearchDepartureFlightsInTimeWindow and SearchArrivalFlightsInTimeWindow in Level 2 functions;  </li>
+ <li>current search result and its size.  </li>
+ </ul>
+ A search context will be passed along Level 2 and 3 functions for one search request.
+ *
  */
 public class SearchService {
 
     private SearchService(){}
 
+    /**
+     *
+     */
     static class AirportFlightsMap extends HashMap<Airport, ArrayList<Flight>> {
 
         interface KeyExtractor extends Function<Flight, Airport> {
