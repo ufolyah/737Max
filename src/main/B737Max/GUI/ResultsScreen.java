@@ -1,17 +1,18 @@
 package B737Max.GUI;
 
-import B737Max.Components.SearchConfig;
-import B737Max.Components.ServiceBase;
-import B737Max.Components.Trip;
-import B737Max.Components.Trips;
+import B737Max.Components.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
+import java.util.function.Function;
 
 public class ResultsScreen {
     private JPanel ResultsPanel;
@@ -33,14 +34,40 @@ public class ResultsScreen {
             returnToSearch(otherFrame, resultFrame);
         }
 
+        Function<Duration, String> durStr = (Duration d) -> String.format("%02d",d.toHours()) +
+                "H" +
+                String.format("%02d", d.toMinutesPart()) +
+                "M";
+
+        Function<Trip, String> printPath = (Trip t) -> {
+            StringBuilder str = new StringBuilder();
+            Flight[] fList = t.getFlights();
+            SeatClass[] sList = t.getSeatClass();
+            Layover[] lList = t.getLayovers();
+            str.append(fList[0].getDepartureAirport().getCode());
+            for (int i=0; i<fList.length; i++) {
+                str.append(" --(")
+                        .append(sList[i].toString())
+                        .append(")--> ")
+                        .append(fList[i].getArrivalAirport().getCode());
+                if (i!=fList.length-1) {
+                    str.append("(Stay ")
+                            .append(durStr.apply(lList[i].duration))
+                            .append(")");
+                }
+            }
+            return str.toString();
+        };
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd HH:mm");
+        Function<Trip, String> printTrip = (Trip t) -> "Duration:" + durStr.apply(t.getTravelTime()) + "   Price:$" + String.format("%-8s", t.getPrice().toString()) + "  "
+                + formatter.format(t.getDepartureTime()) + "->" + formatter.format(t.getArrivalTime()) + "   "
+                + printPath.apply(t);
+
         // Print out the trips
         for(Trip t: theResults.getTrips()){
             String theTrip;
-            theTrip = "Flight " + t.getFlights()[0].getFlightNo() + " from " + t.getFlights()[0].getDepartureAirport().getName() + " to "
-                    + t.getFlights()[0].getArrivalAirport().getName() + ",     Departure Time: " + t.getDepartureTime()
-                    + ",       Arrival Time: " + t.getArrivalTime() + ",    Seating Class: " + t.getSeatClass()[0].toString() + ",   Layovers: "
-                    + t.getLayovers().length + ",    Price: $" + t.getPrice();
-
+            theTrip = printTrip.apply(t);
             ResultsBox.addItem(theTrip);
         }
 
@@ -99,10 +126,7 @@ public class ResultsScreen {
                 // Print out the trips
                 for(Trip t: theResults.getTrips()){
                     String theTrip;
-                    theTrip = "Flight " + t.getFlights()[0].getFlightNo() + " from " + t.getFlights()[0].getDepartureAirport().getName() + " to "
-                            + t.getFlights()[0].getArrivalAirport().getName() + ",     Departure Time: " + t.getDepartureTime()
-                            + ",       Arrival Time: " + t.getArrivalTime() + ",    Seating Class: " + t.getSeatClass()[0].toString() + ",   Layovers: "
-                            + t.getLayovers().length + ",    Price: $" + t.getPrice();
+                    theTrip = printTrip.apply(t);
 
                     ResultsBox.addItem(theTrip);
                 }
