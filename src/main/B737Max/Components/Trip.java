@@ -22,8 +22,9 @@ public class Trip {
     private SeatClass preferredSeatClass;
 
     /**
-     * @param flight
-     * @param preferredSeatClass
+     * construct a trip instance with flight, preferred seatClass
+     * @param flight flights of the trips
+     * @param preferredSeatClass the preferred searClass for the trips
      */
     public Trip(Flight flight, SeatClass preferredSeatClass) {
         assert flight!=null;
@@ -37,9 +38,11 @@ public class Trip {
     }
 
     /**
-     * @param flights
-     * @param preferredSeatClass
-     * @throws IllegalArgumentException
+     * construct a trip instance with flight, preferred seatClass
+     * The number of flights for this trip can not be null or more than 3
+     * @param flights the flights of the trips
+     * @param preferredSeatClass the preferred searClass for the trips
+     * @throws IllegalArgumentException throw an IllegalArgumentException when there are errors in parameters
      */
     public Trip(Flight[] flights, SeatClass preferredSeatClass) throws IllegalArgumentException {
         assert flights!=null;
@@ -67,8 +70,8 @@ public class Trip {
      * add a flight with relevant departure airport and arrival airport.
      * One trip could only have at most 3 flights.
      *
-     * @param f
-     * @return
+     * @param f the added flight
+     * @return whether the flight is added
      */
     public boolean addFlight(Flight f) {
         assert f!=null;
@@ -91,6 +94,7 @@ public class Trip {
     }
 
     /**
+     * Get the total travel time of the trip
      * @return total travel time of the trip
      */
     public Duration getTravelTime() {
@@ -98,6 +102,7 @@ public class Trip {
     }
 
     /**
+     * get departure time of the trip
      * @return departure time of the trip
      */
     public ZonedDateTime getDepartureTime() {
@@ -105,6 +110,7 @@ public class Trip {
     }
 
     /**
+     * get arrival time of the trip
      * @return arrival time of the trip
      */
     public ZonedDateTime getArrivalTime() {
@@ -112,6 +118,7 @@ public class Trip {
     }
 
     /**
+     * get total price of the trip
      * @return total price of the trip
      */
     public BigDecimal getPrice() {
@@ -123,6 +130,7 @@ public class Trip {
     }
 
     /**
+     * get all the flights of the trip
      * @return all the flights of the trip
      */
     public Flight[] getFlights() {
@@ -130,6 +138,7 @@ public class Trip {
     }
 
     /**
+     * get all the layovers of the trip
      * @return all the layovers of the trip
      */
     public Layover[] getLayovers() {
@@ -144,6 +153,7 @@ public class Trip {
     }
 
     /**
+     * get number of flights in the trip
      * @return number of flights in the trip
      */
     public int getNumFlights() {
@@ -151,6 +161,7 @@ public class Trip {
     }
 
     /**
+     * get details of the trip
      * @return details of the trip
      */
     public String toString() {

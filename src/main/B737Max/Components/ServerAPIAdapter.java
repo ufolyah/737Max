@@ -26,7 +26,8 @@ public class ServerAPIAdapter {
     private ServerAPIAdapter() {}
 
     /**
-     * @return
+     * get a server API adapter instance
+     * @return a server API adapter
      */
     public static ServerAPIAdapter getInstance() {
         singletonLock.lock();
@@ -38,8 +39,8 @@ public class ServerAPIAdapter {
     }
 
     /**
-     *
-     * @throws IOException
+     * get list of airports
+     * @throws IOException throw an IOException on input error
      */
     public void getAirports() throws IOException {
         String xml = httpGet(urlBase+QueryFactory.getAirports(teamName));
@@ -47,7 +48,8 @@ public class ServerAPIAdapter {
     }
 
     /**
-     * @throws IOException
+     * get list of airplanes
+     * @throws IOException throw an IOException on input error
      */
     public void getAirplanes() throws IOException {
         String xml = httpGet(urlBase+QueryFactory.getAirplanes(teamName));
@@ -59,31 +61,36 @@ public class ServerAPIAdapter {
     }
 
     /**
-     * @param airport
-     * @param dateInGMT
+     * get flights that satisfy the demand of departure airport and departure date
+     * @param airport departure airport of the flight
+     * @param dateInGMT local departure date of the flight
      * @return list of fights that satisfy the demand of departure airport and departure date
-     * @throws IOException
+     * @throws IOException throw an IOException on input error
      */
     public Flight[] getDepartureFlights(Airport airport, LocalDate dateInGMT) throws IOException {
         return getFlights(airport, dateInGMT, FlightSearchMode.DEPARTURE);
     }
 
     /**
-     * @param airport
-     * @param dateInGMT
+     * get fights that satisfy the demand of arrival airport and arrival date
+     *
+     * @param airport arrival airport of the flight
+     * @param dateInGMT local arrival date of the flight
      * @return list of fights that satisfy the demand of arrival airport and arrival date
-     * @throws IOException
+     * @throws IOException throw an IOException on input error
      */
     public Flight[] getArrivalFlights(Airport airport, LocalDate dateInGMT) throws IOException{
         return getFlights(airport, dateInGMT, FlightSearchMode.ARRIVAL);
     }
 
     /**
-     * @param airport
-     * @param begin
-     * @param end
+     * get fights that satisfy the demand of departure airport, date and time
+     *
+     * @param airport departure airport of the flight
+     * @param begin the begin of departure time window
+     * @param end the end of departure time window
      * @return list of fights that satisfy the demand of departure airport, date and time
-     * @throws IOException
+     * @throws IOException throw an IOException on input error
      */
     public Flight[] getDepartureFlightsByTimeWindow(Airport airport, ZonedDateTime begin, ZonedDateTime end)
         throws IOException {
@@ -91,11 +98,13 @@ public class ServerAPIAdapter {
     }
 
     /**
-     * @param airport
-     * @param begin
-     * @param end
+     * get fights that satisfy the demand of arrival airport, date and time
+     *
+     * @param airport arrival airport of the flight
+     * @param begin the begin of arrival time window
+     * @param end the end of arrival time window
      * @return list of fights that satisfy the demand of arrival airport, date and time
-     * @throws IOException
+     * @throws IOException throw an IOException on input error
      */
     public Flight[] getArrivalFlightsByTimeWindow(Airport airport, ZonedDateTime begin, ZonedDateTime end)
         throws IOException {
@@ -103,13 +112,14 @@ public class ServerAPIAdapter {
     }
 
     /**
+     * get fights that satisfy the airport, the time window of departure or arrival
      *
-     * @param airport
-     * @param begin
-     * @param end
-     * @param mode
-     * @return list of fights that satisfy the demand relevant features
-     * @throws IOException
+     * @param airport departure of arrival airport of the flight
+     * @param begin the begin of time window
+     * @param end the end of time window
+     * @param mode search by departure conditions or arrival conditions
+     * @return list of fights that satisfy the relevant features
+     * @throws IOException throw an IOException on input error
      */
     private Flight[] getFlightsByTimeWindow(Airport airport, ZonedDateTime begin, ZonedDateTime end, FlightSearchMode mode)
             throws IOException {
@@ -151,12 +161,13 @@ public class ServerAPIAdapter {
     }
 
     /**
+     * get flights that satisfy the airport and local date of departure or arrival
      *
-     * @param airport
-     * @param dateInGMT
-     * @param mode
-     * @return xml of flights that satisfy relevant features
-     * @throws IOException
+     * @param airport the airport of departure of arrival
+     * @param dateInGMT the local date of departure of arrival
+     * @param mode search by departure conditions or arrival conditions
+     * @return list of flights that satisfy relevant features
+     * @throws IOException throw an IOException on input error
      */
     private Flight[] getFlights(Airport airport, LocalDate dateInGMT, FlightSearchMode mode) throws IOException{
         String xml;
@@ -174,29 +185,33 @@ public class ServerAPIAdapter {
     }
 
     /**
-     * @throws IOException
+     * reset the server database
+     * @throws IOException throw an IOException on input error
      */
     public void reset() throws IOException {
         httpGet(urlBase+QueryFactory.getReset(teamName));
     }
 
     /**
-     * @throws IOException
+     * lock the server database
+     * @throws IOException throw an IOException on input error
      */
     public void lock() throws IOException {
         httpPost(urlBase, QueryFactory.postLock(teamName));
     }
 
     /**
-     * @throws IOException
+     * unlock the server database
+     * @throws IOException throw an IOException on input error
      */
     public void unlock() throws IOException {
         httpPost(urlBase, QueryFactory.postUnlock(teamName));
     }
 
     /**
-     * @param trips
-     * @throws IOException
+     * reserve the trips
+     * @param trips trips tht wants to reserver
+     * @throws IOException throw an IOException on input error
      */
     public void reserve(Trip[] trips) throws IOException {
         String q = QueryFactory.postReservation(teamName, trips);
@@ -206,7 +221,7 @@ public class ServerAPIAdapter {
     /**
      * @param query
      * @return
-     * @throws IOException
+     * @throws IOException throw an IOException on input error
      */
     public String httpGet(String query) throws IOException {
         /*
@@ -246,7 +261,7 @@ public class ServerAPIAdapter {
      * @param query
      * @param body
      * @return
-     * @throws IOException
+     * @throws IOException throw an IOException on input error
      */
     public String httpPost(String query, String body) throws IOException {
         URL url = new URL(query);

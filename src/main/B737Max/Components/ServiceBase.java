@@ -10,7 +10,8 @@ import java.io.IOException;
  */
 public class ServiceBase {
     /**
-     * @throws IOException
+     * load the airports and airplanes from the server
+     * @throws IOException throw an IOException on input error
      */
     public static void load() throws IOException {
         ServerAPIAdapter.getInstance().getAirports();
@@ -18,10 +19,11 @@ public class ServiceBase {
     }
 
     /**
+     * search flights by special criteria
      * @param cfg  search criteria
      * @return results that satisfy the search criteria
-     * @throws IllegalArgumentException
-     * @throws IOException
+     * @throws IllegalArgumentException throw an IllegalArgumentException when search criteria is illegal
+     * @throws IOException throw an IOException on input error
      */
     public static Trips searchFlights(SearchConfig cfg) throws IllegalArgumentException, IOException {
         return SearchService.searchTrips(cfg);
@@ -29,8 +31,8 @@ public class ServiceBase {
 
     /**
      * lock the server database during the reservation
-     * @param trips
-     * @throws IOException
+     * @param trips the trips that need to be reserved
+     * @throws IOException throw an IOException when there is an error
      */
     public static void reserve(Trip[] trips) throws IOException {
         ServerAPIAdapter.getInstance().lock();
