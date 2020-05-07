@@ -4,6 +4,9 @@ import java.io.IOException;
 
 /**
  *
+ * @author xudufy
+ * @version 2.0 2020-05-03
+ * @since 2020-03-01
  */
 public class ServiceBase {
     /**
@@ -15,8 +18,8 @@ public class ServiceBase {
     }
 
     /**
-     * @param cfg
-     * @return
+     * @param cfg  search criteria
+     * @return results that satisfy the search criteria
      * @throws IllegalArgumentException
      * @throws IOException
      */
@@ -25,6 +28,7 @@ public class ServiceBase {
     }
 
     /**
+     * lock the server database during the reservation
      * @param trips
      * @throws IOException
      */

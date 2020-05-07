@@ -4,7 +4,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
+ * This class build query string for HTTP get and return the final string
  *
+ *
+ *  @author xudufy
+ *  @version 2.0 2020-05-03
+ *  @since 2020-03-01
  */
 public class QueryFactory {
     /**
@@ -18,6 +23,8 @@ public class QueryFactory {
     }
 
     /**
+     * Return a query string that can be passed to HTTP URL to request list of airplanes
+     *
      * @param teamName
      * @return
      */
@@ -26,6 +33,9 @@ public class QueryFactory {
     }
 
     /**
+     *
+     * Return a query string to request list of flight
+     *
      * @param teamName
      * @param airport
      * @param day
@@ -61,6 +71,7 @@ public class QueryFactory {
     }
 
     /**
+     * Reset the server database
      * @param teamName
      * @return
      */
@@ -88,6 +99,12 @@ public class QueryFactory {
         return "team=" + teamName + "&action=unlockDB";
     }
 
+    /**
+     * Return the reservation of trips
+     * @param teamName
+     * @param trips
+     * @return
+     */
     public static String postReservation(String teamName, Trip[] trips) {
         String tripXml = XMLInterface.buildReservations(trips);
         return "team="+teamName+"&action=buyTickets&flightData="+tripXml;

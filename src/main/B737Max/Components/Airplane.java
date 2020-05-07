@@ -2,12 +2,24 @@ package B737Max.Components;
 
 /**
  *
+ * This class holds values pertaining to a single Airplane. Class member attributes
+ * are the same as defined by the CS509 server API and store values after conversion from
+ * XML received from the server to Java primitives.
+ *
+ *
+ * @author xudufy
+ * @version 2.0 2020-05-03
+ * @since 2020-03-01
  */
 public class Airplane {
-    private String manufacturer;
-    private String model;
-    private int firstSeats;
-    private int coachSeats;
+    /** Manufacturer of the airplane */
+    private final String manufacturer;
+    /** Model of the airplane */
+    private final String model;
+    /** Total number of firstSeat for the airplane */
+    private final int firstSeats;
+    /** Total number of CoachSeat for the airplane */
+    private final int coachSeats;
 
     /**
      * @param manufacturer
@@ -30,6 +42,7 @@ public class Airplane {
     }
 
     /**
+     * get a string of basic airport information
      * @return
      */
     @Override
@@ -63,4 +76,24 @@ public class Airplane {
         return coachSeats;
     }
 
+    /**
+     * determine whether two objects are equal
+     * @param obj
+     * @return
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Airplane other = (Airplane) obj;
+        return manufacturer.equals(other.manufacturer) && model.equals(other.model) && firstSeats == other.firstSeats
+                && coachSeats == other.coachSeats;
+    }
 }

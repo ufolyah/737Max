@@ -3,19 +3,25 @@ package B737Max.Components;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
- *
+ * @author xudufy
+ * @version 2.0 2020-05-03
+ * @since 2020-03-01
  */
 public class ServerAPIAdapter {
     private final String teamName="737Max";
     private final String urlBase="http://cs509.cs.wpi.edu:8181/CS509.server/ReservationSystem";
     private static ServerAPIAdapter instance=null;
+    private static final Lock singletonLock = new ReentrantLock();
 
     private ServerAPIAdapter() {}
 
@@ -23,9 +29,11 @@ public class ServerAPIAdapter {
      * @return
      */
     public static ServerAPIAdapter getInstance() {
+        singletonLock.lock();
         if (instance==null) {
             instance = new ServerAPIAdapter();
         }
+        singletonLock.unlock();
         return instance;
     }
 
@@ -53,7 +61,7 @@ public class ServerAPIAdapter {
     /**
      * @param airport
      * @param dateInGMT
-     * @return
+     * @return list of fights that satisfy the demand of departure airport and departure date
      * @throws IOException
      */
     public Flight[] getDepartureFlights(Airport airport, LocalDate dateInGMT) throws IOException {
@@ -63,7 +71,7 @@ public class ServerAPIAdapter {
     /**
      * @param airport
      * @param dateInGMT
-     * @return
+     * @return list of fights that satisfy the demand of arrival airport and arrival date
      * @throws IOException
      */
     public Flight[] getArrivalFlights(Airport airport, LocalDate dateInGMT) throws IOException{
@@ -74,7 +82,7 @@ public class ServerAPIAdapter {
      * @param airport
      * @param begin
      * @param end
-     * @return
+     * @return list of fights that satisfy the demand of departure airport, date and time
      * @throws IOException
      */
     public Flight[] getDepartureFlightsByTimeWindow(Airport airport, ZonedDateTime begin, ZonedDateTime end)
@@ -86,7 +94,7 @@ public class ServerAPIAdapter {
      * @param airport
      * @param begin
      * @param end
-     * @return
+     * @return list of fights that satisfy the demand of arrival airport, date and time
      * @throws IOException
      */
     public Flight[] getArrivalFlightsByTimeWindow(Airport airport, ZonedDateTime begin, ZonedDateTime end)
@@ -94,6 +102,15 @@ public class ServerAPIAdapter {
         return getFlightsByTimeWindow(airport, begin, end, FlightSearchMode.ARRIVAL);
     }
 
+    /**
+     *
+     * @param airport
+     * @param begin
+     * @param end
+     * @param mode
+     * @return list of fights that satisfy the demand relevant features
+     * @throws IOException
+     */
     private Flight[] getFlightsByTimeWindow(Airport airport, ZonedDateTime begin, ZonedDateTime end, FlightSearchMode mode)
             throws IOException {
 
@@ -133,6 +150,14 @@ public class ServerAPIAdapter {
         return ans.toArray(new Flight[0]);
     }
 
+    /**
+     *
+     * @param airport
+     * @param dateInGMT
+     * @param mode
+     * @return xml of flights that satisfy relevant features
+     * @throws IOException
+     */
     private Flight[] getFlights(Airport airport, LocalDate dateInGMT, FlightSearchMode mode) throws IOException{
         String xml;
         switch (mode) {
@@ -199,13 +224,15 @@ public class ServerAPIAdapter {
          * line by line to build the full return string
          */
         int responseCode = connection.getResponseCode();
+//        System.out.println("Sending 'GET':" + query);
+//        System.out.println("Response Code : " + responseCode+"\n");
 
         if (responseCode/100!=2) {
             throw new IOException(String.valueOf(responseCode));
         }
 
         InputStream inputStream = connection.getInputStream();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("windows-1252")));
         String line;
         while ((line = reader.readLine()) != null) {
             result.append(line);

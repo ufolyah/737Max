@@ -7,7 +7,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
+ * This class holds values pertaining to a single trip. Class member attributes
+ * are composed of several flights, airports and layovers.
  *
+ * @author xudufy
+ * @version 2.0 2020-05-03
+ * @since 2020-03-01
  */
 public class Trip {
     private int numFlights;
@@ -59,6 +64,9 @@ public class Trip {
     }
 
     /**
+     * add a flight with relevant departure airport and arrival airport.
+     * One trip could only have at most 3 flights.
+     *
      * @param f
      * @return
      */
@@ -83,28 +91,28 @@ public class Trip {
     }
 
     /**
-     * @return
+     * @return total travel time of the trip
      */
     public Duration getTravelTime() {
         return Duration.between(flights.get(0).getDepartureTime(), flights.get(flights.size()-1).getArrivalTime());
     }
 
     /**
-     * @return
+     * @return departure time of the trip
      */
     public ZonedDateTime getDepartureTime() {
         return flights.get(0).getDepartureTime();
     }
 
     /**
-     * @return
+     * @return arrival time of the trip
      */
     public ZonedDateTime getArrivalTime() {
         return flights.get(flights.size() - 1).getArrivalTime();
     }
 
     /**
-     * @return
+     * @return total price of the trip
      */
     public BigDecimal getPrice() {
         BigDecimal price = BigDecimal.ZERO;
@@ -115,35 +123,35 @@ public class Trip {
     }
 
     /**
-     * @return
+     * @return all the flights of the trip
      */
     public Flight[] getFlights() {
         return flights.toArray(new Flight[0]).clone();
     }
 
     /**
-     * @return
+     * @return all the layovers of the trip
      */
     public Layover[] getLayovers() {
         return layovers.toArray(new Layover[0]).clone();
     }
 
     /**
-     * @return
+     * @return seat types of the trip
      */
     public SeatClass[] getSeatClass() {
         return seatClass.toArray(new SeatClass[0]).clone();
     }
 
     /**
-     * @return
+     * @return number of flights in the trip
      */
     public int getNumFlights() {
         return numFlights;
     }
 
     /**
-     * @return
+     * @return details of the trip
      */
     public String toString() {
         StringBuilder s = new StringBuilder();

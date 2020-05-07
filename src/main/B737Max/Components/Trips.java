@@ -8,7 +8,10 @@ import java.util.HashMap;
 import java.util.function.Function;
 
 /**
- *
+ * The class aggregates a number of trip. The aggregate is implemented as an HashMap.
+ * @author xudufy
+ * @version 2.0 2020-05-04
+ * @since 2020-03-01
  */
 public class Trips {
 
@@ -39,6 +42,7 @@ public class Trips {
     }
 
     /**
+     * Add a new trip into list
      * @param trip
      */
     public void addTrip(Trip trip) {
@@ -55,6 +59,7 @@ public class Trips {
     }
 
     /**
+     * identify the filter
      * @param id
      * @param flt
      */
@@ -64,6 +69,7 @@ public class Trips {
     }
 
     /**
+     * Remove the filter options
      * @param id
      */
     public void removeFilter(String id) {
@@ -72,7 +78,7 @@ public class Trips {
     }
 
     /**
-     *
+     * Reset the filter options
      */
     public void resetFilter() {
         filters.clear();
@@ -80,7 +86,7 @@ public class Trips {
     }
 
     /**
-     * @return
+     * @return latest list of trips
      */
     public Trip[] getTrips() {
         if (!modifiedSinceLastResult) {
@@ -113,7 +119,7 @@ public class Trips {
     }
 
     /**
-     * @return
+     * @return the size of trip list
      */
     public int size() {
         return trips.size();

@@ -7,6 +7,10 @@ import java.time.LocalTime;
  * Contains all of the parameters needed for one flight search for one-way.
  * if the arrival/departure date is null, the corresponding time window should not used, and can be any value.
  * builder design pattern used.
+ *
+ * @author xudufy
+ * @version 2.0 2020-05-03
+ * @since 2020-03-01
  */
 public class SearchConfig {
 
@@ -16,6 +20,7 @@ public class SearchConfig {
     public SeatClass preferredSeatClass = SeatClass.COACH;
 
     /**
+     * set the departure date
      * @param departureDate
      * @return
      */
@@ -25,6 +30,8 @@ public class SearchConfig {
     }
 
     /**
+     * set the arrival date
+     *
      * @param arrivalDate
      * @return
      */
@@ -34,6 +41,7 @@ public class SearchConfig {
     }
 
     /**
+     * set the departure time window
      * @param departureWindowStart
      * @param departureWindowEnd
      * @return
@@ -45,6 +53,8 @@ public class SearchConfig {
     }
 
     /**
+     * det the arrival time window
+     *
      * @param arrivalWindowStart
      * @param arrivalWindowEnd
      * @return
@@ -56,6 +66,8 @@ public class SearchConfig {
     }
 
     /**
+     * set the departure airport
+     *
      * @param departureAirport
      * @return
      */
@@ -65,6 +77,8 @@ public class SearchConfig {
     }
 
     /**
+     * set the arrival airport
+     *
      * @param arrivalAirport
      * @return
      */
@@ -74,6 +88,8 @@ public class SearchConfig {
     }
 
     /**
+     * set the preferred seat type
+     *
      * @param preferredSeatClass
      * @return
      */

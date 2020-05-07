@@ -20,11 +20,16 @@ import java.util.ArrayList;
 
 /**
  *
+ * @author xudufy
+ * @version 2.0 2020-05-03
+ * @since 2020-04-01
  */
+
 public class XMLInterface {
     /**
+     * Parse the XMl to get the string of airports
      * @param xml
-     * @return
+     * @return list of airports
      */
     public static Airport[] parseAirports(String xml) {
         Document doc = buildDomDoc(xml);
@@ -46,8 +51,9 @@ public class XMLInterface {
     }
 
     /**
+     * Get the string of airplanes
      * @param xml
-     * @return
+     * @return list of airplanes
      */
     public static Airplane[] parseAirplanes(String xml) {
         Document doc = buildDomDoc(xml);
@@ -71,7 +77,7 @@ public class XMLInterface {
 
     /**
      * @param xml
-     * @return
+     * @return list of Flights
      */
     public static Flight[] parseFlights(String xml) {
         Document doc = buildDomDoc(xml);
@@ -149,8 +155,9 @@ public class XMLInterface {
     }
 
     /**
+     * Get the flight information of reservations
      * @param trips
-     * @return
+     * @return reservation detail
      */
     public static String buildReservations(Trip[] trips) {
         StringBuilder s = new StringBuilder();
@@ -164,10 +171,15 @@ public class XMLInterface {
         return s.toString();
     }
 
+    /**
+     *
+     * load the xml string into a DOM document and return the Document
+     *
+     * @param xmlString
+     * @return
+     */
     static private Document buildDomDoc (String xmlString) {
-        /*
-         * load the xml string into a DOM document and return the Document
-         */
+
         try {
             DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
@@ -182,11 +194,20 @@ public class XMLInterface {
         }
     }
 
+    /**
+     * @param ele
+     * @param tag
+     * @return
+     */
     private static String getOnlyChildTextByTagName(Element ele, String tag) {
         Element target = (Element) ele.getElementsByTagName(tag).item(0);
         return getElementText(target);
     }
 
+    /**
+     * @param ele
+     * @return
+     */
     private static String getElementText(Element ele) {
         if (ele==null) {
             System.out.println("null Element\n");
