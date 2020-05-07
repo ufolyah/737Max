@@ -36,13 +36,12 @@ public class Airport {
     private final double longitude;
 
     /**
+     * Construct an Airport instance with code, name, latitude, longitude
      *
-     * Sets all params in Class Airport
-     *
-     * @param code
-     * @param name
-     * @param latitude
-     * @param longitude
+     * @param code Three character code of the airport
+     * @param name Full name of the airport
+     * @param latitude latitude of airport in decimal format
+     * @param longitude Longitude of airport in decimal format
      */
     public Airport(String code, String name, double latitude, double longitude) {
         this.code = code;
@@ -55,7 +54,8 @@ public class Airport {
     }
 
     /**
-     * @return Basic information of the airport
+     * set a string of airport information
+     * @return Basic information of the airport including code,name, timezone ID, latitude, longitude
      */
     @Override
     public String toString() {
@@ -69,6 +69,7 @@ public class Airport {
     }
 
     /**
+     * get the code of airport
      * @return airport code
      */
     public String getCode() {
@@ -76,6 +77,7 @@ public class Airport {
     }
 
     /**
+     * get full name of airport
      * @return airport name
      */
     public String getName() {
@@ -83,6 +85,7 @@ public class Airport {
     }
 
     /**
+     * get timezone id of airport
      * @return timezone id
      */
     public ZoneId getTimeZone() {
@@ -90,6 +93,7 @@ public class Airport {
     }
 
     /**
+     * get latitude of airport
      * @return latitude of airport
      */
     public double getLatitude() {
@@ -97,6 +101,7 @@ public class Airport {
     }
 
     /**
+     * get longitude of airport
      * @return longitude of airport
      */
     public double getLongitude() {
@@ -104,9 +109,9 @@ public class Airport {
     }
     
     /**
-     * determine whether two objects are equal
-     * @param obj
-     * @return
+     * determine whether two airports are equal
+     * @param obj an airport
+     * @return whether two airports are equal
      */
     @Override
     public boolean equals(Object obj) {

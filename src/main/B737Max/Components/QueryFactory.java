@@ -16,7 +16,7 @@ public class QueryFactory {
      * Return a query string that can be passed to HTTP URL to request list of airports
      *
      * @param teamName is the name of the team to specify the data copy on server
-     * @return the query String which can be appended to URL to form HTTP GET request
+     * @return the query String of airports which can be appended to URL to form HTTP GET request
      */
     public static String getAirports(String teamName) {
         return "?team=" + teamName + "&action=list&list_type=airports";
@@ -25,22 +25,21 @@ public class QueryFactory {
     /**
      * Return a query string that can be passed to HTTP URL to request list of airplanes
      *
-     * @param teamName
-     * @return
+     * @param teamName is the name of the team to specify the data copy on server
+     * @return the query String of airplanes which can be appended to URL to form HTTP GET request
      */
     public static String getAirplanes(String teamName) {
         return "?team="+ teamName + "&action=list&list_type=airplanes";
     }
 
     /**
+     * Return a query string that can be passed to HTTP URL to request list of flight
      *
-     * Return a query string to request list of flight
-     *
-     * @param teamName
-     * @param airport
-     * @param day
-     * @param type
-     * @return
+     * @param teamName is the name of the team to specify the data copy on server
+     * @param airport the airport
+     * @param day the date
+     * @param type type of the airport
+     * @return  the query String of flights which can be appended to URL to form HTTP GET request
      */
     private static String getFlights(String teamName, Airport airport, LocalDate day, String type) {
         String airportCode = airport.getCode();
@@ -51,20 +50,24 @@ public class QueryFactory {
     }
 
     /**
-     * @param teamName
-     * @param airport
-     * @param day
-     * @return
+     * Return a query string that can be passed to HTTP URL to request list of flight.
+     * The list of flights should depart from special airport on special day
+     * @param teamName is the name of the team to specify the data copy on server
+     * @param airport the airport where the flights depart from
+     * @param day when the flights depart
+     * @return  a query String of flights which can be appended to URL to form HTTP GET request
      */
     public static String getDepartureFlights(String teamName, Airport airport, LocalDate day) {
         return getFlights(teamName, airport, day, "departing");
     }
 
     /**
-     * @param teamName
-     * @param airport
-     * @param day
-     * @return
+     * Return a query string that can be passed to HTTP URL to request list of flight.
+     * The list of flights should arrive at a special airport on special day
+     * @param teamName is the name of the team to specify the data copy on server
+     * @param airport the airport where the flights arrive at
+     * @param day when the fights arrive
+     * @return a query String of flights
      */
     public static String getArrivalFlights(String teamName, Airport airport, LocalDate day) {
         return getFlights(teamName, airport, day, "arriving");
@@ -72,8 +75,8 @@ public class QueryFactory {
 
     /**
      * Reset the server database
-     * @param teamName
-     * @return
+     * @param teamName is the name of the team to specify the data copy on server
+     * @return the String written to HTTP POST to reset server database
      */
     public static String getReset(String teamName) {
         return "?team=" + teamName + "&action=resetDB";
@@ -101,9 +104,9 @@ public class QueryFactory {
 
     /**
      * Return the reservation of trips
-     * @param teamName
-     * @param trips
-     * @return
+     * @param teamName is the name of the team to specify the data copy on server
+     * @param trips the reserved trips
+     * @return the String written to the HTTP POST to reserve the trips
      */
     public static String postReservation(String teamName, Trip[] trips) {
         String tripXml = XMLInterface.buildReservations(trips);

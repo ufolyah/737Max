@@ -26,7 +26,8 @@ public class Airplanes {
     }
 
     /**
-     * @return
+     * Return an Airplanes instance
+     * @return an Airplane
      */
     public static Airplanes getInstance() {
         singletonLock.lock();
@@ -38,8 +39,8 @@ public class Airplanes {
     }
 
     /**
-     * set a list of airplanes
-     * @param airplanes
+     * build a hashmap based on model, so we can search the airplanes by model.
+     * @param airplanes list of airplanes
      */
     public void setList(Airplane[] airplanes) {
         wLock.lock();
@@ -51,8 +52,8 @@ public class Airplanes {
     }
 
     /**
-     *
-     * @return
+     * get the arraylist of airplanes
+     * @return the arraylist of airplanes
      */
     public Airplane[] getList() {
         rLock.lock();
@@ -64,9 +65,9 @@ public class Airplanes {
     }
 
     /**
-     * using model to get relevant airplane's code
-     * @param code
-     * @return
+     * using model  to get corresponding airplanes
+     * @param code model of the airplane
+     * @return the relevant airplane
      */
     public Airplane selectByModel(String code) {
         rLock.lock();

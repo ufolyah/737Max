@@ -60,7 +60,7 @@ public class Trips {
 
     /**
      * identify the filter
-     * @param id
+     * @param id id of the filter options
      * @param flt
      */
     public void filterBy(String id, Function<Trip, Boolean> flt) {
@@ -70,7 +70,7 @@ public class Trips {
 
     /**
      * Remove the filter options
-     * @param id
+     * @param id the id of filter options
      */
     public void removeFilter(String id) {
         filters.remove(id);
@@ -86,6 +86,7 @@ public class Trips {
     }
 
     /**
+     * get the latest trip list
      * @return latest list of trips
      */
     public Trip[] getTrips() {
@@ -119,6 +120,7 @@ public class Trips {
     }
 
     /**
+     * return the size of the list
      * @return the size of trip list
      */
     public int size() {

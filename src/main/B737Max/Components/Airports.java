@@ -28,8 +28,8 @@ public class Airports {
     }
 
     /**
-     *
-     * @return
+     * Return an airport instance
+     * @return an airport
      */
     public static Airports getInstance() {
         singletonLock.lock();
@@ -41,7 +41,8 @@ public class Airports {
     }
 
     /**
-     * @return
+     * Get the list of airports
+     * @return the list of airports
      */
     public Airport[] getList() {
         rLock.lock();
@@ -53,8 +54,8 @@ public class Airports {
     }
 
     /**
-     * set a list of airport including name and code
-     * @param list
+     * build two hashmaps based on airport name and airport code, so we can search airports by name or code
+     * @param list list of airports
      */
     public void setList(Airport[] list) {
         wLock.lock();
@@ -68,9 +69,9 @@ public class Airports {
     }
 
     /**
-     * using airport code to get the name
-     * @param code
-     * @return
+     * using airport code to get the airport
+     * @param code code of the airport
+     * @return the corresponding airport
      */
     public Airport selectByCode(String code) {
         rLock.lock();
@@ -82,9 +83,9 @@ public class Airports {
     }
 
     /**
-     * using airport name to get the code
-     * @param name
-     * @return
+     * using airport name to get the airport
+     * @param name name of the airport
+     * @return the corresponding airport
      */
     public Airport selectByName(String name) {
         rLock.lock();
