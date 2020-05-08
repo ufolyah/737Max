@@ -14,10 +14,10 @@ import java.time.LocalTime;
  */
 public class SearchConfig {
 
-    public LocalDate departureDate=null, arrivalDate=null;
-    public LocalTime departureWindowStart=null, departureWindowEnd=null, arrivalWindowStart=null, arrivalWindowEnd=null;
-    public Airport departureAirport=null, arrivalAirport=null;
-    public SeatClass preferredSeatClass = SeatClass.COACH;
+    LocalDate departureDate=null, arrivalDate=null;
+    LocalTime departureWindowStart=null, departureWindowEnd=null, arrivalWindowStart=null, arrivalWindowEnd=null;
+    Airport departureAirport=null, arrivalAirport=null;
+    SeatClass preferredSeatClass = SeatClass.COACH;
 
     /**
      * set the departure date
