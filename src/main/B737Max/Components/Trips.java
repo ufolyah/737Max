@@ -22,7 +22,7 @@ public class Trips {
     private boolean modifiedSinceLastResult;
 
     /**
-     *
+     * construct a trip instance with filters, comparator, trips and modifiedSinceLastResult
      */
     public Trips() {
         filters = new HashMap<>();
@@ -32,7 +32,8 @@ public class Trips {
     }
 
     /**
-     * @param trips
+     * construct a trip instance with filters, comparator, trips and modifiedSinceLastResult
+     * @param trips list of trips
      */
     public Trips(Trip[] trips) {
         filters = new HashMap<>();
@@ -43,7 +44,7 @@ public class Trips {
 
     /**
      * Add a new trip into list
-     * @param trip
+     * @param trip a trip instance
      */
     public void addTrip(Trip trip) {
         this.trips.add(trip);
@@ -51,7 +52,8 @@ public class Trips {
     }
 
     /**
-     * @param cmp
+     * sort trips by special comparator
+     * @param cmp the comparator
      */
     public void sortBy(Comparator<Trip> cmp) {
         comparator = cmp;
