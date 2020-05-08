@@ -13,6 +13,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
+ * The adaptor for server HTTP APIs
  * @author xudufy
  * @version 2.0 2020-05-03
  * @since 2020-03-01
@@ -210,7 +211,7 @@ public class ServerAPIAdapter {
 
     /**
      * reserve the trips
-     * @param trips trips tht wants to reserver
+     * @param trips trips that to be reserved
      * @throws IOException throw an IOException on input error
      */
     public void reserve(Trip[] trips) throws IOException {
@@ -219,9 +220,10 @@ public class ServerAPIAdapter {
     }
 
     /**
-     * @param query
-     * @return
-     * @throws IOException throw an IOException on input error
+     * perform a http GET request to the query url
+     * @param query the query url
+     * @return the response text
+     * @throws IOException throw an IOException on connection error
      */
     public String httpGet(String query) throws IOException {
         /*
@@ -260,10 +262,11 @@ public class ServerAPIAdapter {
     }
 
     /**
-     * @param query
-     * @param body
-     * @return
-     * @throws IOException throw an IOException on input error
+     * perform a http Post request to the query url with a body text.
+     * @param query the query url
+     * @param body the body content.
+     * @return the response text.
+     * @throws IOException throw an IOException on connection error
      */
     public String httpPost(String query, String body) throws IOException {
         URL url = new URL(query);

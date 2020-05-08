@@ -118,16 +118,16 @@ public class Flight {
     }
 
     /**
-     * get the price of firstSeat in the flight
-     * @return the price of firstSeat in the flight
+     * get the price of a first class seat in the flight
+     * @return the price of a first class seat in the flight
      */
     public BigDecimal getFirstPrice() {
         return firstPrice;
     }
 
     /**
-     * get the price of coachSeat in the flight
-     * @return price of coachSeat in the flight
+     * get the price of a coach seat in the flight
+     * @return price of a coach seat in the flight
      */
     public BigDecimal getCoachPrice() {
         return coachPrice;
@@ -176,8 +176,8 @@ public class Flight {
     }
 
     /**
-     * Return the available classes
-     * @param seat seatClass
+     * Return the available seat class based on preferred seat class.
+     * @param seat the preferred seat class.
      * @return the available classes
      */
     public SeatClass checkSeatClass(SeatClass seat) {

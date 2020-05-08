@@ -18,12 +18,18 @@ public class Layover {
     public final Airport airport;
 
     /**
-     * Arrival time and departure time of the layover
+     * Start time of the layover.
      */
-    public final ZonedDateTime startTime, endTime;
+    public final ZonedDateTime startTime;
+
 
     /**
-     * Stopping time of the layover
+     * Ending time of the layover.
+     */
+    public final ZonedDateTime endTime;
+
+    /**
+     * Time span of the layover
      */
     public final Duration duration;
 
@@ -56,8 +62,8 @@ public class Layover {
 
     /**
      *
-     * The arrival airport of the first flight should be same as the departure airport of the second flight
-     * And the duration of layover should be more than 30 min and less than 4h
+     * Return a layover instance representing the layover between two flights.
+     *
      * @param f1 the first flight of the layover
      * @param f2  the second fight of the layover
      * @return the layover instance

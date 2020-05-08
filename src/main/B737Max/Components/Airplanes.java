@@ -65,7 +65,7 @@ public class Airplanes {
     }
 
     /**
-     * using model  to get corresponding airplanes
+     * using model to get corresponding airplanes
      * @param code model of the airplane
      * @return the relevant airplane
      */

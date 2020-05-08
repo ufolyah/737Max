@@ -4,12 +4,19 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.util.concurrent.TimeUnit;
 
+/**
+ *  Entry Screen of Reservation System GUI.
+ */
 public class StartScreen {
     private JPanel panel1;
     private JLabel PlaneLogo;
     private JLabel Welcome;
 
-    public static void main(String[] args) throws Exception {
+    /**
+     * Entry point of Reservation System GUI.
+     * @param args command line arguments
+     */
+    public static void main(String[] args) {
         JFrame mainframe = new JFrame("Startup");
         mainframe.setContentPane((new StartScreen().panel1));
         mainframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -18,7 +25,11 @@ public class StartScreen {
         mainframe.setLocationRelativeTo(null);
         mainframe.setVisible(true);
 
-        TimeUnit.MILLISECONDS.sleep(500);
+        try {
+            TimeUnit.MILLISECONDS.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
 
         mainframe.setVisible(false);

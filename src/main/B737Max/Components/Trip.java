@@ -71,7 +71,7 @@ public class Trip {
      * One trip could only have at most 3 flights.
      *
      * @param f the added flight
-     * @return whether the flight is added
+     * @return whether the adding is successful.
      */
     public boolean addFlight(Flight f) {
         assert f!=null;

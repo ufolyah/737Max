@@ -19,7 +19,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /**
- *
+ *  Contains the functions to parse and build XML strings for the server API.
  * @author xudufy
  * @version 2.0 2020-05-03
  * @since 2020-04-01
@@ -27,8 +27,8 @@ import java.util.ArrayList;
 
 public class XMLInterface {
     /**
-     * Parse the XMl to get the string of airports
-     * @param xml
+     * Parse the XMl to get Airports instances.
+     * @param xml the xml string
      * @return list of airports
      */
     public static Airport[] parseAirports(String xml) {
@@ -51,8 +51,8 @@ public class XMLInterface {
     }
 
     /**
-     * Get the string of airplanes
-     * @param xml
+     * Parse the XMl to get Airplane instances.
+     * @param xml the xml string
      * @return list of airplanes
      */
     public static Airplane[] parseAirplanes(String xml) {
@@ -76,6 +76,7 @@ public class XMLInterface {
     }
 
     /**
+     * Parse the XML string to get Flights instances.
      * @param xml the xml of flight
      * @return list of Flights
      */
@@ -155,9 +156,9 @@ public class XMLInterface {
     }
 
     /**
-     * Get the flight information of reservations
-     * @param trips
-     * @return reservation detail
+     *  Give a list of trip instances, Return the xml used for reserving the flights in all of the trips.
+     * @param trips the list of Trip instances
+     * @return reservation XML
      */
     public static String buildReservations(Trip[] trips) {
         StringBuilder s = new StringBuilder();
@@ -171,13 +172,6 @@ public class XMLInterface {
         return s.toString();
     }
 
-    /**
-     *
-     * load the xml string into a DOM document and return the Document
-     *
-     * @param xmlString
-     * @return
-     */
     static private Document buildDomDoc (String xmlString) {
 
         try {
@@ -194,20 +188,11 @@ public class XMLInterface {
         }
     }
 
-    /**
-     * @param ele
-     * @param tag
-     * @return
-     */
     private static String getOnlyChildTextByTagName(Element ele, String tag) {
         Element target = (Element) ele.getElementsByTagName(tag).item(0);
         return getElementText(target);
     }
 
-    /**
-     * @param ele
-     * @return
-     */
     private static String getElementText(Element ele) {
         if (ele==null) {
             System.out.println("null Element\n");

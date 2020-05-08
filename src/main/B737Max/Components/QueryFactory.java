@@ -74,7 +74,7 @@ public class QueryFactory {
     }
 
     /**
-     * Reset the server database
+     * Return a query string to reset the server database
      * @param teamName is the name of the team to specify the data copy on server
      * @return the String written to HTTP POST to reset server database
      */
@@ -83,7 +83,7 @@ public class QueryFactory {
     }
 
     /**
-     * Lock the server database so updates can be written
+     * Return a body string to lock the server database
      *
      * @param teamName is the name of the team to acquire the lock
      * @return the String written to HTTP POST to lock server database
@@ -93,7 +93,7 @@ public class QueryFactory {
     }
 
     /**
-     * Unlock the server database after updates are written
+     * Return a body string to unlock the server database
      *
      * @param teamName is the name of the team holding the lock
      * @return the String written to the HTTP POST to unlock server database
@@ -103,7 +103,7 @@ public class QueryFactory {
     }
 
     /**
-     * Return the reservation of trips
+     * Return a body string to return the reservation of trips
      * @param teamName is the name of the team to specify the data copy on server
      * @param trips the reserved trips
      * @return the String written to the HTTP POST to reserve the trips

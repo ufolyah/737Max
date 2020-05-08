@@ -21,8 +21,8 @@ public class SearchConfig {
 
     /**
      * set the departure date
-     * @param departureDate
-     * @return
+     * @param departureDate the departure date
+     * @return this instance after setting
      */
     public SearchConfig setDepartureDate(LocalDate departureDate) {
         this.departureDate = departureDate;
@@ -32,8 +32,8 @@ public class SearchConfig {
     /**
      * set the arrival date
      *
-     * @param arrivalDate
-     * @return
+     * @param arrivalDate the arrival date
+     * @return this instance after setting
      */
     public SearchConfig setArrivalDate(LocalDate arrivalDate) {
         this.arrivalDate = arrivalDate;
@@ -42,9 +42,9 @@ public class SearchConfig {
 
     /**
      * set the departure time window
-     * @param departureWindowStart
-     * @param departureWindowEnd
-     * @return
+     * @param departureWindowStart the beginning of the time window
+     * @param departureWindowEnd the end of the time window
+     * @return this instance after setting
      */
     public SearchConfig setDepartureWindow(LocalTime departureWindowStart, LocalTime departureWindowEnd) {
         this.departureWindowStart = departureWindowStart;
@@ -55,9 +55,9 @@ public class SearchConfig {
     /**
      * det the arrival time window
      *
-     * @param arrivalWindowStart
-     * @param arrivalWindowEnd
-     * @return
+     * @param arrivalWindowStart the beginning of the time window
+     * @param arrivalWindowEnd the end of the time window
+     * @return this instance after setting
      */
     public SearchConfig setArrivalWindow(LocalTime arrivalWindowStart, LocalTime arrivalWindowEnd) {
         this.arrivalWindowStart = arrivalWindowStart;
@@ -68,8 +68,8 @@ public class SearchConfig {
     /**
      * set the departure airport
      *
-     * @param departureAirport
-     * @return
+     * @param departureAirport the departure airport
+     * @return this instance after setting
      */
     public SearchConfig setDepartureAirport(Airport departureAirport) {
         this.departureAirport = departureAirport;
@@ -79,8 +79,8 @@ public class SearchConfig {
     /**
      * set the arrival airport
      *
-     * @param arrivalAirport
-     * @return
+     * @param arrivalAirport the departure airport
+     * @return this instance after setting
      */
     public SearchConfig setArrivalAirport(Airport arrivalAirport) {
         this.arrivalAirport = arrivalAirport;
@@ -90,8 +90,8 @@ public class SearchConfig {
     /**
      * set the preferred seat type
      *
-     * @param preferredSeatClass
-     * @return
+     * @param preferredSeatClass the preferred seat class
+     * @return this instance after setting
      */
     public SearchConfig setPreferredSeatClass(SeatClass preferredSeatClass) {
         if (preferredSeatClass!=null) {

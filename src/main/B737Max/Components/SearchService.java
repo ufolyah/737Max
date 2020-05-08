@@ -163,7 +163,7 @@ public class SearchService {
     private SearchService(){}
 
     /**
-     *
+     * A utility for airport-flights mapping.
      */
     static class AirportFlightsMap extends HashMap<Airport, ArrayList<Flight>> {
 
@@ -231,8 +231,8 @@ public class SearchService {
     /**
      * Search possible trips without layovers from the server satisfying the search config
      *
-     * @param context
-     * @throws IOException
+     * @param context search context for this search request
+     * @throws IOException thrown when any connection error happened in the search
      */
     static void searchTripsWithZeroLayover(SearchContext context) throws IOException {
         populateFlightMaps(context);
@@ -268,8 +268,8 @@ public class SearchService {
     /**
      * Search possible trips with one layovers from the server satisfying the search config
      *
-     * @param context
-     * @throws IOException
+     * @param context search context for this search request
+     * @throws IOException thrown when any connection error happened in the search
      */
     static void searchTripsWithOneLayover(SearchContext context) throws IOException {
         populateFlightMaps(context);
@@ -294,8 +294,8 @@ public class SearchService {
 
     /**
      * Search possible trips with 2 layovers from the server satisfying the search config
-     * @param context
-     * @throws IOException
+     * @param context search context for this search request
+     * @throws IOException thrown when any connection error happened in the search
      */
     static void searchTripsWithTwoLayover(SearchContext context) throws IOException {
         populateFlightMaps(context);
@@ -357,7 +357,8 @@ public class SearchService {
     }
 
     /**
-     *
+     * Calculate the great circle distance between two airports.
+     * The distance is relative, meaning that the result is not multiplied by the radius of the earth.
      * @param a1 departure airport
      * @param a2 arrival airport
      * @return distance between two airports
@@ -380,10 +381,10 @@ public class SearchService {
      *
      * Search possible trips with at most 2 layovers from the server satisfying the search config
      *
-     * @param config
-     * @return trips
-     * @throws IllegalArgumentException
-     * @throws IOException
+     * @param config the search config
+     * @return trips the search result
+     * @throws IllegalArgumentException happens when config is invalid.
+     * @throws IOException happens when connection error occurs.
      */
     public static Trips searchTrips(SearchConfig config) throws IllegalArgumentException, IOException {
         SearchContext context = new SearchContext(config);
