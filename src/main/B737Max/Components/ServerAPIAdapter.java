@@ -65,7 +65,7 @@ public class ServerAPIAdapter {
      * get flights that satisfy the demand of departure airport and departure date
      * @param airport departure airport of the flight
      * @param dateInGMT local departure date of the flight
-     * @return list of fights that satisfy the demand of departure airport and departure date
+     * @return list of flights that satisfy the demand of departure airport and departure date
      * @throws IOException throw an IOException on input error
      */
     public Flight[] getDepartureFlights(Airport airport, LocalDate dateInGMT) throws IOException {
@@ -73,11 +73,11 @@ public class ServerAPIAdapter {
     }
 
     /**
-     * get fights that satisfy the demand of arrival airport and arrival date
+     * get flights that satisfy the demand of arrival airport and arrival date
      *
      * @param airport arrival airport of the flight
      * @param dateInGMT local arrival date of the flight
-     * @return list of fights that satisfy the demand of arrival airport and arrival date
+     * @return list of flights that satisfy the demand of arrival airport and arrival date
      * @throws IOException throw an IOException on input error
      */
     public Flight[] getArrivalFlights(Airport airport, LocalDate dateInGMT) throws IOException{
@@ -85,12 +85,12 @@ public class ServerAPIAdapter {
     }
 
     /**
-     * get fights that satisfy the demand of departure airport, date and time
+     * get flights that satisfy the demand of departure airport, date and time
      *
      * @param airport departure airport of the flight
      * @param begin the begin of departure time window
      * @param end the end of departure time window
-     * @return list of fights that satisfy the demand of departure airport, date and time
+     * @return list of flights that satisfy the demand of departure airport, date and time
      * @throws IOException throw an IOException on input error
      */
     public Flight[] getDepartureFlightsByTimeWindow(Airport airport, ZonedDateTime begin, ZonedDateTime end)
@@ -99,12 +99,12 @@ public class ServerAPIAdapter {
     }
 
     /**
-     * get fights that satisfy the demand of arrival airport, date and time
+     * get flights that satisfy the demand of arrival airport, date and time
      *
      * @param airport arrival airport of the flight
      * @param begin the begin of arrival time window
      * @param end the end of arrival time window
-     * @return list of fights that satisfy the demand of arrival airport, date and time
+     * @return list of flights that satisfy the demand of arrival airport, date and time
      * @throws IOException throw an IOException on input error
      */
     public Flight[] getArrivalFlightsByTimeWindow(Airport airport, ZonedDateTime begin, ZonedDateTime end)
@@ -113,13 +113,13 @@ public class ServerAPIAdapter {
     }
 
     /**
-     * get fights that satisfy the airport, the time window of departure or arrival
+     * get flights that satisfy the airport, the time window of departure or arrival
      *
      * @param airport departure of arrival airport of the flight
      * @param begin the begin of time window
      * @param end the end of time window
      * @param mode search by departure conditions or arrival conditions
-     * @return list of fights that satisfy the relevant features
+     * @return list of flights that satisfy the relevant features
      * @throws IOException throw an IOException on input error
      */
     private Flight[] getFlightsByTimeWindow(Airport airport, ZonedDateTime begin, ZonedDateTime end, FlightSearchMode mode)
