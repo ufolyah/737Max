@@ -41,7 +41,6 @@ public class Trips {
     }
 
     /**
-     *
      * Construct a Trips instance with a list of Trip instances.
      * @param trips list of Trip instances
      */
@@ -54,7 +53,7 @@ public class Trips {
 
     /**
      * Add a new trip into list
-     * @param trip the new trip
+     * @param trip a trip instance
      */
     public void addTrip(Trip trip) {
         this.trips.add(trip);
