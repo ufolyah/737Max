@@ -5,6 +5,6 @@ Usage:
 - Entry point of the GUI is in `src/main/B737Max/GUI/StartScreen`
 - Automated unit tests are in `src/test`
 - JavaDocs index page is in `docs/index.html`
-
+- JavaDocs hosted on https://xudufy.github.io/737Max/
  
 
